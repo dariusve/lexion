@@ -10,6 +10,13 @@ It provides a headless core, optional UI adapters, extension-driven features, co
 - `packages/web`: framework-neutral browser integration utilities.
 - `packages/react`: React adapter layer.
 - `packages/vue`: Vue adapter layer.
+- `packages/vue2`: Vue 2 lifecycle adapter layer.
+- `packages/angular`: Angular lifecycle/form bridge adapter.
+- `packages/svelte`: Svelte action adapter.
+- `packages/solid`: Solid lifecycle adapter.
+- `packages/astro`: Astro client-mount adapter.
+- `packages/next`: Next.js client component adapter.
+- `packages/nuxt`: Nuxt SSR-safe Vue adapter.
 - `apps/api`: backend API surface (Fastify/Node.js).
 - `apps/collab-server`: real-time collaboration backend (Yjs transport/persistence).
 - `apps/docs`, `apps/playground`: documentation and interactive validation environments.
@@ -25,9 +32,8 @@ It provides a headless core, optional UI adapters, extension-driven features, co
 ## Where To Implement Features
 - New editor behavior: `packages/extensions` (default path).
 - Shared editor rules/invariants: `packages/core`.
-- Rendering or framework lifecycle integration: `packages/web`, `packages/react`, `packages/vue`.
+- Rendering or framework lifecycle integration: `packages/web`, `packages/react`, `packages/vue`, `packages/vue2`, `packages/angular`, `packages/svelte`, `packages/solid`, `packages/astro`, `packages/next`, `packages/nuxt`.
 - Realtime sync transport/persistence: `apps/collab-server`.
 - API endpoints and backend workflows: `apps/api`.
 
 Rule of thumb: implement logic once in core or extensions, then expose it through adapters.
-

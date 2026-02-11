@@ -1,6 +1,7 @@
 # Package APIs
 
 For extension-specific API details, see `docs/EXTENSIONS_REFERENCE.md`.
+For concrete payload samples, see `docs/DATA_EXAMPLES.md`.
 
 ## `@lexion/core`
 
@@ -271,6 +272,210 @@ export default defineComponent({
       });
   }
 })
+```
+
+## `@lexion/vue2`
+
+### Exports
+- `LexionVue2Adapter`
+- `createLexionVue2Adapter(options?)`
+
+### Example: Vue 2 Options API
+```ts
+import Vue from "vue";
+import type { JSONDocument } from "@lexion/core";
+import { createLexionVue2Adapter } from "@lexion/vue2";
+
+export default Vue.extend({
+  props: {
+    value: {
+      type: Object as () => JSONDocument | undefined,
+      default: undefined
+    }
+  },
+  data() {
+    return {
+      adapter: createLexionVue2Adapter({
+        onChange: (nextValue) => {
+          this.$emit("input", nextValue);
+        }
+      })
+    };
+  },
+  mounted() {
+    this.adapter.mount(this.$el as HTMLElement);
+  },
+  beforeDestroy() {
+    this.adapter.destroy();
+  },
+  watch: {
+    value(nextValue: JSONDocument | undefined) {
+      if (nextValue) {
+        this.adapter.update({ value: nextValue });
+      }
+    }
+  },
+  render(h) {
+    return h("div");
+  }
+});
+```
+
+## `@lexion/angular`
+
+### Exports
+- `LexionAngularAdapter`
+- `createLexionAngularAdapter(options?)`
+
+### Example: Component Lifecycle Binding
+```ts
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from "@angular/core";
+import { createLexionAngularAdapter } from "@lexion/angular";
+
+@Component({
+  selector: "app-editor",
+  template: `<div #editorHost></div>`
+})
+export class EditorComponent implements AfterViewInit, OnDestroy {
+  @ViewChild("editorHost", { static: true })
+  private editorHost!: ElementRef<HTMLElement>;
+
+  private readonly adapter = createLexionAngularAdapter({
+    onChange: (value) => {
+      console.log("changed", value);
+    }
+  });
+
+  ngAfterViewInit(): void {
+    this.adapter.attach(this.editorHost.nativeElement);
+  }
+
+  ngOnDestroy(): void {
+    this.adapter.destroy();
+  }
+}
+```
+
+## `@lexion/svelte`
+
+### Exports
+- `lexion` (Svelte action)
+
+### Example: Action Usage
+```svelte
+<script lang="ts">
+  import type { JSONDocument } from "@lexion/core";
+  import { lexion } from "@lexion/svelte";
+
+  let value: JSONDocument | undefined = undefined;
+</script>
+
+<div
+  use:lexion={{
+    value,
+    onChange: (nextValue: JSONDocument) => {
+      value = nextValue;
+    }
+  }}
+></div>
+```
+
+## `@lexion/solid`
+
+### Exports
+- `LexionSolidAdapter`
+- `createLexionSolidAdapter(options?)`
+
+### Example: Solid Lifecycle Integration
+```ts
+import { createEffect, onCleanup, onMount } from "solid-js";
+import { createSignal } from "solid-js";
+import type { JSONDocument } from "@lexion/core";
+import { createLexionSolidAdapter } from "@lexion/solid";
+
+const [value, setValue] = createSignal<JSONDocument | undefined>(undefined);
+const adapter = createLexionSolidAdapter({
+  onChange: (nextValue) => setValue(nextValue)
+});
+
+let host!: HTMLDivElement;
+
+onMount(() => {
+  adapter.mount(host);
+});
+
+createEffect(() => {
+  const nextValue = value();
+  if (nextValue) {
+    adapter.update({ value: nextValue });
+  }
+});
+
+onCleanup(() => {
+  adapter.destroy();
+});
+```
+
+## `@lexion/astro`
+
+### Exports
+- `LexionAstroAdapter`
+- `mountLexionAstroEditor(options)`
+
+### Example: Client Mount Script
+```astro
+---
+const editorId = "lexion-editor";
+---
+
+<div id={editorId}></div>
+<script>
+  import { mountLexionAstroEditor } from "@lexion/astro";
+
+  const element = document.getElementById("lexion-editor");
+  if (element) {
+    const adapter = mountLexionAstroEditor({ element });
+    window.addEventListener("beforeunload", () => adapter.destroy(), { once: true });
+  }
+</script>
+```
+
+## `@lexion/next`
+
+### Exports
+- `LexionNextEditorView`
+
+### Example: App Router Client Component
+```tsx
+"use client";
+
+import { LexionNextEditorView } from "@lexion/next";
+
+export default function EditorPage() {
+  return <LexionNextEditorView defaultValue={doc} />;
+}
+```
+
+## `@lexion/nuxt`
+
+### Exports
+- `LexionNuxtEditorView`
+
+### Example: Nuxt `ClientOnly` + `v-model`
+```vue
+<template>
+  <ClientOnly>
+    <LexionNuxtEditorView v-model="value" />
+  </ClientOnly>
+</template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+import type { JSONDocument } from "@lexion/core";
+import { LexionNuxtEditorView } from "@lexion/nuxt";
+
+const value = ref<JSONDocument>(doc);
+</script>
 ```
 
 ## `@lexion/tools`

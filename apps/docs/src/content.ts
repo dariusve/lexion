@@ -5,6 +5,7 @@ import taskList from "../../../TASK_LIST.md?raw";
 import adapterExamples from "../../../docs/ADAPTER_EXAMPLES.md?raw";
 import architectureGuide from "../../../docs/ARCHITECTURE_GUIDE.md?raw";
 import backendServices from "../../../docs/BACKEND_SERVICES.md?raw";
+import dataExamples from "../../../docs/DATA_EXAMPLES.md?raw";
 import extensionDevelopment from "../../../docs/EXTENSION_DEVELOPMENT.md?raw";
 import extensionsReference from "../../../docs/EXTENSIONS_REFERENCE.md?raw";
 import gettingStarted from "../../../docs/GETTING_STARTED.md?raw";
@@ -93,6 +94,14 @@ export const pages: readonly DocPage[] = [
     summary: "Core, adapters, tools, and backend package API surfaces and usage contracts.",
     sourcePath: "/docs/PACKAGE_APIS.md",
     markdown: packageApis
+  },
+  {
+    id: "data-examples",
+    title: "Data Examples",
+    category: "Reference",
+    summary: "Concrete examples of JSON documents, adapter values, HTML/text output, and service payloads.",
+    sourcePath: "/docs/DATA_EXAMPLES.md",
+    markdown: dataExamples
   },
   {
     id: "extensions-reference",

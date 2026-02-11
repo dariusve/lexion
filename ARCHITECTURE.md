@@ -5,7 +5,7 @@
 - Exposes framework-independent APIs for initialization, editing, serialization, and extension hooks.
 - Contains domain logic and invariants for correctness and testability.
 
-## Framework Adapters (`packages/web`, `packages/react`, `packages/vue`)
+## Framework Adapters (`packages/web`, `packages/react`, `packages/vue`, `packages/vue2`, `packages/angular`, `packages/svelte`, `packages/solid`, `packages/astro`, `packages/next`, `packages/nuxt`)
 - Provide platform/framework bindings to the core.
 - Responsible for rendering integration, lifecycle wiring, and event bridging.
 - Must remain thin: no editor business rules, no feature logic duplication.
@@ -24,4 +24,3 @@
 - Implements AI-native editing features as extensions on top of core APIs.
 - Manages structured prompts, model I/O contracts, and deterministic editor transforms.
 - Keeps model/provider concerns isolated so core remains provider-agnostic.
-

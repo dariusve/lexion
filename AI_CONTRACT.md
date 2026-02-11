@@ -7,7 +7,7 @@ These rules are non-negotiable for all code in this repository.
 - Core APIs must be portable and consumable by any adapter.
 
 ## 2) No Business Logic In UI Adapters
-- `packages/react`, `packages/vue`, and `packages/web` are integration layers only.
+- `packages/web`, `packages/react`, `packages/vue`, `packages/vue2`, `packages/angular`, `packages/svelte`, `packages/solid`, `packages/astro`, `packages/next`, and `packages/nuxt` are integration layers only.
 - UI adapters may map events/state to core APIs, but must not implement editor domain logic.
 
 ## 3) Features Must Be Implemented As Extensions
@@ -21,4 +21,3 @@ These rules are non-negotiable for all code in this repository.
 ## 5) `any` Is Not Allowed
 - Do not introduce explicit `any`.
 - Do not bypass typing with implicit `any`; model unknown data using safe, explicit types.
-

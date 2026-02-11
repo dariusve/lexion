@@ -36,6 +36,13 @@ pnpm dev:collab
 - `packages/web`: vanilla JS adapter.
 - `packages/react`: React adapter.
 - `packages/vue`: Vue adapter.
+- `packages/vue2`: Vue 2 adapter.
+- `packages/angular`: Angular adapter utilities.
+- `packages/svelte`: Svelte action adapter.
+- `packages/solid`: Solid lifecycle adapter.
+- `packages/astro`: Astro client-mount adapter.
+- `packages/next`: Next.js adapter.
+- `packages/nuxt`: Nuxt adapter.
 - `packages/tools`: format conversion helpers (`toHTML`, `toText`, `fromHTML`, `fromText`).
 - `apps/playground`: lightweight integration playground helpers.
 - `apps/vue-sample`: runnable local sample app.
