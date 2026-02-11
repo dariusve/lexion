@@ -1,5 +1,7 @@
 # Package APIs
 
+For extension-specific API details, see `docs/EXTENSIONS_REFERENCE.md`.
+
 ## `@lexion/core`
 
 ### Main Class

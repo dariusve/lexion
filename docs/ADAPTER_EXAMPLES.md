@@ -16,7 +16,7 @@ const editor = createLexionWebEditor({
 
 const boldButton = document.getElementById("toolbar-bold") as HTMLButtonElement;
 boldButton.addEventListener("click", () => {
-  editor.editor.execute(starterKitCommandNames.toggleBold);
+  editor.execute(starterKitCommandNames.toggleBold);
 });
 ```
 

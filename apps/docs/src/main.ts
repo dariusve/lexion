@@ -1,4 +1,5 @@
-import { sections } from "./content.js";
+import { categoryOrder, pages } from "./content.js";
+import { renderMarkdown } from "./markdown.js";
 import "./styles.css";
 
 const app = document.getElementById("app");
@@ -7,28 +8,74 @@ if (!app) {
   throw new Error("Missing #app root element");
 }
 
-const nav = sections
-  .map((section) => `<a href="#${section.id}">${section.title}</a>`)
-  .join("");
+const pagesById = new Map(pages.map((page) => [page.id, page]));
+const defaultPageId = pages[0]?.id ?? "";
 
-const content = sections
-  .map(
-    (section) => `
-      <section id="${section.id}" class="card">
-        <h2>${section.title}</h2>
-        ${section.body.map((paragraph) => `<p>${paragraph}</p>`).join("")}
-      </section>
-    `
-  )
-  .join("");
+function getActivePageId(): string {
+  const hash = window.location.hash.slice(1);
+  return pagesById.has(hash) ? hash : defaultPageId;
+}
 
-app.innerHTML = `
-  <main class="page">
-    <header class="hero">
-      <h1>Lexion Documentation</h1>
-      <p>Developer-focused docs for core, extensions, adapters, and backend services.</p>
+function renderNav(activePageId: string): string {
+  return categoryOrder
+    .map((category) => {
+      const categoryPages = pages.filter((page) => page.category === category);
+      if (categoryPages.length === 0) {
+        return "";
+      }
+
+      const links = categoryPages
+        .map((page) => {
+          const activeClass = page.id === activePageId ? "is-active" : "";
+          return `<a href="#${page.id}" class="nav-link ${activeClass}">${page.title}</a>`;
+        })
+        .join("");
+
+      return `
+        <section class="nav-group">
+          <h2>${category}</h2>
+          <div class="nav-links">${links}</div>
+        </section>
+      `;
+    })
+    .join("");
+}
+
+function renderPage(activePageId: string): string {
+  const page = pagesById.get(activePageId);
+  if (!page) {
+    return "<p>Document not found.</p>";
+  }
+
+  return `
+    <header class="doc-header">
+      <h1>${page.title}</h1>
+      <p>${page.summary}</p>
+      <p class="doc-source">Source: <code>${page.sourcePath}</code></p>
     </header>
-    <nav class="nav">${nav}</nav>
-    <article class="content">${content}</article>
-  </main>
-`;
+    <section class="doc-content">${renderMarkdown(page.markdown)}</section>
+  `;
+}
+
+function mount(): void {
+  const activePageId = getActivePageId();
+  app.innerHTML = `
+    <main class="page">
+      <header class="hero">
+        <h1>Lexion Documentation</h1>
+        <p>Complete project documentation index across architecture, APIs, extensions, adapters, and operations.</p>
+      </header>
+      <div class="layout">
+        <aside class="sidebar">${renderNav(activePageId)}</aside>
+        <article class="viewer">${renderPage(activePageId)}</article>
+      </div>
+    </main>
+  `;
+}
+
+if (defaultPageId && !window.location.hash) {
+  window.location.hash = `#${defaultPageId}`;
+}
+
+window.addEventListener("hashchange", mount);
+mount();

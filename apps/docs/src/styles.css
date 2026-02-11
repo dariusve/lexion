@@ -1,6 +1,6 @@
 :root {
   color: #111827;
-  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  background: linear-gradient(135deg, #eef2ff, #f8fafc 40%, #e2e8f0);
   font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
 }
 
@@ -13,57 +13,208 @@ body {
 }
 
 .page {
-  max-width: 960px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 2rem 1rem 3rem;
+  padding: 2rem 1.25rem 3rem;
 }
 
 .hero h1 {
   margin: 0;
-  font-size: 2rem;
+  font-size: 2.1rem;
 }
 
 .hero p {
   margin-top: 0.5rem;
-  color: #334155;
+  color: #1f2937;
+  max-width: 72ch;
 }
 
-.nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin: 1.25rem 0;
+.layout {
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+  margin-top: 1.5rem;
 }
 
-.nav a {
+.sidebar {
+  position: sticky;
+  top: 1rem;
+  background: #ffffffc9;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.85rem;
+  padding: 0.9rem;
+  backdrop-filter: blur(3px);
+}
+
+.nav-group + .nav-group {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.nav-group h2 {
+  margin: 0 0 0.55rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.045em;
+  color: #475569;
+}
+
+.nav-links {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.nav-link {
+  display: block;
   text-decoration: none;
   color: #0f172a;
+  border: 1px solid transparent;
+  border-radius: 0.55rem;
+  padding: 0.42rem 0.5rem;
+  font-size: 0.92rem;
+}
+
+.nav-link:hover {
+  background: #e2e8f0;
+}
+
+.nav-link.is-active {
   background: #dbeafe;
-  border: 1px solid #bfdbfe;
-  padding: 0.4rem 0.7rem;
-  border-radius: 999px;
-  font-size: 0.9rem;
+  border-color: #93c5fd;
+  color: #1e3a8a;
 }
 
-.content {
-  display: grid;
-  gap: 1rem;
-}
-
-.card {
+.viewer {
   background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.75rem;
-  padding: 1rem;
+  border: 1px solid #dbe3ee;
+  border-radius: 0.85rem;
+  padding: 1.4rem;
+  min-height: 70vh;
+  box-shadow: 0 6px 28px rgba(15, 23, 42, 0.05);
 }
 
-.card h2 {
-  margin-top: 0;
-  margin-bottom: 0.5rem;
+.doc-header h1 {
+  margin: 0;
+  font-size: 1.7rem;
 }
 
-.card p {
-  margin: 0.5rem 0 0;
+.doc-header p {
+  margin: 0.6rem 0 0;
   color: #334155;
-  line-height: 1.5;
+}
+
+.doc-source code {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.35rem;
+  padding: 0.1rem 0.35rem;
+}
+
+.doc-content {
+  margin-top: 1.25rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.doc-content h1,
+.doc-content h2,
+.doc-content h3,
+.doc-content h4,
+.doc-content h5,
+.doc-content h6 {
+  margin: 1.2rem 0 0.25rem;
+  line-height: 1.25;
+}
+
+.doc-content h1 {
+  font-size: 1.5rem;
+}
+
+.doc-content h2 {
+  font-size: 1.25rem;
+}
+
+.doc-content h3 {
+  font-size: 1.05rem;
+}
+
+.doc-content p {
+  margin: 0.2rem 0 0;
+  color: #1f2937;
+  line-height: 1.6;
+}
+
+.doc-content ul,
+.doc-content ol {
+  margin: 0.15rem 0 0.15rem 1.3rem;
+  color: #1f2937;
+}
+
+.doc-content li {
+  margin: 0.2rem 0;
+}
+
+.doc-content code {
+  font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.9em;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.35rem;
+  padding: 0.05rem 0.25rem;
+}
+
+.doc-content pre {
+  margin: 0.15rem 0;
+  padding: 0.9rem;
+  overflow-x: auto;
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 0.65rem;
+}
+
+.doc-content pre code {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.doc-content a {
+  color: #1d4ed8;
+}
+
+.doc-content table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 0.55rem;
+  border: 1px solid #d1d9e5;
+}
+
+.doc-content th,
+.doc-content td {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.5rem 0.6rem;
+  vertical-align: top;
+}
+
+.doc-content thead th {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.doc-content tbody tr:nth-child(2n) {
+  background: #f8fafc99;
+}
+
+@media (max-width: 920px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+  }
 }

@@ -7,6 +7,7 @@ Lexion is a framework-agnostic, headless rich text editor platform built on Pros
 - Architecture guide: [docs/ARCHITECTURE_GUIDE.md](docs/ARCHITECTURE_GUIDE.md)
 - Package APIs: [docs/PACKAGE_APIS.md](docs/PACKAGE_APIS.md)
 - Extension development: [docs/EXTENSION_DEVELOPMENT.md](docs/EXTENSION_DEVELOPMENT.md)
+- Extensions reference: [docs/EXTENSIONS_REFERENCE.md](docs/EXTENSIONS_REFERENCE.md)
 - Adapter examples: [docs/ADAPTER_EXAMPLES.md](docs/ADAPTER_EXAMPLES.md)
 - Backend services: [docs/BACKEND_SERVICES.md](docs/BACKEND_SERVICES.md)
 - Release process: [docs/RELEASE_PROCESS.md](docs/RELEASE_PROCESS.md)
