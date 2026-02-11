@@ -8,6 +8,7 @@ import backendServices from "../../../docs/BACKEND_SERVICES.md?raw";
 import extensionDevelopment from "../../../docs/EXTENSION_DEVELOPMENT.md?raw";
 import extensionsReference from "../../../docs/EXTENSIONS_REFERENCE.md?raw";
 import gettingStarted from "../../../docs/GETTING_STARTED.md?raw";
+import lexionOverview from "../../../docs/LEXION_OVERVIEW.md?raw";
 import packageApis from "../../../docs/PACKAGE_APIS.md?raw";
 import releaseProcess from "../../../docs/RELEASE_PROCESS.md?raw";
 
@@ -28,6 +29,14 @@ export const pages: readonly DocPage[] = [
     summary: "Environment prerequisites, workspace commands, and local startup workflow.",
     sourcePath: "/docs/GETTING_STARTED.md",
     markdown: gettingStarted
+  },
+  {
+    id: "lexion-overview",
+    title: "Lexion Overview",
+    category: "Foundations",
+    summary: "What Lexion is and why ProseMirror is used for the document model and engine.",
+    sourcePath: "/docs/LEXION_OVERVIEW.md",
+    markdown: lexionOverview
   },
   {
     id: "ai-contract",

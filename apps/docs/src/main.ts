@@ -1,5 +1,6 @@
 import { categoryOrder, pages } from "./content.js";
 import { renderMarkdown } from "./markdown.js";
+import logo from "../../../assets/images/logo.png";
 import "./styles.css";
 
 const app = document.getElementById("app");
@@ -62,7 +63,10 @@ function mount(): void {
   app.innerHTML = `
     <main class="page">
       <header class="hero">
-        <h1>Lexion Documentation</h1>
+        <div class="hero-brand">
+          <img src="${logo}" alt="Lexion logo" class="hero-logo" />
+          <h1>Lexion Documentation</h1>
+        </div>
         <p>Complete project documentation index across architecture, APIs, extensions, adapters, and operations.</p>
       </header>
       <div class="layout">

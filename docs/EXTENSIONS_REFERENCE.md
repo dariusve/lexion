@@ -58,6 +58,26 @@ This document is the canonical API reference for `@lexion/extensions`.
 | `HeadingAttributes` | `{ level: 1 \| 2 \| 3 \| 4 \| 5 \| 6 }` |
 | `LinkAttributes` | `{ href: string; title?: string \| null }` |
 
+### Starter-Kit Example
+
+```ts
+import { LexionEditor } from "@lexion/core";
+import {
+  starterKitCommandNames,
+  starterKitExtension
+} from "@lexion/extensions";
+
+const editor = new LexionEditor({
+  extensions: [starterKitExtension]
+});
+
+editor.execute(starterKitCommandNames.setParagraph);
+editor.execute(starterKitCommandNames.toggleHeading, { level: 3 });
+editor.execute(starterKitCommandNames.toggleBold);
+editor.execute(starterKitCommandNames.wrapBulletList);
+editor.execute(starterKitCommandNames.undo);
+```
+
 ## AI Extension
 
 ### `aiExtension`
@@ -101,6 +121,31 @@ This document is the canonical API reference for `@lexion/extensions`.
 | --- | --- | --- |
 | `createAIService` | `(provider: AIProvider) => AIService` | New `AIService` instance. |
 
+### AI Extension Example
+
+```ts
+import { LexionEditor } from "@lexion/core";
+import {
+  aiCommandNames,
+  aiExtension,
+  createAIService,
+  starterKitExtension
+} from "@lexion/extensions";
+
+const editor = new LexionEditor({
+  extensions: [starterKitExtension, aiExtension]
+});
+
+const ai = createAIService({
+  async generate(request) {
+    return `Improved text: ${request.selection || "empty selection"}`;
+  }
+});
+
+const suggestion = await ai.generateForSelection(editor, "Improve clarity");
+editor.execute(aiCommandNames.applySuggestion, suggestion);
+```
+
 ## Collaboration Extension
 
 ### `CollaborationExtensionOptions`
@@ -132,6 +177,38 @@ This document is the canonical API reference for `@lexion/extensions`.
 | --- | --- | --- | --- |
 | `undo` | `"collaboration.undo"` | none | Executes Yjs-aware undo command. |
 | `redo` | `"collaboration.redo"` | none | Executes Yjs-aware redo command. |
+
+### Collaboration Example
+
+```ts
+import { LexionEditor } from "@lexion/core";
+import {
+  collaborationCommandNames,
+  createCollaborationExtension,
+  starterKitExtension
+} from "@lexion/extensions";
+import * as Y from "yjs";
+import { Awareness } from "y-protocols/awareness";
+
+const ydoc = new Y.Doc();
+const fragment = ydoc.getXmlFragment("lexion");
+const awareness = new Awareness(ydoc);
+
+const editor = new LexionEditor({
+  extensions: [
+    starterKitExtension,
+    createCollaborationExtension({
+      fragment,
+      awareness,
+      withCursor: true,
+      withUndo: true
+    })
+  ]
+});
+
+editor.execute(collaborationCommandNames.undo);
+editor.execute(collaborationCommandNames.redo);
+```
 
 ## Minimal Usage
 

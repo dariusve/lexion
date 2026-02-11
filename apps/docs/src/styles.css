@@ -23,6 +23,19 @@ body {
   font-size: 2.1rem;
 }
 
+.hero-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hero-logo {
+  height: 72px;
+  width: auto;
+  max-width: min(42vw, 240px);
+  display: block;
+}
+
 .hero p {
   margin-top: 0.5rem;
   color: #1f2937;
