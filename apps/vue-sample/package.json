@@ -1,0 +1,22 @@
+{
+  "name": "@lexion/vue-sample",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .ts"
+  },
+  "dependencies": {
+    "@lexion/core": "workspace:*",
+    "@lexion/extensions": "workspace:*",
+    "@lexion/vue": "workspace:*",
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vite": "^6.0.0"
+  }
+}

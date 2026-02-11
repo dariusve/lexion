@@ -1,0 +1,48 @@
+:root {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+  color: #1f2937;
+  background: radial-gradient(circle at 10% 0%, #f4f6ff 0%, #f8fafc 45%, #eef2ff 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+.card {
+  border: 1px solid #dbe4ff;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-top: 1.25rem;
+  background: #ffffffcc;
+  backdrop-filter: blur(2px);
+}
+
+.ProseMirror {
+  min-height: 140px;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  background: #ffffff;
+}
+
+pre {
+  margin: 0;
+  overflow: auto;
+  max-height: 240px;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  background: #f8fafc;
+  padding: 0.75rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12px;
+}
