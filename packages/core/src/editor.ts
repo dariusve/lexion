@@ -1,4 +1,4 @@
-import { Node as ProseMirrorNode, Schema } from "prosemirror-model";
+import { Node as ProseMirrorNode, type Schema } from "prosemirror-model";
 import { EditorState, type Plugin, type Transaction } from "prosemirror-state";
 
 import { coreSchema } from "./schema.js";

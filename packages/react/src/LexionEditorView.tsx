@@ -32,14 +32,22 @@ export const LexionEditorView = ({
   const latestOnChange = useRef(onChange);
   const latestOnReady = useRef(onReady);
   const latestReadOnly = useRef(readOnly);
-  const lastAppliedValueRef = useRef<string | null>(value ? serializeJSON(value) : null);
+  const lastAppliedValueRef = useRef<string | null>(null);
 
   const internalEditor = useMemo(
-    () =>
-      new LexionEditor({
-        doc: defaultValue,
-        extensions: [starterKitExtension]
-      }),
+    () => {
+      const initialDoc = value ?? defaultValue;
+      const editorOptions =
+        initialDoc === undefined
+          ? {
+              extensions: [starterKitExtension]
+            }
+          : {
+              doc: initialDoc,
+              extensions: [starterKitExtension]
+            };
+      return new LexionEditor(editorOptions);
+    },
     []
   );
 
@@ -53,6 +61,11 @@ export const LexionEditorView = ({
   useEffect(() => {
     if (!containerRef.current) {
       return;
+    }
+
+    if (isControlled && value !== undefined) {
+      activeEditor.setJSON(value);
+      lastAppliedValueRef.current = serializeJSON(value);
     }
 
     const view = new EditorView(containerRef.current, {

@@ -1,4 +1,4 @@
-import { Node as ProseMirrorNode, Schema } from "prosemirror-model";
+import { Node as ProseMirrorNode } from "prosemirror-model";
 import { EditorState } from "prosemirror-state";
 import { coreSchema } from "./schema.js";
 export class LexionEditor {

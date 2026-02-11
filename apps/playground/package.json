@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "@lexion/core": "workspace:*",
+    "@lexion/extensions": "workspace:*",
+    "@lexion/web": "workspace:*",
     "@lexion/vue": "workspace:*",
     "vue": "^3.4.0"
   }

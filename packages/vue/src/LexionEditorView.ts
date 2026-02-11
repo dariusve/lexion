@@ -7,6 +7,7 @@ import {
   onBeforeUnmount,
   onMounted,
   ref,
+  shallowRef,
   watch,
   type PropType,
   type StyleValue
@@ -64,22 +65,26 @@ export const LexionEditorView = defineComponent({
   },
   setup(props, { emit }) {
     const containerRef = ref<HTMLDivElement | null>(null);
-    const viewRef = ref<EditorView | null>(null);
+    const viewRef = shallowRef<EditorView | null>(null);
     const ownsEditorRef = ref(false);
-    const activeEditorRef = ref<LexionEditor | null>(null);
-    const lastAppliedValueRef = ref<string | null>(
-      props.modelValue ? serializeJSON(props.modelValue) : null
-    );
+    const activeEditorRef = shallowRef<LexionEditor | null>(null);
+    const lastAppliedValueRef = ref<string | null>(null);
 
     const setActiveEditor = (nextEditor: LexionEditor): void => {
       activeEditorRef.value = nextEditor;
     };
 
     const createInternalEditor = (): LexionEditor =>
-      new LexionEditor({
-        doc: props.defaultValue,
-        extensions: [starterKitExtension]
-      });
+      new LexionEditor(
+        props.defaultValue === undefined
+          ? {
+              extensions: [starterKitExtension]
+            }
+          : {
+              doc: props.defaultValue,
+              extensions: [starterKitExtension]
+            }
+      );
 
     const destroyView = (): void => {
       viewRef.value?.destroy();
@@ -119,6 +124,11 @@ export const LexionEditorView = defineComponent({
       } else {
         ownsEditorRef.value = true;
         setActiveEditor(createInternalEditor());
+      }
+
+      if (props.modelValue !== undefined && activeEditorRef.value) {
+        activeEditorRef.value.setJSON(props.modelValue);
+        lastAppliedValueRef.value = serializeJSON(props.modelValue);
       }
 
       recreateView();
@@ -177,6 +187,9 @@ export const LexionEditorView = defineComponent({
         editor.setJSON(nextValue);
         lastAppliedValueRef.value = serialized;
         viewRef.value?.updateState(editor.state);
+      },
+      {
+        immediate: true
       }
     );
 

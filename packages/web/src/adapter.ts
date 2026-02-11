@@ -24,19 +24,27 @@ export class LexionWebEditor {
   private readonly ownsEditor: boolean;
   private readonly editorInstance: LexionEditor;
   private readonly view: EditorView;
-  private onChange?: (value: JSONDocument, editor: LexionEditor) => void;
+  private onChange: ((value: JSONDocument, editor: LexionEditor) => void) | undefined;
   private isReadOnly: boolean;
   private lastAppliedValue: string | null;
   private destroyed: boolean;
 
   public constructor(options: LexionWebEditorOptions) {
     this.ownsEditor = options.editor === undefined;
-    this.editorInstance =
-      options.editor ??
-      new LexionEditor({
-        doc: options.defaultValue,
-        extensions: [starterKitExtension]
-      });
+    if (options.editor) {
+      this.editorInstance = options.editor;
+    } else {
+      const editorOptions =
+        options.defaultValue === undefined
+          ? {
+              extensions: [starterKitExtension]
+            }
+          : {
+              doc: options.defaultValue,
+              extensions: [starterKitExtension]
+            };
+      this.editorInstance = new LexionEditor(editorOptions);
+    }
     this.onChange = options.onChange;
     this.isReadOnly = options.readOnly ?? false;
     this.lastAppliedValue = options.value ? serializeJSON(options.value) : null;
@@ -69,6 +77,18 @@ export class LexionWebEditor {
   public getJSON(): JSONDocument {
     this.assertNotDestroyed();
     return this.editorInstance.getJSON();
+  }
+
+  public execute(command: string, ...args: readonly unknown[]): boolean {
+    this.assertNotDestroyed();
+    const executed = this.editorInstance.execute(command, ...args);
+    this.view.updateState(this.editorInstance.state);
+
+    const nextValue = this.editorInstance.getJSON();
+    this.lastAppliedValue = serializeJSON(nextValue);
+    this.onChange?.(nextValue, this.editorInstance);
+
+    return executed;
   }
 
   public setValue(value: JSONDocument): void {

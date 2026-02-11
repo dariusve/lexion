@@ -9,12 +9,28 @@
     "build:packages": "pnpm -r --filter './packages/*' build",
     "build:apps": "pnpm -r --filter './apps/*' build",
     "lint": "pnpm -r lint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "ci": "pnpm lint && pnpm build && pnpm test",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish",
+    "dev:api": "pnpm --filter @lexion/api build && pnpm --filter @lexion/api start",
+    "dev:collab": "pnpm --filter @lexion/collab-server build && pnpm --filter @lexion/collab-server start",
+    "dev:docs": "pnpm --filter @lexion/docs dev",
     "dev:vue-sample": "pnpm --filter @lexion/vue-sample dev"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.12",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
     "@typescript-eslint/parser": "^8.22.0",
     "eslint": "^9.19.0",
+    "jsdom": "^26.0.0",
+    "prosemirror-state": "^1.4.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "vitest": "^2.1.9",
+    "vue": "^3.4.0",
     "typescript": "^5.7.3"
   }
 }

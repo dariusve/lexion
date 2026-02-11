@@ -23,6 +23,9 @@
     "prosemirror-model": "^1.22.3",
     "prosemirror-schema-basic": "^1.2.3",
     "prosemirror-schema-list": "^1.4.1",
-    "prosemirror-state": "^1.4.3"
+    "prosemirror-state": "^1.4.3",
+    "y-prosemirror": "^1.2.12",
+    "y-protocols": "^1.0.6",
+    "yjs": "^13.6.23"
   }
 }

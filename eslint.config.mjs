@@ -6,9 +6,14 @@ export default [
     ignores: ["**/dist/**"]
   },
   {
-    files: ["**/*.ts"],
+    files: ["**/*.ts", "**/*.tsx"],
     languageOptions: {
-      parser: tseslintParser
+      parser: tseslintParser,
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        }
+      }
     },
     plugins: {
       "@typescript-eslint": tseslintPlugin

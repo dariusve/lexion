@@ -38,31 +38,39 @@ Last updated: 2026-02-11
   - [x] Starter-kit schema moved out of core
   - [x] Starter-kit commands moved out of core
   - [x] Starter-kit ProseMirror plugins moved out of core
+  - [x] AI extension layer baseline (`aiExtension`, provider-agnostic AI service)
+  - [x] Collaboration extension baseline (`createCollaborationExtension`)
 - [x] Vue playground examples in `apps/playground`.
 - [x] Local Vue sample app (`apps/vue-sample`) that runs against workspace packages (no registry publish required).
+- [x] `apps/api` backend application baseline (Fastify).
+- [x] `apps/collab-server` realtime collaboration server baseline (Yjs + WebSocket).
+- [x] Yjs collaboration integration wiring.
+- [x] `apps/docs` real docs site implementation.
+- [x] Test suite:
+  - [x] Unit tests for `@lexion/core`
+  - [x] Adapter tests (`@lexion/react`, `@lexion/vue`, `@lexion/web`)
+  - [x] Integration tests (editor + adapters + tools)
+- [x] Workspace build verification in CI (GitHub Actions).
+- [x] Release/versioning workflow baseline (Changesets + release workflow).
 
 ## Partially Completed
-- [ ] Workspace build verification in CI
-  - [x] Build scripts exist per package/app.
-  - [ ] Automated CI pipeline not set up yet.
-- [ ] Documentation coverage
+- [x] Documentation coverage
   - [x] Core architecture docs exist.
-  - [ ] API reference docs and usage guides are still missing.
+  - [x] API reference docs and usage guides added under `docs/`.
+- [ ] Production hardening
+  - [x] Baseline CI/lint/build/test/release wiring
+  - [ ] Security/auth layers for API/collab are not implemented
+  - [ ] Persistence/storage for API/collab is not implemented
+  - [ ] End-to-end collaboration client protocol validation is not implemented
 
 ## Not Started
-- [ ] `apps/api` backend application.
-- [ ] `apps/collab-server` realtime collaboration server.
-- [ ] Yjs collaboration integration wiring.
-- [ ] AI-native extension layer.
-- [ ] `apps/docs` real docs site implementation.
-- [ ] Test suite:
-  - [ ] Unit tests for `@lexion/core`
-  - [ ] Adapter tests (`@lexion/react`, `@lexion/vue`, `@lexion/web`)
-  - [ ] Integration tests (editor + adapters)
-- [ ] Release/versioning workflow for open-source publishing.
+- [ ] Persistent storage adapters for API/collab documents.
+- [ ] Authn/Authz integration for API and collaboration transport.
+- [ ] Expanded AI providers and prompt/policy guardrails.
+- [ ] End-to-end browser collaboration tests.
 
 ## Suggested Next Milestones
-1. Build `packages/extensions` and move built-in behaviors into extension modules.
-2. Add test coverage for core commands, schema behavior, and adapter lifecycle.
-3. Implement collaboration stack (`apps/collab-server` + Yjs integration).
-4. Implement API server (`apps/api`) and docs app (`apps/docs`).
+1. Add persistence (PostgreSQL) for document and collaboration state.
+2. Add auth to `apps/api` and `apps/collab-server`.
+3. Expand AI extension providers and deterministic transformation policies.
+4. Add e2e collaboration test matrix (multiple clients, conflict scenarios, reconnect flow).

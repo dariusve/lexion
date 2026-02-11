@@ -1,0 +1,21 @@
+{
+  "name": "@lexion/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "node --enable-source-maps dist/index.js",
+    "start": "node --enable-source-maps dist/index.js",
+    "lint": "eslint src --ext .ts"
+  },
+  "dependencies": {
+    "@lexion/core": "workspace:*",
+    "@lexion/extensions": "workspace:*",
+    "@lexion/tools": "workspace:*",
+    "fastify": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10"
+  }
+}

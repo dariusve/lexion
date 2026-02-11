@@ -1,0 +1,21 @@
+{
+  "name": "@lexion/collab-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "node --enable-source-maps dist/index.js",
+    "start": "node --enable-source-maps dist/index.js",
+    "lint": "eslint src --ext .ts"
+  },
+  "dependencies": {
+    "@fastify/websocket": "^11.0.2",
+    "fastify": "^5.2.1",
+    "y-protocols": "^1.0.6",
+    "yjs": "^13.6.23"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10"
+  }
+}
