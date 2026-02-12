@@ -1,5 +1,7 @@
 # Lexion
 
+![Lexion Logo](assets/images/logo.png)
+
 Lexion is a framework-agnostic, headless rich text editor platform built on ProseMirror.
 
 ## Developer Docs
