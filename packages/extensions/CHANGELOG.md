@@ -1,5 +1,18 @@
 # @lexion-rte/extensions
 
+## 0.1.3
+
+### Patch Changes
+
+- Release `0.1.3` with framework-native adapter samples and documentation alignment.
+
+  - Add runnable sample apps for each adapter package in `apps/*-sample`.
+  - Ensure adapter and extension docs use real framework code style (React JSX, Vue SFC, Vue 2 Options API, Angular component lifecycle, Svelte action/component usage, Solid JSX).
+  - Update guides and task tracking to reflect the full adapter sample matrix and framework-accurate examples.
+
+- Updated dependencies
+  - @lexion-rte/core@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes

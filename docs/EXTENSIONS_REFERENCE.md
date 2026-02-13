@@ -227,3 +227,56 @@ const editor = new LexionEditor({
 // Later, when Yjs is available:
 // editor.use(createCollaborationExtension({ fragment, awareness }));
 ```
+
+## Framework Usage Patterns
+
+### React (`.tsx`)
+```tsx
+import { useMemo } from "react";
+import { LexionEditor } from "@lexion-rte/core";
+import { starterKitExtension, aiExtension } from "@lexion-rte/extensions";
+import { LexionEditorView } from "@lexion-rte/react";
+
+export const EditorScreen = () => {
+  const editor = useMemo(
+    () => new LexionEditor({ extensions: [starterKitExtension, aiExtension] }),
+    []
+  );
+
+  return <LexionEditorView editor={editor} />;
+};
+```
+
+### Vue (`.vue`)
+```vue
+<template>
+  <LexionEditorView :editor="editor" />
+</template>
+
+<script setup lang="ts">
+import { onBeforeUnmount } from "vue";
+import { LexionEditor } from "@lexion-rte/core";
+import { starterKitExtension, aiExtension } from "@lexion-rte/extensions";
+import { LexionEditorView } from "@lexion-rte/vue";
+
+const editor = new LexionEditor({
+  extensions: [starterKitExtension, aiExtension]
+});
+
+onBeforeUnmount(() => {
+  editor.destroy();
+});
+</script>
+```
+
+### Svelte (`.svelte`)
+```svelte
+<script lang="ts">
+  import type { JSONDocument } from "@lexion-rte/core";
+  import { lexion } from "@lexion-rte/svelte";
+
+  let value: JSONDocument | undefined = undefined;
+</script>
+
+<div use:lexion={{ value, onChange: (nextValue) => (value = nextValue) }}></div>
+```

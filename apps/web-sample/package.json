@@ -1,0 +1,21 @@
+{
+  "name": "@lexion-rte/web-sample",
+  "version": "0.1.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .ts"
+  },
+  "dependencies": {
+    "@lexion-rte/core": "workspace:*",
+    "@lexion-rte/extensions": "workspace:*",
+    "@lexion-rte/web": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vite": "^6.0.0"
+  }
+}

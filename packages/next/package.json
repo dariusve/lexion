@@ -1,6 +1,6 @@
 {
   "name": "@lexion-rte/next",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Next.js adapter for the Lexion editor.",
   "private": false,
   "type": "module",

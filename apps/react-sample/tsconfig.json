@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": ["ES2022", "DOM"],
+    "jsx": "react-jsx",
+    "paths": {
+      "@lexion-rte/core": ["../../packages/core/src/index.ts"],
+      "@lexion-rte/extensions": ["../../packages/extensions/src/index.ts"],
+      "@lexion-rte/react": ["../../packages/react/src/index.ts"]
+    },
+    "types": ["vite/client"],
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
+}

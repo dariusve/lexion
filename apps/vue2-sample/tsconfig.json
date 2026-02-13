@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": ["ES2022", "DOM"],
+    "paths": {
+      "@lexion-rte/core": ["../../packages/core/src/index.ts"],
+      "@lexion-rte/extensions": ["../../packages/extensions/src/index.ts"],
+      "@lexion-rte/web": ["../../packages/web/src/index.ts"],
+      "@lexion-rte/vue2": ["../../packages/vue2/src/index.ts"]
+    },
+    "types": ["vite/client"],
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": ["src/**/*.ts"]
+}

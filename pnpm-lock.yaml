@@ -42,6 +42,49 @@ importers:
         specifier: ^3.4.0
         version: 3.5.28(typescript@5.9.3)
 
+  apps/angular-sample:
+    dependencies:
+      '@angular/common':
+        specifier: ^19.0.0
+        version: 19.2.18(@angular/core@19.2.18(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
+      '@angular/compiler':
+        specifier: ^19.0.0
+        version: 19.2.18
+      '@angular/core':
+        specifier: ^19.0.0
+        version: 19.2.18(rxjs@7.8.2)(zone.js@0.15.1)
+      '@angular/forms':
+        specifier: ^19.0.0
+        version: 19.2.18(@angular/common@19.2.18(@angular/core@19.2.18(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@19.2.18(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@19.2.18(@angular/common@19.2.18(@angular/core@19.2.18(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@19.2.18(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2)
+      '@angular/platform-browser':
+        specifier: ^19.0.0
+        version: 19.2.18(@angular/common@19.2.18(@angular/core@19.2.18(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@19.2.18(rxjs@7.8.2)(zone.js@0.15.1))
+      '@lexion-rte/angular':
+        specifier: workspace:*
+        version: link:../../packages/angular
+      '@lexion-rte/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@lexion-rte/extensions':
+        specifier: workspace:*
+        version: link:../../packages/extensions
+      '@lexion-rte/web':
+        specifier: workspace:*
+        version: link:../../packages/web
+      rxjs:
+        specifier: ^7.8.0
+        version: 7.8.2
+      zone.js:
+        specifier: ^0.15.0
+        version: 0.15.1
+    devDependencies:
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
+      vite:
+        specifier: ^6.0.0
+        version: 6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2)
+
   apps/api:
     dependencies:
       '@lexion-rte/core':
@@ -60,6 +103,28 @@ importers:
       '@types/node':
         specifier: ^22.13.10
         version: 22.19.11
+
+  apps/astro-sample:
+    dependencies:
+      '@lexion-rte/astro':
+        specifier: workspace:*
+        version: link:../../packages/astro
+      '@lexion-rte/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@lexion-rte/extensions':
+        specifier: workspace:*
+        version: link:../../packages/extensions
+      '@lexion-rte/web':
+        specifier: workspace:*
+        version: link:../../packages/web
+      astro:
+        specifier: ^5.0.0
+        version: 5.17.2(@types/node@22.19.11)(db0@0.3.4)(ioredis@5.9.3)(jiti@2.6.1)(rollup@4.57.1)(terser@5.46.0)(typescript@5.9.3)(yaml@2.8.2)
+    devDependencies:
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
 
   apps/collab-server:
     dependencies:
@@ -89,6 +154,59 @@ importers:
         specifier: ^6.0.0
         version: 6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2)
 
+  apps/next-sample:
+    dependencies:
+      '@lexion-rte/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@lexion-rte/next':
+        specifier: workspace:*
+        version: link:../../packages/next
+      next:
+        specifier: ^15.0.0
+        version: 15.5.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      react:
+        specifier: ^19.0.0
+        version: 19.2.4
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.4(react@19.2.4)
+    devDependencies:
+      '@types/node':
+        specifier: ^22.13.10
+        version: 22.19.11
+      '@types/react':
+        specifier: ^19.0.7
+        version: 19.2.13
+      '@types/react-dom':
+        specifier: ^19.0.3
+        version: 19.2.3(@types/react@19.2.13)
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
+
+  apps/nuxt-sample:
+    dependencies:
+      '@lexion-rte/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@lexion-rte/nuxt':
+        specifier: workspace:*
+        version: link:../../packages/nuxt
+      '@lexion-rte/vue':
+        specifier: workspace:*
+        version: link:../../packages/vue
+      nuxt:
+        specifier: ^4.0.0
+        version: 4.3.1(@parcel/watcher@2.5.6)(@types/node@22.19.11)(@vue/compiler-sfc@3.5.28)(cac@6.7.14)(db0@0.3.4)(eslint@9.39.2(jiti@2.6.1))(ioredis@5.9.3)(magicast@0.5.2)(optionator@0.9.4)(rollup@4.57.1)(terser@5.46.0)(typescript@5.9.3)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2))(yaml@2.8.2)
+      vue:
+        specifier: ^3.4.0
+        version: 3.5.28(typescript@5.9.3)
+    devDependencies:
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
+
   apps/playground:
     dependencies:
       '@lexion-rte/core':
@@ -107,6 +225,87 @@ importers:
         specifier: ^3.4.0
         version: 3.5.28(typescript@5.9.3)
 
+  apps/react-sample:
+    dependencies:
+      '@lexion-rte/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@lexion-rte/react':
+        specifier: workspace:*
+        version: link:../../packages/react
+      react:
+        specifier: ^19.0.0
+        version: 19.2.4
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.4(react@19.2.4)
+    devDependencies:
+      '@types/react':
+        specifier: ^19.0.7
+        version: 19.2.13
+      '@types/react-dom':
+        specifier: ^19.0.3
+        version: 19.2.3(@types/react@19.2.13)
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
+      vite:
+        specifier: ^6.0.0
+        version: 6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2)
+
+  apps/solid-sample:
+    dependencies:
+      '@lexion-rte/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@lexion-rte/extensions':
+        specifier: workspace:*
+        version: link:../../packages/extensions
+      '@lexion-rte/solid':
+        specifier: workspace:*
+        version: link:../../packages/solid
+      '@lexion-rte/web':
+        specifier: workspace:*
+        version: link:../../packages/web
+      solid-js:
+        specifier: ^1.8.0
+        version: 1.9.11
+    devDependencies:
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
+      vite:
+        specifier: ^6.0.0
+        version: 6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2)
+
+  apps/svelte-sample:
+    dependencies:
+      '@lexion-rte/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@lexion-rte/extensions':
+        specifier: workspace:*
+        version: link:../../packages/extensions
+      '@lexion-rte/svelte':
+        specifier: workspace:*
+        version: link:../../packages/svelte
+      '@lexion-rte/web':
+        specifier: workspace:*
+        version: link:../../packages/web
+      svelte:
+        specifier: ^5.0.0
+        version: 5.50.3
+    devDependencies:
+      '@sveltejs/vite-plugin-svelte':
+        specifier: ^4.0.0
+        version: 4.0.4(svelte@5.50.3)(vite@6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2))
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
+      vite:
+        specifier: ^6.0.0
+        version: 6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2)
+
   apps/vue-sample:
     dependencies:
       '@lexion-rte/core':
@@ -121,6 +320,50 @@ importers:
       vue:
         specifier: ^3.4.0
         version: 3.5.28(typescript@5.9.3)
+    devDependencies:
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
+      vite:
+        specifier: ^6.0.0
+        version: 6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2)
+
+  apps/vue2-sample:
+    dependencies:
+      '@lexion-rte/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@lexion-rte/extensions':
+        specifier: workspace:*
+        version: link:../../packages/extensions
+      '@lexion-rte/vue2':
+        specifier: workspace:*
+        version: link:../../packages/vue2
+      '@lexion-rte/web':
+        specifier: workspace:*
+        version: link:../../packages/web
+      vue:
+        specifier: ^2.7.0
+        version: 2.7.16
+    devDependencies:
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
+      vite:
+        specifier: ^6.0.0
+        version: 6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2)
+
+  apps/web-sample:
+    dependencies:
+      '@lexion-rte/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@lexion-rte/extensions':
+        specifier: workspace:*
+        version: link:../../packages/extensions
+      '@lexion-rte/web':
+        specifier: workspace:*
+        version: link:../../packages/web
     devDependencies:
       typescript:
         specifier: ^5.7.3
@@ -336,6 +579,10 @@ packages:
     peerDependencies:
       '@angular/core': 19.2.18
       rxjs: ^6.5.3 || ^7.4.0
+
+  '@angular/compiler@19.2.18':
+    resolution: {integrity: sha512-3MscvODxRVxc3Cs0ZlHI5Pk5rEvE80otfvxZTMksOZuPlv1B+S8MjWfc3X3jk9SbyUEzODBEH55iCaBHD48V3g==}
+    engines: {node: ^18.19.1 || ^20.11.1 || >=22.0.0}
 
   '@angular/core@19.2.18':
     resolution: {integrity: sha512-+QRrf0Igt8ccUWXHA+7doK5W6ODyhHdqVyblSlcQ8OciwkzIIGGEYNZom5OZyWMh+oI54lcSeyV2O3xaDepSrQ==}
@@ -2193,6 +2440,21 @@ packages:
     resolution: {integrity: sha512-lVJX6qEgs/4DOcRTpo56tmKzVPtoWAaVbL4hfO7t7NVwl9AAXzQR6cihesW1BmNMPl+bK6dreu2sOKBP2Q9CIA==}
     peerDependencies:
       acorn: ^8.9.0
+
+  '@sveltejs/vite-plugin-svelte-inspector@3.0.1':
+    resolution: {integrity: sha512-2CKypmj1sM4GE7HjllT7UKmo4Q6L5xFRd7VMGEWhYnZ+wc6AUVU01IBd7yUi6WnFndEwWoMNOd6e8UjoN0nbvQ==}
+    engines: {node: ^18.0.0 || ^20.0.0 || >=22}
+    peerDependencies:
+      '@sveltejs/vite-plugin-svelte': ^4.0.0-next.0||^4.0.0
+      svelte: ^5.0.0-next.96 || ^5.0.0
+      vite: ^5.0.0
+
+  '@sveltejs/vite-plugin-svelte@4.0.4':
+    resolution: {integrity: sha512-0ba1RQ/PHen5FGpdSrW7Y3fAMQjrXantECALeOiOdBdzR5+5vPP6HVZRLmZaQL+W8m++o+haIAKq5qT+MiZ7VA==}
+    engines: {node: ^18.0.0 || ^20.0.0 || >=22}
+    peerDependencies:
+      svelte: ^5.0.0-next.96 || ^5.0.0
+      vite: ^5.0.0
 
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
@@ -5901,6 +6163,10 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.8.1
 
+  '@angular/compiler@19.2.18':
+    dependencies:
+      tslib: 2.8.1
+
   '@angular/core@19.2.18(rxjs@7.8.2)(zone.js@0.15.1)':
     dependencies:
       rxjs: 7.8.2
@@ -7622,6 +7888,28 @@ snapshots:
   '@sveltejs/acorn-typescript@1.0.9(acorn@8.15.0)':
     dependencies:
       acorn: 8.15.0
+
+  '@sveltejs/vite-plugin-svelte-inspector@3.0.1(@sveltejs/vite-plugin-svelte@4.0.4(svelte@5.50.3)(vite@6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2)))(svelte@5.50.3)(vite@6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2))':
+    dependencies:
+      '@sveltejs/vite-plugin-svelte': 4.0.4(svelte@5.50.3)(vite@6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2))
+      debug: 4.4.3
+      svelte: 5.50.3
+      vite: 6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2)
+    transitivePeerDependencies:
+      - supports-color
+
+  '@sveltejs/vite-plugin-svelte@4.0.4(svelte@5.50.3)(vite@6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2))':
+    dependencies:
+      '@sveltejs/vite-plugin-svelte-inspector': 3.0.1(@sveltejs/vite-plugin-svelte@4.0.4(svelte@5.50.3)(vite@6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2)))(svelte@5.50.3)(vite@6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2))
+      debug: 4.4.3
+      deepmerge: 4.3.1
+      kleur: 4.1.5
+      magic-string: 0.30.21
+      svelte: 5.50.3
+      vite: 6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2)
+      vitefu: 1.1.1(vite@6.4.1(@types/node@22.19.11)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2))
+    transitivePeerDependencies:
+      - supports-color
 
   '@swc/helpers@0.5.15':
     dependencies:

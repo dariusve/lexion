@@ -42,10 +42,12 @@ Last updated: 2026-02-13
   - [x] Collaboration extension baseline (`createCollaborationExtension`)
 - [x] Vue playground examples in `apps/playground`.
 - [x] Local Vue sample app (`apps/vue-sample`) that runs against workspace packages (no registry publish required).
+- [x] Framework-native adapter sample app matrix (`apps/web-sample`, `apps/react-sample`, `apps/vue-sample`, `apps/vue2-sample`, `apps/angular-sample`, `apps/svelte-sample`, `apps/solid-sample`, `apps/astro-sample`, `apps/next-sample`, `apps/nuxt-sample`).
 - [x] `apps/api` backend application baseline (Fastify).
 - [x] `apps/collab-server` realtime collaboration server baseline (Yjs + WebSocket).
 - [x] Yjs collaboration integration wiring.
 - [x] `apps/docs` real docs site implementation.
+- [x] Framework-idiomatic documentation examples for adapters/extensions (React JSX, Vue SFC, Vue 2 Options API, Angular component lifecycle, Svelte component/action usage, Solid JSX).
 - [x] Test suite:
   - [x] Unit tests for `@lexion-rte/core`
   - [x] Adapter tests (`@lexion-rte/react`, `@lexion-rte/vue`, `@lexion-rte/web`)

@@ -242,36 +242,29 @@ export const ControlledEditor = ({ initial }: { initial: JSONDocument }) => {
 - `LexionEditorView`
 
 ### Example: Uncontrolled
-```ts
-import { defineComponent, h } from "vue";
-import { LexionEditorView } from "@lexion-rte/vue";
+```vue
+<template>
+  <LexionEditorView :default-value="doc" />
+</template>
 
-export default defineComponent({
-  setup() {
-    return () => h(LexionEditorView, { defaultValue: doc });
-  }
-});
+<script setup lang="ts">
+import { LexionEditorView } from "@lexion-rte/vue";
+</script>
 ```
 
 ### Example: Controlled (`v-model`)
-```ts
-import { defineComponent, h, ref } from "vue";
+```vue
+<template>
+  <LexionEditorView v-model="value" />
+</template>
+
+<script setup lang="ts">
+import { ref } from "vue";
 import type { JSONDocument } from "@lexion-rte/core";
 import { LexionEditorView } from "@lexion-rte/vue";
 
-export default defineComponent({
-  setup() {
-    const value = ref<JSONDocument>(doc);
-
-    return () =>
-      h(LexionEditorView, {
-        modelValue: value.value,
-        "onUpdate:modelValue": (nextValue: JSONDocument) => {
-          value.value = nextValue;
-        }
-      });
-  }
-})
+const value = ref<JSONDocument>(doc);
+</script>
 ```
 
 ## `@lexion-rte/vue2`
@@ -284,9 +277,10 @@ export default defineComponent({
 ```ts
 import Vue from "vue";
 import type { JSONDocument } from "@lexion-rte/core";
-import { createLexionVue2Adapter } from "@lexion-rte/vue2";
+import { createLexionVue2Adapter, type LexionVue2Adapter } from "@lexion-rte/vue2";
 
 export default Vue.extend({
+  template: `<div ref="editorHost"></div>`,
   props: {
     value: {
       type: Object as () => JSONDocument | undefined,
@@ -295,28 +289,31 @@ export default Vue.extend({
   },
   data() {
     return {
-      adapter: createLexionVue2Adapter({
-        onChange: (nextValue) => {
-          this.$emit("input", nextValue);
-        }
-      })
+      adapter: null as LexionVue2Adapter | null
     };
   },
   mounted() {
-    this.adapter.mount(this.$el as HTMLElement);
+    const host = this.$refs.editorHost as HTMLElement | undefined;
+    if (!host) {
+      throw new Error("Missing editor host ref");
+    }
+
+    this.adapter = createLexionVue2Adapter({
+      onChange: (nextValue) => {
+        this.$emit("input", nextValue);
+      }
+    });
+    this.adapter.mount(host);
   },
   beforeDestroy() {
-    this.adapter.destroy();
+    this.adapter?.destroy();
   },
   watch: {
     value(nextValue: JSONDocument | undefined) {
-      if (nextValue) {
+      if (nextValue && this.adapter) {
         this.adapter.update({ value: nextValue });
       }
     }
-  },
-  render(h) {
-    return h("div");
   }
 });
 ```
@@ -387,33 +384,39 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
 - `createLexionSolidAdapter(options?)`
 
 ### Example: Solid Lifecycle Integration
-```ts
-import { createEffect, onCleanup, onMount } from "solid-js";
-import { createSignal } from "solid-js";
+```tsx
+import { createSignal, onCleanup, onMount } from "solid-js";
+import { render } from "solid-js/web";
 import type { JSONDocument } from "@lexion-rte/core";
 import { createLexionSolidAdapter } from "@lexion-rte/solid";
 
-const [value, setValue] = createSignal<JSONDocument | undefined>(undefined);
-const adapter = createLexionSolidAdapter({
-  onChange: (nextValue) => setValue(nextValue)
-});
+const EditorScreen = () => {
+  const [value, setValue] = createSignal<JSONDocument | undefined>(undefined);
+  const adapter = createLexionSolidAdapter({
+    onChange: (nextValue) => setValue(nextValue)
+  });
 
-let host!: HTMLDivElement;
+  let host!: HTMLDivElement;
 
-onMount(() => {
-  adapter.mount(host);
-});
+  onMount(() => {
+    adapter.mount(host);
+  });
 
-createEffect(() => {
-  const nextValue = value();
-  if (nextValue) {
-    adapter.update({ value: nextValue });
-  }
-});
+  onCleanup(() => {
+    adapter.destroy();
+  });
 
-onCleanup(() => {
-  adapter.destroy();
-});
+  return (
+    <main>
+      <div ref={(element) => {
+        host = element;
+      }} />
+      <pre>{JSON.stringify(value(), null, 2)}</pre>
+    </main>
+  );
+};
+
+render(() => <EditorScreen />, document.getElementById("app")!);
 ```
 
 ## `@lexion-rte/astro`

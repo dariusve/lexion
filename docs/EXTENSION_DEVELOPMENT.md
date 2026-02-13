@@ -38,6 +38,74 @@ const editor = new LexionEditor({
 });
 ```
 
+## Framework-Style Extension Usage
+
+### React (`.tsx`)
+```tsx
+import { useMemo } from "react";
+import { LexionEditor } from "@lexion-rte/core";
+import { starterKitExtension } from "@lexion-rte/extensions";
+import { LexionEditorView } from "@lexion-rte/react";
+import { myExtension } from "./my-extension";
+
+export const EditorScreen = () => {
+  const editor = useMemo(
+    () => new LexionEditor({ extensions: [starterKitExtension, myExtension] }),
+    []
+  );
+
+  return <LexionEditorView editor={editor} />;
+};
+```
+
+### Vue (`.vue`)
+```vue
+<template>
+  <LexionEditorView :editor="editor" />
+</template>
+
+<script setup lang="ts">
+import { onBeforeUnmount } from "vue";
+import { LexionEditor } from "@lexion-rte/core";
+import { starterKitExtension } from "@lexion-rte/extensions";
+import { LexionEditorView } from "@lexion-rte/vue";
+import { myExtension } from "./my-extension";
+
+const editor = new LexionEditor({
+  extensions: [starterKitExtension, myExtension]
+});
+
+onBeforeUnmount(() => {
+  editor.destroy();
+});
+</script>
+```
+
+### Angular (`.component.ts`)
+```ts
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from "@angular/core";
+import { createLexionAngularAdapter } from "@lexion-rte/angular";
+
+@Component({
+  selector: "app-editor",
+  template: `<div #editorHost></div>`
+})
+export class EditorComponent implements AfterViewInit, OnDestroy {
+  @ViewChild("editorHost", { static: true })
+  private editorHost!: ElementRef<HTMLElement>;
+
+  private readonly adapter = createLexionAngularAdapter();
+
+  ngAfterViewInit(): void {
+    this.adapter.attach(this.editorHost.nativeElement);
+  }
+
+  ngOnDestroy(): void {
+    this.adapter.destroy();
+  }
+}
+```
+
 ## Rules for Contributors
 1. Put feature logic in `packages/extensions`, not adapters.
 2. Keep extension command names stable and explicit.
@@ -47,4 +115,4 @@ const editor = new LexionEditor({
 ## Validation Checklist
 1. `pnpm build`
 2. `pnpm lint`
-3. Verify behavior in `apps/vue-sample` or playground.
+3. Verify behavior in relevant adapter sample apps under `apps/*-sample` and in `apps/playground`.

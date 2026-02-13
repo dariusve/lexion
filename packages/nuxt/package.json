@@ -1,6 +1,6 @@
 {
   "name": "@lexion-rte/nuxt",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Nuxt adapter for the Lexion editor.",
   "private": false,
   "type": "module",

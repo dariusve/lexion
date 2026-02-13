@@ -1,0 +1,11 @@
+<main class="shell">
+  <h1>Angular Adapter Sample</h1>
+  <div class="toolbar">
+    <button type="button" (click)="toggleReadOnly()">
+      {{ readOnly() ? "Set Editable" : "Toggle Read Only" }}
+    </button>
+    <button type="button" (click)="rewriteValue()">Write New Value</button>
+  </div>
+  <section class="editor" #editorHost></section>
+  <pre class="state">{{ state() }}</pre>
+</main>

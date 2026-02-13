@@ -18,7 +18,16 @@
     "dev:api": "pnpm --filter @lexion-rte/api build && pnpm --filter @lexion-rte/api start",
     "dev:collab": "pnpm --filter @lexion-rte/collab-server build && pnpm --filter @lexion-rte/collab-server start",
     "dev:docs": "pnpm --filter @lexion-rte/docs dev",
-    "dev:vue-sample": "pnpm --filter @lexion-rte/vue-sample dev"
+    "dev:web-sample": "pnpm --filter @lexion-rte/web-sample dev",
+    "dev:react-sample": "pnpm --filter @lexion-rte/react-sample dev",
+    "dev:vue-sample": "pnpm --filter @lexion-rte/vue-sample dev",
+    "dev:vue2-sample": "pnpm --filter @lexion-rte/vue2-sample dev",
+    "dev:angular-sample": "pnpm --filter @lexion-rte/angular-sample dev",
+    "dev:svelte-sample": "pnpm --filter @lexion-rte/svelte-sample dev",
+    "dev:solid-sample": "pnpm --filter @lexion-rte/solid-sample dev",
+    "dev:astro-sample": "pnpm --filter @lexion-rte/astro-sample dev",
+    "dev:next-sample": "pnpm --filter @lexion-rte/next-sample dev",
+    "dev:nuxt-sample": "pnpm --filter @lexion-rte/nuxt-sample dev"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.12",

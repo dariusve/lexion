@@ -25,8 +25,17 @@ Lexion is a framework-agnostic, headless rich text editor platform built on Pros
    - `pnpm lint`
 4. Run tests:
    - `pnpm test`
-5. Run the local Vue sample app:
+5. Run adapter sample apps:
+   - `pnpm dev:web-sample`
+   - `pnpm dev:react-sample`
    - `pnpm dev:vue-sample`
+   - `pnpm dev:vue2-sample`
+   - `pnpm dev:angular-sample`
+   - `pnpm dev:svelte-sample`
+   - `pnpm dev:solid-sample`
+   - `pnpm dev:astro-sample`
+   - `pnpm dev:next-sample`
+   - `pnpm dev:nuxt-sample`
 
 ## Monorepo Commands
 - `pnpm build`: build all workspaces.
@@ -37,6 +46,18 @@ Lexion is a framework-agnostic, headless rich text editor platform built on Pros
 - `pnpm dev:docs`: run docs site locally.
 - `pnpm dev:api`: build and run API server.
 - `pnpm dev:collab`: build and run collaboration server.
+- `pnpm dev:web-sample`: run vanilla web adapter sample.
+- `pnpm dev:react-sample`: run React adapter sample.
+- `pnpm dev:vue-sample`: run Vue 3 adapter sample.
+- `pnpm dev:vue2-sample`: run Vue 2 adapter sample.
+- `pnpm dev:angular-sample`: run Angular framework adapter sample.
+- `pnpm dev:svelte-sample`: run Svelte action adapter sample.
+- `pnpm dev:solid-sample`: run Solid framework adapter sample.
+- `pnpm dev:astro-sample`: run Astro framework adapter sample.
+- `pnpm dev:next-sample`: run Next.js framework adapter sample.
+- `pnpm dev:nuxt-sample`: run Nuxt framework adapter sample.
+
+Sample apps use native framework runtimes/tooling where applicable (for example Next.js, Nuxt, Astro, Angular, Svelte, Solid, Vue, and React).
 
 ## Core Rule
 Feature behavior must be implemented as extensions (`@lexion-rte/extensions`), not directly in adapters.
