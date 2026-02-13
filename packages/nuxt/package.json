@@ -15,12 +15,12 @@
   "license": "GPL-3.0-only",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lexion-rte/lexion.git",
+    "url": "https://github.com/dariusve/lexion.git",
     "directory": "packages/nuxt"
   },
-  "homepage": "https://github.com/lexion-rte/lexion/tree/main/packages/nuxt",
+  "homepage": "https://github.com/dariusve/lexion/tree/main/packages/nuxt",
   "bugs": {
-    "url": "https://github.com/lexion-rte/lexion/issues"
+    "url": "https://github.com/dariusve/lexion/issues"
   },
   "keywords": [
     "lexion",

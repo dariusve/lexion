@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.0.3/schema.json",
-  "changelog": ["@changesets/cli/changelog", { "repo": "lexion-rte/lexion" }],
+  "changelog": ["@changesets/cli/changelog", { "repo": "dariusve/lexion" }],
   "commit": false,
   "fixed": [],
   "linked": [],
