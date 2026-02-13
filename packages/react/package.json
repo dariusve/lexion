@@ -15,12 +15,12 @@
   "license": "GPL-3.0-only",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dariusve/lexion.git",
+    "url": "https://github.com/lexion-rte/lexion.git",
     "directory": "packages/react"
   },
-  "homepage": "https://github.com/dariusve/lexion/tree/main/packages/react",
+  "homepage": "https://github.com/lexion-rte/lexion/tree/main/packages/react",
   "bugs": {
-    "url": "https://github.com/dariusve/lexion/issues"
+    "url": "https://github.com/lexion-rte/lexion/issues"
   },
   "keywords": [
     "lexion",
