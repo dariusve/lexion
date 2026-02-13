@@ -1,7 +1,7 @@
 node_modules
 .pnpm-store/
 dist
-coverage/
+coverage
 .DS_Store
 *.log
 pnpm-debug.log*
@@ -10,3 +10,7 @@ pnpm-debug.log*
 .env
 .env.local
 .env.*.local
+PROJECT_MAP.md
+AI_CONTRACT.md
+ARCHITECTURE.md
+TASK_LIST.md
