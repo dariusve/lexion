@@ -33,6 +33,16 @@ jobs:
       - name: Build Packages
         run: pnpm build:packages
 
+      - name: Configure npm auth
+        run: |
+          cat << 'EOF' > "$HOME/.npmrc"
+          //registry.npmjs.org/:_authToken=${NPM_TOKEN}
+          registry=https://registry.npmjs.org/
+          always-auth=true
+          EOF
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Create Release Pull Request or Publish
         uses: changesets/action@v1
         with:
