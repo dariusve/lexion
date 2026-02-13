@@ -1,5 +1,5 @@
 {
-  "name": "@lexion/react",
+  "name": "@lexion-rte/react",
   "version": "0.1.0",
   "description": "React adapter for the Lexion editor platform.",
   "private": false,
@@ -38,8 +38,8 @@
     "lint": "eslint src --ext .ts,.tsx"
   },
   "dependencies": {
-    "@lexion/core": "workspace:*",
-    "@lexion/extensions": "workspace:*",
+    "@lexion-rte/core": "workspace:*",
+    "@lexion-rte/extensions": "workspace:*",
     "prosemirror-view": "^1.37.2"
   },
   "peerDependencies": {

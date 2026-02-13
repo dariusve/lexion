@@ -3,7 +3,7 @@
 For extension-specific API details, see `docs/EXTENSIONS_REFERENCE.md`.
 For concrete payload samples, see `docs/DATA_EXAMPLES.md`.
 
-## `@lexion/core`
+## `@lexion-rte/core`
 
 ### Main Class
 - `LexionEditor`
@@ -31,8 +31,8 @@ For concrete payload samples, see `docs/DATA_EXAMPLES.md`.
 
 ### Example: Initialize + Execute Commands
 ```ts
-import { LexionEditor } from "@lexion/core";
-import { starterKitCommandNames, starterKitExtension } from "@lexion/extensions";
+import { LexionEditor } from "@lexion-rte/core";
+import { starterKitCommandNames, starterKitExtension } from "@lexion-rte/extensions";
 
 const editor = new LexionEditor({
   extensions: [starterKitExtension]
@@ -43,8 +43,8 @@ editor.execute(starterKitCommandNames.toggleBold);
 
 ### Example: JSON Read/Write
 ```ts
-import { LexionEditor, type JSONDocument } from "@lexion/core";
-import { starterKitExtension } from "@lexion/extensions";
+import { LexionEditor, type JSONDocument } from "@lexion-rte/core";
+import { starterKitExtension } from "@lexion-rte/extensions";
 
 const editor = new LexionEditor({ extensions: [starterKitExtension] });
 
@@ -65,8 +65,8 @@ console.log(persisted);
 
 ### Example: Register Custom Command
 ```ts
-import { LexionEditor } from "@lexion/core";
-import { starterKitExtension } from "@lexion/extensions";
+import { LexionEditor } from "@lexion-rte/core";
+import { starterKitExtension } from "@lexion-rte/extensions";
 
 const editor = new LexionEditor({ extensions: [starterKitExtension] });
 
@@ -81,7 +81,7 @@ editor.execute("insertTimestamp");
 editor.unregisterCommand("insertTimestamp");
 ```
 
-## `@lexion/extensions`
+## `@lexion-rte/extensions`
 
 ### Exports
 - `starterKitExtension`
@@ -112,8 +112,8 @@ editor.unregisterCommand("insertTimestamp");
 
 ### Example: Use Starter Kit Commands
 ```ts
-import { LexionEditor } from "@lexion/core";
-import { starterKitCommandNames, starterKitExtension } from "@lexion/extensions";
+import { LexionEditor } from "@lexion-rte/core";
+import { starterKitCommandNames, starterKitExtension } from "@lexion-rte/extensions";
 
 const editor = new LexionEditor({ extensions: [starterKitExtension] });
 
@@ -127,13 +127,13 @@ editor.execute(starterKitCommandNames.setLink, {
 
 ### Example: AI Service + Extension
 ```ts
-import { LexionEditor } from "@lexion/core";
+import { LexionEditor } from "@lexion-rte/core";
 import {
   AIService,
   aiCommandNames,
   aiExtension,
   starterKitExtension
-} from "@lexion/extensions";
+} from "@lexion-rte/extensions";
 
 const editor = new LexionEditor({
   extensions: [starterKitExtension, aiExtension]
@@ -151,12 +151,12 @@ editor.execute(aiCommandNames.applySuggestion, suggestion);
 
 ### Example: Collaboration Extension
 ```ts
-import { LexionEditor } from "@lexion/core";
+import { LexionEditor } from "@lexion-rte/core";
 import {
   collaborationCommandNames,
   createCollaborationExtension,
   starterKitExtension
-} from "@lexion/extensions";
+} from "@lexion-rte/extensions";
 import * as Y from "yjs";
 import { Awareness } from "y-protocols/awareness";
 
@@ -174,7 +174,7 @@ const editor = new LexionEditor({
 editor.execute(collaborationCommandNames.undo);
 ```
 
-## `@lexion/web`
+## `@lexion-rte/web`
 
 ### Exports
 - `createLexionWebEditor(options)`
@@ -182,7 +182,7 @@ editor.execute(collaborationCommandNames.undo);
 
 ### Example: Uncontrolled Editor
 ```ts
-import { createLexionWebEditor } from "@lexion/web";
+import { createLexionWebEditor } from "@lexion-rte/web";
 
 const webEditor = createLexionWebEditor({
   element: document.getElementById("editor")!,
@@ -194,8 +194,8 @@ const webEditor = createLexionWebEditor({
 
 ### Example: Controlled Update + Commands
 ```ts
-import { starterKitCommandNames } from "@lexion/extensions";
-import { createLexionWebEditor } from "@lexion/web";
+import { starterKitCommandNames } from "@lexion-rte/extensions";
+import { createLexionWebEditor } from "@lexion-rte/web";
 
 const webEditor = createLexionWebEditor({
   element: document.getElementById("editor")!,
@@ -206,14 +206,14 @@ webEditor.update({ value: externalDoc, readOnly: false });
 webEditor.execute(starterKitCommandNames.toggleItalic);
 ```
 
-## `@lexion/react`
+## `@lexion-rte/react`
 
 ### Exports
 - `LexionEditorView`
 
 ### Example: Uncontrolled
 ```tsx
-import { LexionEditorView } from "@lexion/react";
+import { LexionEditorView } from "@lexion-rte/react";
 
 export const EditorScreen = () => <LexionEditorView defaultValue={doc} />;
 ```
@@ -221,8 +221,8 @@ export const EditorScreen = () => <LexionEditorView defaultValue={doc} />;
 ### Example: Controlled
 ```tsx
 import { useState } from "react";
-import type { JSONDocument } from "@lexion/core";
-import { LexionEditorView } from "@lexion/react";
+import type { JSONDocument } from "@lexion-rte/core";
+import { LexionEditorView } from "@lexion-rte/react";
 
 export const ControlledEditor = ({ initial }: { initial: JSONDocument }) => {
   const [value, setValue] = useState<JSONDocument>(initial);
@@ -236,7 +236,7 @@ export const ControlledEditor = ({ initial }: { initial: JSONDocument }) => {
 };
 ```
 
-## `@lexion/vue`
+## `@lexion-rte/vue`
 
 ### Exports
 - `LexionEditorView`
@@ -244,7 +244,7 @@ export const ControlledEditor = ({ initial }: { initial: JSONDocument }) => {
 ### Example: Uncontrolled
 ```ts
 import { defineComponent, h } from "vue";
-import { LexionEditorView } from "@lexion/vue";
+import { LexionEditorView } from "@lexion-rte/vue";
 
 export default defineComponent({
   setup() {
@@ -256,8 +256,8 @@ export default defineComponent({
 ### Example: Controlled (`v-model`)
 ```ts
 import { defineComponent, h, ref } from "vue";
-import type { JSONDocument } from "@lexion/core";
-import { LexionEditorView } from "@lexion/vue";
+import type { JSONDocument } from "@lexion-rte/core";
+import { LexionEditorView } from "@lexion-rte/vue";
 
 export default defineComponent({
   setup() {
@@ -274,7 +274,7 @@ export default defineComponent({
 })
 ```
 
-## `@lexion/vue2`
+## `@lexion-rte/vue2`
 
 ### Exports
 - `LexionVue2Adapter`
@@ -283,8 +283,8 @@ export default defineComponent({
 ### Example: Vue 2 Options API
 ```ts
 import Vue from "vue";
-import type { JSONDocument } from "@lexion/core";
-import { createLexionVue2Adapter } from "@lexion/vue2";
+import type { JSONDocument } from "@lexion-rte/core";
+import { createLexionVue2Adapter } from "@lexion-rte/vue2";
 
 export default Vue.extend({
   props: {
@@ -321,7 +321,7 @@ export default Vue.extend({
 });
 ```
 
-## `@lexion/angular`
+## `@lexion-rte/angular`
 
 ### Exports
 - `LexionAngularAdapter`
@@ -330,7 +330,7 @@ export default Vue.extend({
 ### Example: Component Lifecycle Binding
 ```ts
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from "@angular/core";
-import { createLexionAngularAdapter } from "@lexion/angular";
+import { createLexionAngularAdapter } from "@lexion-rte/angular";
 
 @Component({
   selector: "app-editor",
@@ -356,7 +356,7 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
 }
 ```
 
-## `@lexion/svelte`
+## `@lexion-rte/svelte`
 
 ### Exports
 - `lexion` (Svelte action)
@@ -364,8 +364,8 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
 ### Example: Action Usage
 ```svelte
 <script lang="ts">
-  import type { JSONDocument } from "@lexion/core";
-  import { lexion } from "@lexion/svelte";
+  import type { JSONDocument } from "@lexion-rte/core";
+  import { lexion } from "@lexion-rte/svelte";
 
   let value: JSONDocument | undefined = undefined;
 </script>
@@ -380,7 +380,7 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
 ></div>
 ```
 
-## `@lexion/solid`
+## `@lexion-rte/solid`
 
 ### Exports
 - `LexionSolidAdapter`
@@ -390,8 +390,8 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
 ```ts
 import { createEffect, onCleanup, onMount } from "solid-js";
 import { createSignal } from "solid-js";
-import type { JSONDocument } from "@lexion/core";
-import { createLexionSolidAdapter } from "@lexion/solid";
+import type { JSONDocument } from "@lexion-rte/core";
+import { createLexionSolidAdapter } from "@lexion-rte/solid";
 
 const [value, setValue] = createSignal<JSONDocument | undefined>(undefined);
 const adapter = createLexionSolidAdapter({
@@ -416,7 +416,7 @@ onCleanup(() => {
 });
 ```
 
-## `@lexion/astro`
+## `@lexion-rte/astro`
 
 ### Exports
 - `LexionAstroAdapter`
@@ -430,7 +430,7 @@ const editorId = "lexion-editor";
 
 <div id={editorId}></div>
 <script>
-  import { mountLexionAstroEditor } from "@lexion/astro";
+  import { mountLexionAstroEditor } from "@lexion-rte/astro";
 
   const element = document.getElementById("lexion-editor");
   if (element) {
@@ -440,7 +440,7 @@ const editorId = "lexion-editor";
 </script>
 ```
 
-## `@lexion/next`
+## `@lexion-rte/next`
 
 ### Exports
 - `LexionNextEditorView`
@@ -449,14 +449,14 @@ const editorId = "lexion-editor";
 ```tsx
 "use client";
 
-import { LexionNextEditorView } from "@lexion/next";
+import { LexionNextEditorView } from "@lexion-rte/next";
 
 export default function EditorPage() {
   return <LexionNextEditorView defaultValue={doc} />;
 }
 ```
 
-## `@lexion/nuxt`
+## `@lexion-rte/nuxt`
 
 ### Exports
 - `LexionNuxtEditorView`
@@ -471,14 +471,14 @@ export default function EditorPage() {
 
 <script setup lang="ts">
 import { ref } from "vue";
-import type { JSONDocument } from "@lexion/core";
-import { LexionNuxtEditorView } from "@lexion/nuxt";
+import type { JSONDocument } from "@lexion-rte/core";
+import { LexionNuxtEditorView } from "@lexion-rte/nuxt";
 
 const value = ref<JSONDocument>(doc);
 </script>
 ```
 
-## `@lexion/tools`
+## `@lexion-rte/tools`
 
 ### Exports
 - `toHTML(editor, context?)`
@@ -492,9 +492,9 @@ const value = ref<JSONDocument>(doc);
 
 ### Example: Convert Current Document
 ```ts
-import { LexionEditor } from "@lexion/core";
-import { starterKitExtension } from "@lexion/extensions";
-import { fromHTML, fromText, toHTML, toText } from "@lexion/tools";
+import { LexionEditor } from "@lexion-rte/core";
+import { starterKitExtension } from "@lexion-rte/extensions";
+import { fromHTML, fromText, toHTML, toText } from "@lexion-rte/tools";
 
 const editor = new LexionEditor({ extensions: [starterKitExtension] });
 

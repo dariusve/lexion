@@ -1,5 +1,5 @@
 {
-  "name": "@lexion/core",
+  "name": "@lexion-rte/core",
   "version": "0.1.0",
   "description": "Headless core runtime for the Lexion editor platform.",
   "private": false,

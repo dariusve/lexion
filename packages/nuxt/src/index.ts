@@ -1,5 +1,5 @@
-import type { JSONDocument, LexionEditor } from "@lexion/core";
-import { LexionEditorView } from "@lexion/vue";
+import type { JSONDocument, LexionEditor } from "@lexion-rte/core";
+import { LexionEditorView } from "@lexion-rte/vue";
 import {
   defineComponent,
   h,

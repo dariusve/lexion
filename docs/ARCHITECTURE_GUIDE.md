@@ -8,13 +8,13 @@
 
 ## Layer Responsibilities
 
-## `@lexion/core`
+## `@lexion-rte/core`
 - Hosts editor lifecycle (`LexionEditor`).
 - Manages editor state, command registration, and transaction dispatch.
 - Loads extensions for schema, commands, and ProseMirror plugins.
 - Provides only a minimal fallback schema (`doc`, `paragraph`, `text`, `hard_break`).
 
-## `@lexion/extensions`
+## `@lexion-rte/extensions`
 - Contains feature implementations.
 - Provides `starterKitExtension` with:
   - schema
@@ -23,12 +23,12 @@
 - Provides collaboration extension primitives (`createCollaborationExtension`).
 - Provides AI extension primitives (`aiExtension`, `AIService`).
 
-## Adapters (`@lexion/web`, `@lexion/react`, `@lexion/vue`, `@lexion/vue2`, `@lexion/angular`, `@lexion/svelte`, `@lexion/solid`, `@lexion/astro`, `@lexion/next`, `@lexion/nuxt`)
+## Adapters (`@lexion-rte/web`, `@lexion-rte/react`, `@lexion-rte/vue`, `@lexion-rte/vue2`, `@lexion-rte/angular`, `@lexion-rte/svelte`, `@lexion-rte/solid`, `@lexion-rte/astro`, `@lexion-rte/next`, `@lexion-rte/nuxt`)
 - Render/editor view mounting and lifecycle only.
 - Bridge UI events/transactions to `LexionEditor`.
 - When creating internal editors, they attach `starterKitExtension`.
 
-## `@lexion/tools`
+## `@lexion-rte/tools`
 - Converts editor content to/from HTML and text.
 - Operates on `LexionEditor` instances.
 
@@ -42,4 +42,4 @@
 ## Non-Negotiables
 - No feature business logic in adapters.
 - No framework runtime dependencies in core.
-- Feature additions go to `@lexion/extensions`.
+- Feature additions go to `@lexion-rte/extensions`.

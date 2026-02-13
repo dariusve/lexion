@@ -2,7 +2,7 @@
 
 This page shows practical examples of data returned by Lexion APIs.
 
-## `@lexion/core` - `editor.getJSON()`
+## `@lexion-rte/core` - `editor.getJSON()`
 
 ```json
 {
@@ -54,7 +54,7 @@ This page shows practical examples of data returned by Lexion APIs.
 }
 ```
 
-## `@lexion/tools`
+## `@lexion-rte/tools`
 
 ### `toHTML(editor)`
 
@@ -133,7 +133,7 @@ Section title
 }
 ```
 
-## `@lexion/extensions` AI Service Return
+## `@lexion-rte/extensions` AI Service Return
 
 `AIService.generateForSelection(...)` returns a `string` suggestion.
 

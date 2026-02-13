@@ -21,7 +21,7 @@ pnpm test
 pnpm dev:vue-sample
 ```
 
-This starts `apps/vue-sample`, which uses workspace packages (`@lexion/core`, `@lexion/extensions`, `@lexion/vue`) directly.
+This starts `apps/vue-sample`, which uses workspace packages (`@lexion-rte/core`, `@lexion-rte/extensions`, `@lexion-rte/vue`) directly.
 
 ## Run Docs and Servers
 ```bash

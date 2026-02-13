@@ -1,4 +1,4 @@
-import { type JSONDocument, type LexionEditor } from "@lexion/core";
+import { type JSONDocument, type LexionEditor } from "@lexion-rte/core";
 import {
   DOMParser as ProseMirrorDOMParser,
   DOMSerializer,

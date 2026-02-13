@@ -1,4 +1,4 @@
-import { LexionEditor, type JSONDocument } from "@lexion/core";
+import { LexionEditor, type JSONDocument } from "@lexion-rte/core";
 export interface LexionWebEditorOptions {
     readonly element: HTMLElement;
     readonly editor?: LexionEditor;

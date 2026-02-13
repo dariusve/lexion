@@ -1,5 +1,5 @@
-import { LexionEditor } from "@lexion/core";
-import { starterKitExtension } from "@lexion/extensions";
+import { LexionEditor } from "@lexion-rte/core";
+import { starterKitExtension } from "@lexion-rte/extensions";
 import { EditorView } from "prosemirror-view";
 const serializeJSON = (document) => JSON.stringify(document);
 const FOOTER_TEXT = "Open Source Limited Version";

@@ -1,10 +1,10 @@
-import type { JSONDocument, LexionEditor } from "@lexion/core";
+import type { JSONDocument, LexionEditor } from "@lexion-rte/core";
 import {
   createLexionWebEditor,
   type LexionWebEditor,
   type LexionWebEditorOptions,
   type LexionWebEditorUpdateOptions
-} from "@lexion/web";
+} from "@lexion-rte/web";
 
 export interface LexionAngularAdapterOptions {
   readonly editor?: LexionEditor;

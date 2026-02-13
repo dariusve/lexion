@@ -1,5 +1,5 @@
 {
-  "name": "@lexion/playground",
+  "name": "@lexion-rte/playground",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -16,10 +16,10 @@
     "lint": "eslint src --ext .ts"
   },
   "dependencies": {
-    "@lexion/core": "workspace:*",
-    "@lexion/extensions": "workspace:*",
-    "@lexion/web": "workspace:*",
-    "@lexion/vue": "workspace:*",
+    "@lexion-rte/core": "workspace:*",
+    "@lexion-rte/extensions": "workspace:*",
+    "@lexion-rte/web": "workspace:*",
+    "@lexion-rte/vue": "workspace:*",
     "vue": "^3.4.0"
   }
 }

@@ -1,5 +1,5 @@
-import type { JSONDocument } from "@lexion/core";
-import { LexionEditorView } from "@lexion/vue";
+import type { JSONDocument } from "@lexion-rte/core";
+import { LexionEditorView } from "@lexion-rte/vue";
 import { defineComponent, h, ref } from "vue";
 
 const createParagraphDoc = (text: string): JSONDocument => ({
@@ -22,7 +22,7 @@ export const App = defineComponent({
     return () =>
       h("main", { class: "page" }, [
         h("h1", "Lexion Vue Local Sample"),
-        h("p", "Uses workspace packages (@lexion/core and @lexion/vue) without publishing to npm."),
+        h("p", "Uses workspace packages (@lexion-rte/core and @lexion-rte/vue) without publishing to npm."),
 
         h("section", { class: "card" }, [
           h("h2", "Uncontrolled"),

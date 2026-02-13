@@ -1,9 +1,9 @@
-import type { JSONDocument, LexionEditor } from "@lexion/core";
+import type { JSONDocument, LexionEditor } from "@lexion-rte/core";
 import {
   createLexionWebEditor,
   type LexionWebEditor,
   type LexionWebEditorOptions
-} from "@lexion/web";
+} from "@lexion-rte/web";
 
 export interface LexionSvelteActionOptions {
   readonly editor?: LexionEditor;

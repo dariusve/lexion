@@ -1,5 +1,5 @@
 {
-  "name": "@lexion/angular",
+  "name": "@lexion-rte/angular",
   "version": "0.1.0",
   "description": "Angular adapter utilities for the Lexion editor.",
   "private": false,
@@ -42,7 +42,7 @@
     "@angular/forms": "^17.0.0 || ^18.0.0 || ^19.0.0"
   },
   "dependencies": {
-    "@lexion/core": "workspace:*",
-    "@lexion/web": "workspace:*"
+    "@lexion-rte/core": "workspace:*",
+    "@lexion-rte/web": "workspace:*"
   }
 }

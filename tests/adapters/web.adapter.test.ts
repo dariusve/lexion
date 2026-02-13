@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
-import type { JSONDocument } from "@lexion/core";
-import { createLexionWebEditor } from "@lexion/web";
+import type { JSONDocument } from "@lexion-rte/core";
+import { createLexionWebEditor } from "@lexion-rte/web";
 
 const createDoc = (text: string): JSONDocument => ({
   type: "doc",
@@ -13,7 +13,7 @@ const createDoc = (text: string): JSONDocument => ({
   ]
 });
 
-describe("@lexion/web", () => {
+describe("@lexion-rte/web", () => {
   test("creates and updates a web editor instance", () => {
     const container = document.createElement("div");
     const editor = createLexionWebEditor({

@@ -39,7 +39,7 @@ Lexion is a framework-agnostic, headless rich text editor platform built on Pros
 - `pnpm dev:collab`: build and run collaboration server.
 
 ## Core Rule
-Feature behavior must be implemented as extensions (`@lexion/extensions`), not directly in adapters.
+Feature behavior must be implemented as extensions (`@lexion-rte/extensions`), not directly in adapters.
 
 ## License
 This project references the GNU General Public License v3.0 (GPL-3.0): [https://www.gnu.org/licenses/gpl-3.0.en.html](https://www.gnu.org/licenses/gpl-3.0.en.html)

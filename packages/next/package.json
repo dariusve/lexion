@@ -1,5 +1,5 @@
 {
-  "name": "@lexion/next",
+  "name": "@lexion-rte/next",
   "version": "0.1.0",
   "description": "Next.js adapter for the Lexion editor.",
   "private": false,
@@ -43,6 +43,6 @@
     "react-dom": "^18.2.0 || ^19.0.0"
   },
   "dependencies": {
-    "@lexion/react": "workspace:*"
+    "@lexion-rte/react": "workspace:*"
   }
 }

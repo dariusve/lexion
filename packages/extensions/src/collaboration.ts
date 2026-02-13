@@ -1,4 +1,4 @@
-import type { LexionExtension, CommandHandler } from "@lexion/core";
+import type { LexionExtension, CommandHandler } from "@lexion-rte/core";
 import type { Awareness } from "y-protocols/awareness";
 import type { XmlFragment } from "yjs";
 import { yCursorPlugin, ySyncPlugin, yUndoPlugin, undo, redo } from "y-prosemirror";

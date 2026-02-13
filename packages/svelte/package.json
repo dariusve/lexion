@@ -1,5 +1,5 @@
 {
-  "name": "@lexion/svelte",
+  "name": "@lexion-rte/svelte",
   "version": "0.1.0",
   "description": "Svelte action adapter for the Lexion editor.",
   "private": false,
@@ -41,7 +41,7 @@
     "svelte": "^4.0.0 || ^5.0.0"
   },
   "dependencies": {
-    "@lexion/core": "workspace:*",
-    "@lexion/web": "workspace:*"
+    "@lexion-rte/core": "workspace:*",
+    "@lexion-rte/web": "workspace:*"
   }
 }

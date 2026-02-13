@@ -1,8 +1,8 @@
 # Vue Sample (Local Workspace)
 
 This app is a local Vue playground for Lexion and uses workspace packages directly:
-- `@lexion/core`
-- `@lexion/vue`
+- `@lexion-rte/core`
+- `@lexion-rte/vue`
 
 No publishing to the npm registry is required for Lexion packages.
 
@@ -18,5 +18,5 @@ pnpm dev:vue-sample
 Or directly:
 
 ```bash
-pnpm --filter @lexion/vue-sample dev
+pnpm --filter @lexion-rte/vue-sample dev
 ```

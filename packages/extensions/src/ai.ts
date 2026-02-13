@@ -1,4 +1,4 @@
-import type { JSONDocument, LexionEditor, LexionExtension } from "@lexion/core";
+import type { JSONDocument, LexionEditor, LexionExtension } from "@lexion-rte/core";
 
 export const aiCommandNames = {
   applySuggestion: "ai.applySuggestion"

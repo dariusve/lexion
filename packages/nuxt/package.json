@@ -1,5 +1,5 @@
 {
-  "name": "@lexion/nuxt",
+  "name": "@lexion-rte/nuxt",
   "version": "0.1.0",
   "description": "Nuxt adapter for the Lexion editor.",
   "private": false,
@@ -42,7 +42,7 @@
     "vue": "^3.4.0"
   },
   "dependencies": {
-    "@lexion/core": "workspace:*",
-    "@lexion/vue": "workspace:*"
+    "@lexion-rte/core": "workspace:*",
+    "@lexion-rte/vue": "workspace:*"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@lexion/vue-sample",
+  "name": "@lexion-rte/vue-sample",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -10,9 +10,9 @@
     "lint": "eslint src --ext .ts"
   },
   "dependencies": {
-    "@lexion/core": "workspace:*",
-    "@lexion/extensions": "workspace:*",
-    "@lexion/vue": "workspace:*",
+    "@lexion-rte/core": "workspace:*",
+    "@lexion-rte/extensions": "workspace:*",
+    "@lexion-rte/vue": "workspace:*",
     "vue": "^3.4.0"
   },
   "devDependencies": {

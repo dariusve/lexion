@@ -1,5 +1,5 @@
-import type { JSONDocument } from "@lexion/core";
-import { LexionEditorView } from "@lexion/vue";
+import type { JSONDocument } from "@lexion-rte/core";
+import { LexionEditorView } from "@lexion-rte/vue";
 import { createApp, defineComponent, h, ref } from "vue";
 
 export interface PlaygroundExampleHandle {

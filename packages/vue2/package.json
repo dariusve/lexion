@@ -1,5 +1,5 @@
 {
-  "name": "@lexion/vue2",
+  "name": "@lexion-rte/vue2",
   "version": "0.1.0",
   "description": "Vue 2 adapter utilities for the Lexion editor.",
   "private": false,
@@ -41,7 +41,7 @@
     "vue": "^2.7.0"
   },
   "dependencies": {
-    "@lexion/core": "workspace:*",
-    "@lexion/web": "workspace:*"
+    "@lexion-rte/core": "workspace:*",
+    "@lexion-rte/web": "workspace:*"
   }
 }

@@ -4,11 +4,11 @@ This guide shows practical patterns for adding a toolbar and creating a custom a
 
 ## Web Toolbar Example
 
-Use `@lexion/web` plus starter-kit command names:
+Use `@lexion-rte/web` plus starter-kit command names:
 
 ```ts
-import { starterKitCommandNames } from "@lexion/extensions";
-import { createLexionWebEditor } from "@lexion/web";
+import { starterKitCommandNames } from "@lexion-rte/extensions";
+import { createLexionWebEditor } from "@lexion-rte/web";
 
 const editor = createLexionWebEditor({
   element: document.getElementById("editor")!
@@ -28,9 +28,9 @@ A minimal adapter composes:
 3. command bindings
 
 ```ts
-import type { JSONDocument } from "@lexion/core";
-import { starterKitCommandNames } from "@lexion/extensions";
-import { createLexionWebEditor } from "@lexion/web";
+import type { JSONDocument } from "@lexion-rte/core";
+import { starterKitCommandNames } from "@lexion-rte/extensions";
+import { createLexionWebEditor } from "@lexion-rte/web";
 
 export class MyToolbarAdapter {
   private readonly editor;
@@ -67,9 +67,9 @@ Use an external `LexionEditor` so toolbar and editor view share one instance:
 
 ```tsx
 import { useMemo } from "react";
-import { LexionEditor } from "@lexion/core";
-import { starterKitExtension, starterKitCommandNames } from "@lexion/extensions";
-import { LexionEditorView } from "@lexion/react";
+import { LexionEditor } from "@lexion-rte/core";
+import { starterKitExtension, starterKitCommandNames } from "@lexion-rte/extensions";
+import { LexionEditorView } from "@lexion-rte/react";
 
 export const ReactToolbarExample = () => {
   const editor = useMemo(
@@ -92,9 +92,9 @@ Use the same external `LexionEditor` instance from setup state:
 
 ```ts
 import { defineComponent, h } from "vue";
-import { LexionEditor } from "@lexion/core";
-import { starterKitExtension, starterKitCommandNames } from "@lexion/extensions";
-import { LexionEditorView } from "@lexion/vue";
+import { LexionEditor } from "@lexion-rte/core";
+import { starterKitExtension, starterKitCommandNames } from "@lexion-rte/extensions";
+import { LexionEditorView } from "@lexion-rte/vue";
 
 export default defineComponent({
   setup() {
@@ -119,11 +119,11 @@ export default defineComponent({
 
 ## Vue 2 Adapter Pattern
 
-Use `@lexion/vue2` with Vue 2 lifecycle hooks:
+Use `@lexion-rte/vue2` with Vue 2 lifecycle hooks:
 
 ```ts
 import Vue from "vue";
-import { createLexionVue2Adapter } from "@lexion/vue2";
+import { createLexionVue2Adapter } from "@lexion-rte/vue2";
 
 export default Vue.extend({
   data() {
@@ -147,11 +147,11 @@ export default Vue.extend({
 
 ## Angular Adapter Pattern
 
-Use `@lexion/angular` in component lifecycle hooks:
+Use `@lexion-rte/angular` in component lifecycle hooks:
 
 ```ts
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from "@angular/core";
-import { createLexionAngularAdapter } from "@lexion/angular";
+import { createLexionAngularAdapter } from "@lexion-rte/angular";
 
 @Component({
   selector: "app-editor",
@@ -179,7 +179,7 @@ Use the `lexion` action:
 
 ```svelte
 <script lang="ts">
-  import { lexion } from "@lexion/svelte";
+  import { lexion } from "@lexion-rte/svelte";
 </script>
 
 <div use:lexion={{ onChange: (value) => console.log(value) }}></div>
@@ -187,11 +187,11 @@ Use the `lexion` action:
 
 ## Solid Adapter Pattern
 
-Use `@lexion/solid` with `onMount`/`onCleanup`:
+Use `@lexion-rte/solid` with `onMount`/`onCleanup`:
 
 ```ts
 import { onCleanup, onMount } from "solid-js";
-import { createLexionSolidAdapter } from "@lexion/solid";
+import { createLexionSolidAdapter } from "@lexion-rte/solid";
 
 const adapter = createLexionSolidAdapter();
 let host!: HTMLDivElement;
@@ -207,12 +207,12 @@ onCleanup(() => {
 
 ## Astro Adapter Pattern
 
-Use `@lexion/astro` from a client script:
+Use `@lexion-rte/astro` from a client script:
 
 ```astro
 <div id="editor"></div>
 <script>
-  import { mountLexionAstroEditor } from "@lexion/astro";
+  import { mountLexionAstroEditor } from "@lexion-rte/astro";
 
   const element = document.getElementById("editor");
   if (element) {
@@ -228,7 +228,7 @@ Use the Next client wrapper:
 ```tsx
 "use client";
 
-import { LexionNextEditorView } from "@lexion/next";
+import { LexionNextEditorView } from "@lexion-rte/next";
 
 export default function EditorPage() {
   return <LexionNextEditorView />;
@@ -248,8 +248,8 @@ Use the Nuxt SSR-safe adapter with `ClientOnly`:
 
 <script setup lang="ts">
 import { ref } from "vue";
-import type { JSONDocument } from "@lexion/core";
-import { LexionNuxtEditorView } from "@lexion/nuxt";
+import type { JSONDocument } from "@lexion-rte/core";
+import { LexionNuxtEditorView } from "@lexion-rte/nuxt";
 
 const value = ref<JSONDocument>(doc);
 </script>

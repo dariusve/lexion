@@ -10,7 +10,7 @@ import {
   wrapInList
 } from "prosemirror-schema-list";
 import type { Command } from "prosemirror-state";
-import type { CommandHandler, CommandMap, LexionExtension } from "@lexion/core";
+import type { CommandHandler, CommandMap, LexionExtension } from "@lexion-rte/core";
 
 import { starterKitCommandNames } from "./command-names.js";
 import type { HeadingAttributes, LinkAttributes } from "./types.js";

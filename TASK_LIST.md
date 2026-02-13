@@ -10,31 +10,31 @@ Last updated: 2026-02-11
   - [x] `AI_CONTRACT.md`
   - [x] `ARCHITECTURE.md`
   - [x] `PROJECT_MAP.md`
-- [x] `@lexion/core` initial implementation:
+- [x] `@lexion-rte/core` initial implementation:
   - [x] Headless editor class
   - [x] JSON document input/output
   - [x] Command registry (`execute`, register/unregister)
   - [x] Plugin contract and lifecycle (`use`, `removePlugin`)
   - [x] Built-in features: paragraph, heading, bold, italic, lists, links, undo/redo
   - [x] Base key bindings fixed (Enter, cursor movement)
-- [x] `@lexion/react` adapter:
+- [x] `@lexion-rte/react` adapter:
   - [x] `LexionEditorView` component
   - [x] Controlled mode
   - [x] Uncontrolled mode
-- [x] `@lexion/vue` adapter:
+- [x] `@lexion-rte/vue` adapter:
   - [x] `LexionEditorView` component
   - [x] Controlled mode
   - [x] Uncontrolled mode
-- [x] `@lexion/web` vanilla adapter:
+- [x] `@lexion-rte/web` vanilla adapter:
   - [x] `LexionWebEditor` class
   - [x] Controlled/uncontrolled style usage
   - [x] Read-only toggle and lifecycle management
-- [x] `@lexion/tools` package:
+- [x] `@lexion-rte/tools` package:
   - [x] `toHTML`
   - [x] `toText`
   - [x] `fromHTML`
   - [x] `fromText`
-- [x] `@lexion/extensions` package:
+- [x] `@lexion-rte/extensions` package:
   - [x] Starter-kit schema moved out of core
   - [x] Starter-kit commands moved out of core
   - [x] Starter-kit ProseMirror plugins moved out of core
@@ -47,8 +47,8 @@ Last updated: 2026-02-11
 - [x] Yjs collaboration integration wiring.
 - [x] `apps/docs` real docs site implementation.
 - [x] Test suite:
-  - [x] Unit tests for `@lexion/core`
-  - [x] Adapter tests (`@lexion/react`, `@lexion/vue`, `@lexion/web`)
+  - [x] Unit tests for `@lexion-rte/core`
+  - [x] Adapter tests (`@lexion-rte/react`, `@lexion-rte/vue`, `@lexion-rte/web`)
   - [x] Integration tests (editor + adapters + tools)
 - [x] Workspace build verification in CI (GitHub Actions).
 - [x] Release/versioning workflow baseline (Changesets + release workflow).

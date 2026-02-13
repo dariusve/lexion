@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vitest";
 
-import { LexionEditor } from "@lexion/core";
-import { starterKitExtension } from "@lexion/extensions";
-import { fromText, toText } from "@lexion/tools";
-import { createLexionWebEditor } from "@lexion/web";
+import { LexionEditor } from "@lexion-rte/core";
+import { starterKitExtension } from "@lexion-rte/extensions";
+import { fromText, toText } from "@lexion-rte/tools";
+import { createLexionWebEditor } from "@lexion-rte/web";
 
 describe("editor integration", () => {
   test("bridges tools + core + web adapter", () => {

@@ -1,5 +1,5 @@
-import { LexionEditor, type JSONDocument } from "@lexion/core";
-import { starterKitExtension } from "@lexion/extensions";
+import { LexionEditor, type JSONDocument } from "@lexion-rte/core";
+import { starterKitExtension } from "@lexion-rte/extensions";
 import { EditorView } from "prosemirror-view";
 
 export interface LexionWebEditorOptions {

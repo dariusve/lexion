@@ -18,8 +18,8 @@ Fastify service for editor-related server operations.
 
 ### Run
 ```bash
-pnpm --filter @lexion/api build
-pnpm --filter @lexion/api start
+pnpm --filter @lexion-rte/api build
+pnpm --filter @lexion-rte/api start
 ```
 
 ## `apps/collab-server`
@@ -43,6 +43,6 @@ Server -> Client:
 
 ### Run
 ```bash
-pnpm --filter @lexion/collab-server build
-pnpm --filter @lexion/collab-server start
+pnpm --filter @lexion-rte/collab-server build
+pnpm --filter @lexion-rte/collab-server start
 ```

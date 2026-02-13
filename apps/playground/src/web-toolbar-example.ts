@@ -1,6 +1,6 @@
-import type { JSONDocument } from "@lexion/core";
-import { starterKitCommandNames } from "@lexion/extensions";
-import { createLexionWebEditor, type LexionWebEditor } from "@lexion/web";
+import type { JSONDocument } from "@lexion-rte/core";
+import { starterKitCommandNames } from "@lexion-rte/extensions";
+import { createLexionWebEditor, type LexionWebEditor } from "@lexion-rte/web";
 
 import type { PlaygroundExampleHandle } from "./vue-examples.js";
 

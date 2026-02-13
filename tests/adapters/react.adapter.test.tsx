@@ -3,8 +3,8 @@ import { act } from "react";
 import { createRoot } from "react-dom/client";
 import { describe, expect, test } from "vitest";
 
-import type { JSONDocument } from "@lexion/core";
-import { LexionEditorView } from "@lexion/react";
+import type { JSONDocument } from "@lexion-rte/core";
+import { LexionEditorView } from "@lexion-rte/react";
 
 const createDoc = (text: string): JSONDocument => ({
   type: "doc",
@@ -16,7 +16,7 @@ const createDoc = (text: string): JSONDocument => ({
   ]
 });
 
-describe("@lexion/react", () => {
+describe("@lexion-rte/react", () => {
   test("mounts and syncs controlled value", async () => {
     const container = document.createElement("div");
     document.body.appendChild(container);

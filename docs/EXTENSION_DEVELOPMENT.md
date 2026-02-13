@@ -13,7 +13,7 @@ A `LexionExtension` can provide:
 
 ## Minimal Template
 ```ts
-import type { LexionExtension } from "@lexion/core";
+import type { LexionExtension } from "@lexion-rte/core";
 
 export const myExtension: LexionExtension = {
   key: "my-extension",
@@ -29,8 +29,8 @@ export const myExtension: LexionExtension = {
 
 ## Registering an Extension
 ```ts
-import { LexionEditor } from "@lexion/core";
-import { starterKitExtension } from "@lexion/extensions";
+import { LexionEditor } from "@lexion-rte/core";
+import { starterKitExtension } from "@lexion-rte/extensions";
 import { myExtension } from "./my-extension";
 
 const editor = new LexionEditor({

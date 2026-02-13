@@ -1,8 +1,8 @@
 import Fastify, { type FastifyInstance } from "fastify";
 
-import { LexionEditor, type JSONDocument } from "@lexion/core";
-import { starterKitExtension } from "@lexion/extensions";
-import { fromText, toText } from "@lexion/tools";
+import { LexionEditor, type JSONDocument } from "@lexion-rte/core";
+import { starterKitExtension } from "@lexion-rte/extensions";
+import { fromText, toText } from "@lexion-rte/tools";
 
 interface FromTextBody {
   readonly text: string;

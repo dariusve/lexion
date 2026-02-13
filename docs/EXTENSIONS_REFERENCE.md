@@ -1,6 +1,6 @@
 # Extensions Reference
 
-This document is the canonical API reference for `@lexion/extensions`.
+This document is the canonical API reference for `@lexion-rte/extensions`.
 
 ## Package Exports
 
@@ -61,11 +61,11 @@ This document is the canonical API reference for `@lexion/extensions`.
 ### Starter-Kit Example
 
 ```ts
-import { LexionEditor } from "@lexion/core";
+import { LexionEditor } from "@lexion-rte/core";
 import {
   starterKitCommandNames,
   starterKitExtension
-} from "@lexion/extensions";
+} from "@lexion-rte/extensions";
 
 const editor = new LexionEditor({
   extensions: [starterKitExtension]
@@ -124,13 +124,13 @@ editor.execute(starterKitCommandNames.undo);
 ### AI Extension Example
 
 ```ts
-import { LexionEditor } from "@lexion/core";
+import { LexionEditor } from "@lexion-rte/core";
 import {
   aiCommandNames,
   aiExtension,
   createAIService,
   starterKitExtension
-} from "@lexion/extensions";
+} from "@lexion-rte/extensions";
 
 const editor = new LexionEditor({
   extensions: [starterKitExtension, aiExtension]
@@ -181,12 +181,12 @@ editor.execute(aiCommandNames.applySuggestion, suggestion);
 ### Collaboration Example
 
 ```ts
-import { LexionEditor } from "@lexion/core";
+import { LexionEditor } from "@lexion-rte/core";
 import {
   collaborationCommandNames,
   createCollaborationExtension,
   starterKitExtension
-} from "@lexion/extensions";
+} from "@lexion-rte/extensions";
 import * as Y from "yjs";
 import { Awareness } from "y-protocols/awareness";
 
@@ -213,12 +213,12 @@ editor.execute(collaborationCommandNames.redo);
 ## Minimal Usage
 
 ```ts
-import { LexionEditor } from "@lexion/core";
+import { LexionEditor } from "@lexion-rte/core";
 import {
   starterKitExtension,
   aiExtension,
   createCollaborationExtension
-} from "@lexion/extensions";
+} from "@lexion-rte/extensions";
 
 const editor = new LexionEditor({
   extensions: [starterKitExtension, aiExtension]

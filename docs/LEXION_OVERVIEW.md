@@ -4,9 +4,9 @@
 Lexion is a framework-agnostic, headless rich text editor platform for SaaS products.
 
 It provides:
-- a typed editor core (`@lexion/core`)
-- extension-based feature modules (`@lexion/extensions`)
-- optional UI adapters (`@lexion/web`, `@lexion/react`, `@lexion/vue`, `@lexion/vue2`, `@lexion/angular`, `@lexion/svelte`, `@lexion/solid`, `@lexion/astro`, `@lexion/next`, `@lexion/nuxt`)
+- a typed editor core (`@lexion-rte/core`)
+- extension-based feature modules (`@lexion-rte/extensions`)
+- optional UI adapters (`@lexion-rte/web`, `@lexion-rte/react`, `@lexion-rte/vue`, `@lexion-rte/vue2`, `@lexion-rte/angular`, `@lexion-rte/svelte`, `@lexion-rte/solid`, `@lexion-rte/astro`, `@lexion-rte/next`, `@lexion-rte/nuxt`)
 - backend-ready collaboration and AI integration surfaces
 
 The architecture goal is simple: implement editor behavior once in core/extensions, then consume it from any UI stack.
@@ -34,9 +34,9 @@ If you integrate ProseMirror directly, you still need to design and maintain:
 - collaboration/AI integration boundaries
 
 With Lexion, those concerns are already structured:
-- `@lexion/core` standardizes lifecycle, state, and command execution
-- `@lexion/extensions` defines feature delivery boundaries
-- `@lexion/web`, `@lexion/react`, `@lexion/vue`, `@lexion/vue2`, `@lexion/angular`, `@lexion/svelte`, `@lexion/solid`, `@lexion/astro`, `@lexion/next`, and `@lexion/nuxt` provide thin, consistent adapters
+- `@lexion-rte/core` standardizes lifecycle, state, and command execution
+- `@lexion-rte/extensions` defines feature delivery boundaries
+- `@lexion-rte/web`, `@lexion-rte/react`, `@lexion-rte/vue`, `@lexion-rte/vue2`, `@lexion-rte/angular`, `@lexion-rte/svelte`, `@lexion-rte/solid`, `@lexion-rte/astro`, `@lexion-rte/next`, and `@lexion-rte/nuxt` provide thin, consistent adapters
 - backend and tooling packages align around the same document model and APIs
 
 Result: lower integration cost, less duplicated logic, and easier long-term maintenance across products.
@@ -67,8 +67,8 @@ For Lexion this means:
 - clear separation between engine logic and framework bindings
 
 ## Fit With Lexion Architecture
-- `@lexion/core` hosts lifecycle, state, commands, and extension loading.
-- `@lexion/extensions` provides feature behavior as reusable modules.
+- `@lexion-rte/core` hosts lifecycle, state, commands, and extension loading.
+- `@lexion-rte/extensions` provides feature behavior as reusable modules.
 - UI adapters only bind rendering/lifecycle and do not implement domain rules.
 
 This keeps Lexion modular, testable, and ready for collaboration and AI-native workflows.

@@ -1,8 +1,8 @@
 import { createApp, defineComponent, h, nextTick, ref } from "vue";
 import { describe, expect, test } from "vitest";
 
-import type { JSONDocument, LexionEditor } from "@lexion/core";
-import { LexionEditorView } from "@lexion/vue";
+import type { JSONDocument, LexionEditor } from "@lexion-rte/core";
+import { LexionEditorView } from "@lexion-rte/vue";
 
 const createDoc = (text: string): JSONDocument => ({
   type: "doc",
@@ -14,7 +14,7 @@ const createDoc = (text: string): JSONDocument => ({
   ]
 });
 
-describe("@lexion/vue", () => {
+describe("@lexion-rte/vue", () => {
   test("mounts and syncs controlled model", async () => {
     const container = document.createElement("div");
     let editorRef: LexionEditor | null = null;

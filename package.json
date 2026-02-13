@@ -15,10 +15,10 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "changeset publish",
-    "dev:api": "pnpm --filter @lexion/api build && pnpm --filter @lexion/api start",
-    "dev:collab": "pnpm --filter @lexion/collab-server build && pnpm --filter @lexion/collab-server start",
-    "dev:docs": "pnpm --filter @lexion/docs dev",
-    "dev:vue-sample": "pnpm --filter @lexion/vue-sample dev"
+    "dev:api": "pnpm --filter @lexion-rte/api build && pnpm --filter @lexion-rte/api start",
+    "dev:collab": "pnpm --filter @lexion-rte/collab-server build && pnpm --filter @lexion-rte/collab-server start",
+    "dev:docs": "pnpm --filter @lexion-rte/docs dev",
+    "dev:vue-sample": "pnpm --filter @lexion-rte/vue-sample dev"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.12",

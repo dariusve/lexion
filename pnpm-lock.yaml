@@ -44,13 +44,13 @@ importers:
 
   apps/api:
     dependencies:
-      '@lexion/core':
+      '@lexion-rte/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@lexion/extensions':
+      '@lexion-rte/extensions':
         specifier: workspace:*
         version: link:../../packages/extensions
-      '@lexion/tools':
+      '@lexion-rte/tools':
         specifier: workspace:*
         version: link:../../packages/tools
       fastify:
@@ -91,16 +91,16 @@ importers:
 
   apps/playground:
     dependencies:
-      '@lexion/core':
+      '@lexion-rte/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@lexion/extensions':
+      '@lexion-rte/extensions':
         specifier: workspace:*
         version: link:../../packages/extensions
-      '@lexion/vue':
+      '@lexion-rte/vue':
         specifier: workspace:*
         version: link:../../packages/vue
-      '@lexion/web':
+      '@lexion-rte/web':
         specifier: workspace:*
         version: link:../../packages/web
       vue:
@@ -109,13 +109,13 @@ importers:
 
   apps/vue-sample:
     dependencies:
-      '@lexion/core':
+      '@lexion-rte/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@lexion/extensions':
+      '@lexion-rte/extensions':
         specifier: workspace:*
         version: link:../../packages/extensions
-      '@lexion/vue':
+      '@lexion-rte/vue':
         specifier: workspace:*
         version: link:../../packages/vue
       vue:
@@ -137,19 +137,19 @@ importers:
       '@angular/forms':
         specifier: ^17.0.0 || ^18.0.0 || ^19.0.0
         version: 19.2.18(@angular/common@19.2.18(@angular/core@19.2.18(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@19.2.18(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@19.2.18(@angular/common@19.2.18(@angular/core@19.2.18(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@19.2.18(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2)
-      '@lexion/core':
+      '@lexion-rte/core':
         specifier: workspace:*
         version: link:../core
-      '@lexion/web':
+      '@lexion-rte/web':
         specifier: workspace:*
         version: link:../web
 
   packages/astro:
     dependencies:
-      '@lexion/core':
+      '@lexion-rte/core':
         specifier: workspace:*
         version: link:../core
-      '@lexion/web':
+      '@lexion-rte/web':
         specifier: workspace:*
         version: link:../web
       astro:
@@ -167,7 +167,7 @@ importers:
 
   packages/extensions:
     dependencies:
-      '@lexion/core':
+      '@lexion-rte/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-commands:
@@ -203,7 +203,7 @@ importers:
 
   packages/next:
     dependencies:
-      '@lexion/react':
+      '@lexion-rte/react':
         specifier: workspace:*
         version: link:../react
       next:
@@ -218,10 +218,10 @@ importers:
 
   packages/nuxt:
     dependencies:
-      '@lexion/core':
+      '@lexion-rte/core':
         specifier: workspace:*
         version: link:../core
-      '@lexion/vue':
+      '@lexion-rte/vue':
         specifier: workspace:*
         version: link:../vue
       nuxt:
@@ -233,10 +233,10 @@ importers:
 
   packages/react:
     dependencies:
-      '@lexion/core':
+      '@lexion-rte/core':
         specifier: workspace:*
         version: link:../core
-      '@lexion/extensions':
+      '@lexion-rte/extensions':
         specifier: workspace:*
         version: link:../extensions
       prosemirror-view:
@@ -258,10 +258,10 @@ importers:
 
   packages/solid:
     dependencies:
-      '@lexion/core':
+      '@lexion-rte/core':
         specifier: workspace:*
         version: link:../core
-      '@lexion/web':
+      '@lexion-rte/web':
         specifier: workspace:*
         version: link:../web
       solid-js:
@@ -270,10 +270,10 @@ importers:
 
   packages/svelte:
     dependencies:
-      '@lexion/core':
+      '@lexion-rte/core':
         specifier: workspace:*
         version: link:../core
-      '@lexion/web':
+      '@lexion-rte/web':
         specifier: workspace:*
         version: link:../web
       svelte:
@@ -282,7 +282,7 @@ importers:
 
   packages/tools:
     dependencies:
-      '@lexion/core':
+      '@lexion-rte/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-model:
@@ -291,10 +291,10 @@ importers:
 
   packages/vue:
     dependencies:
-      '@lexion/core':
+      '@lexion-rte/core':
         specifier: workspace:*
         version: link:../core
-      '@lexion/extensions':
+      '@lexion-rte/extensions':
         specifier: workspace:*
         version: link:../extensions
       prosemirror-view:
@@ -306,10 +306,10 @@ importers:
 
   packages/vue2:
     dependencies:
-      '@lexion/core':
+      '@lexion-rte/core':
         specifier: workspace:*
         version: link:../core
-      '@lexion/web':
+      '@lexion-rte/web':
         specifier: workspace:*
         version: link:../web
       vue:
@@ -318,10 +318,10 @@ importers:
 
   packages/web:
     dependencies:
-      '@lexion/core':
+      '@lexion-rte/core':
         specifier: workspace:*
         version: link:../core
-      '@lexion/extensions':
+      '@lexion-rte/extensions':
         specifier: workspace:*
         version: link:../extensions
       prosemirror-view:
