@@ -19,17 +19,36 @@ export interface LexionWebEditorUpdateOptions {
 }
 
 const serializeJSON = (document: JSONDocument): string => JSON.stringify(document);
+const FOOTER_TEXT = "Open Source Limited Version";
+
+const createFooterElement = (host: HTMLElement): HTMLDivElement => {
+  const footer = host.ownerDocument.createElement("div");
+  footer.className = "lexion-editor-footer";
+  footer.textContent = FOOTER_TEXT;
+  footer.style.padding = "8px 12px";
+  footer.style.borderTop = "1px solid #d7d7d7";
+  footer.style.background = "#f7f7f7";
+  footer.style.color = "#4a4a4a";
+  footer.style.fontSize = "12px";
+  footer.style.lineHeight = "1.3";
+  footer.style.textAlign = "center";
+  footer.style.fontFamily = "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
+  return footer;
+};
 
 export class LexionWebEditor {
+  private readonly hostElement: HTMLElement;
   private readonly ownsEditor: boolean;
   private readonly editorInstance: LexionEditor;
   private readonly view: EditorView;
+  private readonly footerElement: HTMLDivElement;
   private onChange: ((value: JSONDocument, editor: LexionEditor) => void) | undefined;
   private isReadOnly: boolean;
   private lastAppliedValue: string | null;
   private destroyed: boolean;
 
   public constructor(options: LexionWebEditorOptions) {
+    this.hostElement = options.element;
     this.ownsEditor = options.editor === undefined;
     if (options.editor) {
       this.editorInstance = options.editor;
@@ -54,7 +73,7 @@ export class LexionWebEditor {
       this.editorInstance.setJSON(options.value);
     }
 
-    this.view = new EditorView(options.element, {
+    this.view = new EditorView(this.hostElement, {
       state: this.editorInstance.state,
       editable: () => !this.isReadOnly,
       dispatchTransaction: (transaction) => {
@@ -66,6 +85,8 @@ export class LexionWebEditor {
         this.onChange?.(nextValue, this.editorInstance);
       }
     });
+    this.footerElement = createFooterElement(this.hostElement);
+    this.hostElement.appendChild(this.footerElement);
 
     options.onReady?.(this.editorInstance);
   }
@@ -130,6 +151,9 @@ export class LexionWebEditor {
     }
 
     this.view.destroy();
+    if (this.footerElement.parentNode) {
+      this.footerElement.parentNode.removeChild(this.footerElement);
+    }
     if (this.ownsEditor) {
       this.editorInstance.destroy();
     }

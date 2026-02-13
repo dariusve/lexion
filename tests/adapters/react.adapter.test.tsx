@@ -37,6 +37,7 @@ describe("@lexion/react", () => {
 
     expect(container.querySelector(".ProseMirror")).not.toBeNull();
     expect(readyEditorText).toContain("first");
+    expect(container.textContent ?? "").toContain("Open Source Limited Version");
 
     await act(async () => {
       root.render(<LexionEditorView value={createDoc("second")} />);

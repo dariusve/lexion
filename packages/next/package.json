@@ -1,7 +1,8 @@
 {
   "name": "@lexion/next",
   "version": "0.1.0",
-  "private": true,
+  "description": "Next.js adapter for the Lexion editor.",
+  "private": false,
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,9 +12,35 @@
       "import": "./dist/index.js"
     }
   },
+  "license": "GPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dariusve/lexion.git",
+    "directory": "packages/next"
+  },
+  "homepage": "https://github.com/dariusve/lexion/tree/main/packages/next",
+  "bugs": {
+    "url": "https://github.com/dariusve/lexion/issues"
+  },
+  "keywords": [
+    "lexion",
+    "editor",
+    "rich-text",
+    "prosemirror",
+    "nextjs",
+    "adapter"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "eslint src --ext .ts,.tsx"
+  },
+  "peerDependencies": {
+    "next": "^14.0.0 || ^15.0.0",
+    "react": "^18.2.0 || ^19.0.0",
+    "react-dom": "^18.2.0 || ^19.0.0"
   },
   "dependencies": {
     "@lexion/react": "workspace:*"

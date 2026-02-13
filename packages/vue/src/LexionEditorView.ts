@@ -29,6 +29,7 @@ export interface LexionEditorViewEmits {
 }
 
 const serializeJSON = (document: JSONDocument): string => JSON.stringify(document);
+const FOOTER_TEXT = "Open Source Limited Version";
 
 export const LexionEditorView = defineComponent({
   name: "LexionEditorView",
@@ -202,10 +203,35 @@ export const LexionEditorView = defineComponent({
     });
 
     return () =>
-      h("div", {
-        ref: containerRef,
-        class: props.className,
-        style: props.style
-      });
+      h(
+        "div",
+        {
+          class: props.className,
+          style: [props.style, { display: "flex", flexDirection: "column" }]
+        },
+        [
+          h("div", {
+            ref: containerRef
+          }),
+          h(
+            "div",
+            {
+              class: "lexion-editor-footer",
+              style: {
+                padding: "8px 12px",
+                borderTop: "1px solid #d7d7d7",
+                background: "#f7f7f7",
+                color: "#4a4a4a",
+                fontSize: "12px",
+                lineHeight: "1.3",
+                textAlign: "center",
+                fontFamily:
+                  "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+              }
+            },
+            FOOTER_TEXT
+          )
+        ]
+      );
   }
 });

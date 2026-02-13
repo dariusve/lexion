@@ -41,6 +41,7 @@ describe("@lexion/vue", () => {
     await nextTick();
 
     expect(container.querySelector(".ProseMirror")).not.toBeNull();
+    expect(container.textContent ?? "").toContain("Open Source Limited Version");
     expect(editorRef?.getJSON()).toMatchObject({
       content: [
         {

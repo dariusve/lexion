@@ -16,6 +16,18 @@ export interface LexionEditorViewProps {
 }
 
 const serializeJSON = (document: JSONDocument): string => JSON.stringify(document);
+const FOOTER_TEXT = "Open Source Limited Version";
+
+const FOOTER_STYLE: CSSProperties = {
+  padding: "8px 12px",
+  borderTop: "1px solid #d7d7d7",
+  background: "#f7f7f7",
+  color: "#4a4a4a",
+  fontSize: "12px",
+  lineHeight: 1.3,
+  textAlign: "center",
+  fontFamily: "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+};
 
 export const LexionEditorView = ({
   editor,
@@ -124,5 +136,19 @@ export const LexionEditorView = ({
     [editor, internalEditor]
   );
 
-  return <div className={className} style={style} ref={containerRef} />;
+  return (
+    <div
+      className={className}
+      style={{
+        ...(style ?? {}),
+        display: "flex",
+        flexDirection: "column"
+      }}
+    >
+      <div ref={containerRef} />
+      <div className="lexion-editor-footer" style={FOOTER_STYLE}>
+        {FOOTER_TEXT}
+      </div>
+    </div>
+  );
 };

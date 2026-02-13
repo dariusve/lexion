@@ -1,7 +1,8 @@
 {
   "name": "@lexion/react",
   "version": "0.1.0",
-  "private": true,
+  "description": "React adapter for the Lexion editor platform.",
+  "private": false,
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,6 +11,27 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     }
+  },
+  "license": "GPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dariusve/lexion.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://github.com/dariusve/lexion/tree/main/packages/react",
+  "bugs": {
+    "url": "https://github.com/dariusve/lexion/issues"
+  },
+  "keywords": [
+    "lexion",
+    "editor",
+    "rich-text",
+    "prosemirror",
+    "react",
+    "adapter"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

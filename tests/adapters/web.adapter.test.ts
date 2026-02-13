@@ -22,6 +22,7 @@ describe("@lexion/web", () => {
     });
 
     expect(container.querySelector(".ProseMirror")).not.toBeNull();
+    expect(container.textContent ?? "").toContain("Open Source Limited Version");
 
     editor.setValue(createDoc("updated"));
     expect(editor.getJSON()).toMatchObject({
