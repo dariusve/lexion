@@ -32,6 +32,16 @@ const createEditor = (document?: JSONDocument): LexionEditor =>
       : { extensions: [starterKitExtension] }
   );
 
+const tryCreateEditor = (
+  document: JSONDocument | undefined
+): { readonly editor: LexionEditor } | { readonly error: string } => {
+  try {
+    return { editor: createEditor(document) };
+  } catch {
+    return { error: "Invalid document payload" };
+  }
+};
+
 export const buildApiServer = (): FastifyInstance => {
   const app = Fastify({
     logger: true
@@ -60,7 +70,12 @@ export const buildApiServer = (): FastifyInstance => {
       return reply.code(400).send({ error: "Invalid request body" });
     }
 
-    const editor = createEditor(request.body.document);
+    const result = tryCreateEditor(request.body.document);
+    if ("error" in result) {
+      return reply.code(400).send({ error: result.error });
+    }
+
+    const { editor } = result;
     const text = toText(editor);
     editor.destroy();
 
@@ -72,7 +87,12 @@ export const buildApiServer = (): FastifyInstance => {
       return reply.code(400).send({ error: "Invalid request body" });
     }
 
-    const editor = createEditor(request.body.document);
+    const result = tryCreateEditor(request.body.document);
+    if ("error" in result) {
+      return reply.code(400).send({ error: result.error });
+    }
+
+    const { editor } = result;
 
     let executed = false;
     try {

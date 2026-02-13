@@ -77,19 +77,20 @@ export const buildCollabServer = (): FastifyInstance => {
   }));
 
   app.get("/collab/:docId", { websocket: true }, (socket, request) => {
+    const webSocket = socket as unknown as WebSocket;
     const params = request.params as { readonly docId: string };
     const room = store.getRoom(params.docId);
 
-    room.sockets.add(socket as unknown as WebSocket);
+    room.sockets.add(webSocket);
 
-    send(socket as unknown as WebSocket, {
+    send(webSocket, {
       type: "sync",
       update: encode(Y.encodeStateAsUpdate(room.doc))
     });
 
     const awarenessUpdate = store.currentAwarenessUpdate(room);
     if (awarenessUpdate.byteLength > 0) {
-      send(socket as unknown as WebSocket, {
+      send(webSocket, {
         type: "awareness",
         update: encode(awarenessUpdate)
       });
@@ -98,7 +99,7 @@ export const buildCollabServer = (): FastifyInstance => {
     socket.on("message", (raw: Buffer) => {
       const message = parseClientMessage(raw.toString());
       if (!message) {
-        send(socket as unknown as WebSocket, {
+        send(webSocket, {
           type: "error",
           message: "Invalid message payload"
         });
@@ -106,25 +107,47 @@ export const buildCollabServer = (): FastifyInstance => {
       }
 
       if (message.type === "update") {
-        const update = decode(message.update);
-        Y.applyUpdate(room.doc, update, socket);
-        broadcast(room, socket as unknown as WebSocket, {
-          type: "update",
-          update: message.update
-        });
+        try {
+          const update = decode(message.update);
+          Y.applyUpdate(room.doc, update, socket);
+          broadcast(room, webSocket, {
+            type: "update",
+            update: message.update
+          });
+        } catch {
+          send(webSocket, {
+            type: "error",
+            message: "Invalid update payload"
+          });
+        }
         return;
       }
 
-      const awarenessUpdatePayload = decode(message.update);
-      store.applyAwareness(room, awarenessUpdatePayload);
-      broadcast(room, socket as unknown as WebSocket, {
-        type: "awareness",
-        update: message.update
-      });
+      try {
+        const awarenessUpdatePayload = decode(message.update);
+        store.applyAwareness(room, awarenessUpdatePayload, webSocket);
+        broadcast(room, webSocket, {
+          type: "awareness",
+          update: message.update
+        });
+      } catch {
+        send(webSocket, {
+          type: "error",
+          message: "Invalid awareness payload"
+        });
+      }
     });
 
     socket.on("close", () => {
-      room.sockets.delete(socket as unknown as WebSocket);
+      const awarenessRemovalUpdate = store.clearSocketAwareness(room, webSocket);
+      if (awarenessRemovalUpdate.byteLength > 0) {
+        broadcast(room, webSocket, {
+          type: "awareness",
+          update: encode(awarenessRemovalUpdate)
+        });
+      }
+
+      room.sockets.delete(webSocket);
       store.deleteRoomIfEmpty(room.id);
     });
   });

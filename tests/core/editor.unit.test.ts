@@ -60,4 +60,24 @@ describe("LexionEditor", () => {
 
     editor.destroy();
   });
+
+  test("does not leak commands when extension registration fails", () => {
+    const editor = new LexionEditor({
+      extensions: [starterKitExtension],
+      doc: createDoc("abc")
+    });
+
+    const invalidExtension: LexionExtension = {
+      key: "invalid-extension",
+      commands: () => ({
+        sideCommand: () => true,
+        [starterKitCommandNames.undo]: () => true
+      })
+    };
+
+    expect(() => editor.use(invalidExtension)).toThrow(/Command already registered/);
+    expect(() => editor.execute("sideCommand")).toThrow(/Unknown command/);
+
+    editor.destroy();
+  });
 });

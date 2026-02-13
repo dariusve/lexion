@@ -1,6 +1,6 @@
 # Lexion Task List
 
-Last updated: 2026-02-11
+Last updated: 2026-02-13
 
 ## Completed
 - [x] Monorepo scaffolding with `pnpm` workspaces.
@@ -50,8 +50,15 @@ Last updated: 2026-02-11
   - [x] Unit tests for `@lexion-rte/core`
   - [x] Adapter tests (`@lexion-rte/react`, `@lexion-rte/vue`, `@lexion-rte/web`)
   - [x] Integration tests (editor + adapters + tools)
+  - [x] API server validation tests (`apps/api`)
+  - [x] Collaboration store awareness lifecycle tests (`apps/collab-server`)
 - [x] Workspace build verification in CI (GitHub Actions).
 - [x] Release/versioning workflow baseline (Changesets + release workflow).
+- [x] Reliability hardening pass:
+  - [x] Atomic extension registration rollback in `@lexion-rte/core`
+  - [x] API malformed document requests return `400` (not `500`)
+  - [x] Collaboration server handles invalid sync/awareness updates without crashing handlers
+  - [x] Collaboration awareness state is cleared on socket disconnect and broadcast to peers
 
 ## Partially Completed
 - [x] Documentation coverage
@@ -59,6 +66,7 @@ Last updated: 2026-02-11
   - [x] API reference docs and usage guides added under `docs/`.
 - [ ] Production hardening
   - [x] Baseline CI/lint/build/test/release wiring
+  - [x] Baseline defensive error handling for malformed API/collaboration payloads
   - [ ] Security/auth layers for API/collab are not implemented
   - [ ] Persistence/storage for API/collab is not implemented
   - [ ] End-to-end collaboration client protocol validation is not implemented

@@ -102,9 +102,21 @@ export class LexionEditor implements LexionEditorContract {
 
   public use(extension: LexionExtension): void {
     this.assertNotDestroyed();
+    const previousState = this._state;
     this.addExtension(extension);
-    this._state = this.createState(this._state.doc);
-    this.runExtensionOnCreate([extension]);
+
+    try {
+      this._state = this.createState(this._state.doc);
+      this.runExtensionOnCreate([extension]);
+    } catch (error) {
+      for (const commandName of this.extensionCommandsByKey.get(extension.key) ?? []) {
+        this.commandMap.delete(commandName);
+      }
+      this.extensionCommandsByKey.delete(extension.key);
+      this.extensionsByKey.delete(extension.key);
+      this._state = previousState;
+      throw error;
+    }
   }
 
   public removePlugin(key: string): void {
@@ -206,16 +218,19 @@ export class LexionEditor implements LexionEditorContract {
       throw new Error(`Extension already registered: ${extension.key}`);
     }
 
-    this.extensionsByKey.set(extension.key, extension);
-    const commandNames: string[] = [];
     const extensionCommands = extension.commands?.({ schema: this._schema }) ?? {};
+    const commandNames = Object.keys(extensionCommands);
 
-    for (const [name, handler] of Object.entries(extensionCommands)) {
+    for (const name of commandNames) {
       if (this.commandMap.has(name)) {
         throw new Error(`Command already registered: ${name}`);
       }
+    }
+
+    this.extensionsByKey.set(extension.key, extension);
+
+    for (const [name, handler] of Object.entries(extensionCommands)) {
       this.commandMap.set(name, handler);
-      commandNames.push(name);
     }
 
     this.extensionCommandsByKey.set(extension.key, commandNames);
