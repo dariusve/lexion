@@ -1,10 +1,15 @@
 # @lexion-rte/astro
 
-Astro client-mount adapter for Lexion.
+Astro client-side mounting adapter for Lexion.
 
-## What It Is
+## Overview
 
-`@lexion-rte/astro` provides `LexionAstroAdapter` and `mountLexionAstroEditor` for mounting an editor in browser scripts.
+`@lexion-rte/astro` provides:
+
+- `LexionAstroAdapter` class
+- `mountLexionAstroEditor({ element, ...options })` helper
+
+Use it in client scripts where DOM APIs are available.
 
 ## Install
 
@@ -12,7 +17,7 @@ Astro client-mount adapter for Lexion.
 pnpm add @lexion-rte/astro astro
 ```
 
-## Usage
+## Quick Usage
 
 ```astro
 ---
@@ -31,3 +36,15 @@ const editorId = "lexion-editor";
 </script>
 ```
 
+## Adapter Methods
+
+- `mount(element)`
+- `update({ value?, readOnly?, onChange? })`
+- `execute(command, ...args)`
+- `destroy()`
+- `editor` getter
+
+## Notes
+
+- Mount only on the client.
+- Re-mounting recreates the underlying web editor instance.

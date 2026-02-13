@@ -2,9 +2,16 @@
 
 Vue 3 adapter for Lexion.
 
-## What It Is
+## Overview
 
-`@lexion-rte/vue` exposes `LexionEditorView` with `v-model` support (`modelValue` / `update:modelValue`).
+`@lexion-rte/vue` exports `LexionEditorView`, a Vue component with `v-model` support.
+
+It supports:
+
+- controlled mode (`modelValue`)
+- uncontrolled mode (`defaultValue`)
+- custom editor instances
+- read-only mode
 
 ## Install
 
@@ -12,11 +19,26 @@ Vue 3 adapter for Lexion.
 pnpm add @lexion-rte/vue vue
 ```
 
-## Usage
+## Props
+
+- `editor?: LexionEditor`
+- `modelValue?: JSONDocument`
+- `defaultValue?: JSONDocument`
+- `readOnly?: boolean`
+- `className?: string`
+- `style?: StyleValue`
+
+## Emits
+
+- `update:modelValue` with `JSONDocument`
+- `change` with `(value, editor)`
+- `ready` with `(editor)`
+
+## `v-model` Example
 
 ```vue
 <template>
-  <LexionEditorView v-model="value" />
+  <LexionEditorView v-model="value" :read-only="false" />
 </template>
 
 <script setup lang="ts">
@@ -28,3 +50,20 @@ const value = ref<JSONDocument | undefined>(undefined);
 </script>
 ```
 
+## Uncontrolled Example
+
+```ts
+import { defineComponent, h } from "vue";
+import { LexionEditorView } from "@lexion-rte/vue";
+
+export default defineComponent({
+  setup() {
+    return () => h(LexionEditorView, { defaultValue: initialDoc });
+  }
+});
+```
+
+## Notes
+
+- In controlled mode, update `modelValue` from `update:modelValue`.
+- The component renders the shared footer message.

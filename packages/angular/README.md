@@ -1,10 +1,14 @@
 # @lexion-rte/angular
 
-Angular adapter utilities for Lexion.
+Angular integration helpers for Lexion.
 
-## What It Is
+## Overview
 
-`@lexion-rte/angular` provides `createLexionAngularAdapter` to attach/detach the editor and bridge value/touched callbacks.
+`@lexion-rte/angular` provides an adapter that:
+
+- attaches/detaches editor lifecycle to Angular components
+- supports value updates and read-only toggling
+- exposes hooks compatible with form-style change/touched flow
 
 ## Install
 
@@ -12,7 +16,25 @@ Angular adapter utilities for Lexion.
 pnpm add @lexion-rte/angular @angular/core @angular/forms
 ```
 
-## Usage
+## Adapter API
+
+Create adapter:
+
+- `createLexionAngularAdapter(options?)`
+
+Main methods:
+
+- `attach(element)`
+- `detach()`
+- `update({ value?, readOnly?, onChange? })`
+- `writeValue(value)`
+- `setDisabledState(disabled)`
+- `registerOnChange(handler)`
+- `registerOnTouched(handler)`
+- `markAsTouched()`
+- `destroy()`
+
+## Component Lifecycle Example
 
 ```ts
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from "@angular/core";
@@ -26,7 +48,11 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
   @ViewChild("editorHost", { static: true })
   private editorHost!: ElementRef<HTMLElement>;
 
-  private readonly adapter = createLexionAngularAdapter();
+  private readonly adapter = createLexionAngularAdapter({
+    onChange: (value) => {
+      console.log("changed", value);
+    }
+  });
 
   ngAfterViewInit(): void {
     this.adapter.attach(this.editorHost.nativeElement);
@@ -38,3 +64,7 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
 }
 ```
 
+## Notes
+
+- `attach()` is idempotent for the same element.
+- Use `setDisabledState(true)` for read-only behavior in form-driven components.

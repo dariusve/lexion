@@ -2,9 +2,9 @@
 
 SolidJS adapter utilities for Lexion.
 
-## What It Is
+## Overview
 
-`@lexion-rte/solid` provides `createLexionSolidAdapter` for mounting and controlling the editor from Solid lifecycle hooks.
+`@lexion-rte/solid` provides an imperative adapter for Solid lifecycle integration.
 
 ## Install
 
@@ -12,7 +12,22 @@ SolidJS adapter utilities for Lexion.
 pnpm add @lexion-rte/solid solid-js
 ```
 
-## Usage
+## API
+
+- `createLexionSolidAdapter(options?)`
+- `LexionSolidAdapter`
+
+Methods:
+
+- `mount(element)`
+- `update({ value?, readOnly?, onChange? })`
+- `setValue(value)`
+- `setReadOnly(readOnly)`
+- `execute(command, ...args)`
+- `destroy()`
+- `editor` getter
+
+## Solid Integration Example
 
 ```ts
 import { createSignal, createEffect, onCleanup, onMount } from "solid-js";
@@ -26,8 +41,9 @@ const adapter = createLexionSolidAdapter({
 
 let host!: HTMLDivElement;
 
-onMount(() => adapter.mount(host));
-onCleanup(() => adapter.destroy());
+onMount(() => {
+  adapter.mount(host);
+});
 
 createEffect(() => {
   const nextValue = value();
@@ -35,5 +51,13 @@ createEffect(() => {
     adapter.update({ value: nextValue });
   }
 });
+
+onCleanup(() => {
+  adapter.destroy();
+});
 ```
 
+## Notes
+
+- Always call `destroy()` on cleanup.
+- `execute()` throws if the adapter is not mounted.

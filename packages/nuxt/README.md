@@ -2,9 +2,11 @@
 
 Nuxt adapter for Lexion.
 
-## What It Is
+## Overview
 
-`@lexion-rte/nuxt` exports `LexionNuxtEditorView` for client-side Nuxt usage with `v-model`.
+`@lexion-rte/nuxt` exports `LexionNuxtEditorView`, a Nuxt-friendly wrapper around the Vue adapter.
+
+It is intended for client-side rendering in Nuxt.
 
 ## Install
 
@@ -12,7 +14,7 @@ Nuxt adapter for Lexion.
 pnpm add @lexion-rte/nuxt nuxt vue
 ```
 
-## Usage
+## Usage with `ClientOnly`
 
 ```vue
 <template>
@@ -30,3 +32,22 @@ const value = ref<JSONDocument | undefined>(undefined);
 </script>
 ```
 
+## Props
+
+- `editor?: LexionEditor`
+- `modelValue?: JSONDocument`
+- `defaultValue?: JSONDocument`
+- `readOnly?: boolean`
+- `className?: string`
+- `style?: StyleValue`
+
+## Emits
+
+- `update:modelValue`
+- `change`
+- `ready`
+
+## Notes
+
+- Wrap with `<ClientOnly>` to avoid SSR DOM constraints.
+- Prop and event behavior mirrors `@lexion-rte/vue`.

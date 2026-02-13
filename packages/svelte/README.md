@@ -2,9 +2,18 @@
 
 Svelte action adapter for Lexion.
 
-## What It Is
+## Overview
 
-`@lexion-rte/svelte` exports a `lexion` action for mounting and updating an editor on an element.
+`@lexion-rte/svelte` exports the `lexion` action for declarative editor mounting.
+
+Action options:
+
+- `editor?: LexionEditor`
+- `value?: JSONDocument`
+- `defaultValue?: JSONDocument`
+- `readOnly?: boolean`
+- `onChange?: (value, editor) => void`
+- `onReady?: (editor) => void`
 
 ## Install
 
@@ -12,7 +21,7 @@ Svelte action adapter for Lexion.
 pnpm add @lexion-rte/svelte svelte
 ```
 
-## Usage
+## Basic Usage
 
 ```svelte
 <script lang="ts">
@@ -32,3 +41,19 @@ pnpm add @lexion-rte/svelte svelte
 ></div>
 ```
 
+## Read-only Toggle Example
+
+```svelte
+<script lang="ts">
+  import { lexion } from "@lexion-rte/svelte";
+  let readOnly = false;
+</script>
+
+<button on:click={() => (readOnly = !readOnly)}>Toggle read-only</button>
+<div use:lexion={{ readOnly }}></div>
+```
+
+## Notes
+
+- The action returns `update()` and `destroy()` automatically handled by Svelte.
+- If the `editor` instance changes, the adapter recreates the web editor.
