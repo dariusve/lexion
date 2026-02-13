@@ -1,6 +1,6 @@
 {
   "name": "@lexion-rte/extensions",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Feature extensions for the Lexion editor platform.",
   "private": false,
   "type": "module",
