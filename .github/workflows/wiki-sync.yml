@@ -37,31 +37,24 @@ jobs:
 
       - name: Prepare Wiki Repository
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WIKI_TOKEN: ${{ secrets.WIKI_TOKEN }}
+          FALLBACK_GITHUB_TOKEN: ${{ github.token }}
           GITHUB_SERVER_URL: ${{ github.server_url }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           set -euo pipefail
-          wiki_url="https://x-access-token:${GITHUB_TOKEN}@${GITHUB_SERVER_URL#https://}/${GITHUB_REPOSITORY}.wiki.git"
+          token="${WIKI_TOKEN:-$FALLBACK_GITHUB_TOKEN}"
+          wiki_url="https://x-access-token:${token}@${GITHUB_SERVER_URL#https://}/${GITHUB_REPOSITORY}.wiki.git"
 
-          if git ls-remote "$wiki_url" >/dev/null 2>&1; then
-            git clone "$wiki_url" wiki
-            exit 0
+          if ! git ls-remote "$wiki_url" >/dev/null 2>&1; then
+            echo "Wiki repository is not reachable."
+            echo "1) Ensure Wiki is enabled in repo settings."
+            echo "2) Create the first wiki page manually in the GitHub Wiki UI."
+            echo "3) For private repos, add a WIKI_TOKEN secret (PAT with repo scope)."
+            exit 1
           fi
 
-          mkdir wiki
-          cd wiki
-          git init
-          git branch -M master
-          git remote add origin "$wiki_url"
-          cat > Home.md << 'EOF'
-          # Lexion Wiki
-          EOF
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add Home.md
-          git commit -m "docs: initialize wiki"
-          git push -u origin master
+          git clone "$wiki_url" wiki
 
       - name: Sync Markdown Content
         run: |
