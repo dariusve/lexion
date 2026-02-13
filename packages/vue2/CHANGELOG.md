@@ -1,5 +1,14 @@
 # @lexion-rte/vue2
 
+## 0.1.2
+
+### Patch Changes
+
+- Refresh package metadata links and expand package-level README documentation.
+- Updated dependencies
+  - @lexion-rte/core@0.1.2
+  - @lexion-rte/web@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes

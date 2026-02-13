@@ -1,5 +1,11 @@
 # @lexion-rte/core
 
+## 0.1.2
+
+### Patch Changes
+
+- Refresh package metadata links and expand package-level README documentation.
+
 ## 0.1.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@lexion-rte/tools",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Document conversion tools for the Lexion editor platform.",
   "private": false,
   "type": "module",

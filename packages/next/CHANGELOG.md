@@ -1,5 +1,13 @@
 # @lexion-rte/next
 
+## 0.1.2
+
+### Patch Changes
+
+- Refresh package metadata links and expand package-level README documentation.
+- Updated dependencies
+  - @lexion-rte/react@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes
