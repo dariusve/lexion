@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "lint": "eslint src --ext .ts"
+    "lint": "eslint src --ext .ts --no-error-on-unmatched-pattern"
   },
   "dependencies": {
     "@lexion-rte/astro": "workspace:*",

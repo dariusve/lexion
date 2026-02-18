@@ -1,13 +1,11 @@
 import { CommonModule } from "@angular/common";
 import {
-  AfterViewInit,
   Component,
-  ElementRef,
-  OnDestroy,
   ViewChild,
   signal,
   computed
 } from "@angular/core";
+import type { AfterViewInit, ElementRef, OnDestroy } from "@angular/core";
 
 import type { JSONDocument } from "@lexion-rte/core";
 import { createLexionAngularAdapter } from "@lexion-rte/angular";
