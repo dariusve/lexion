@@ -1,5 +1,11 @@
 # @lexion-rte/core
 
+## 0.1.4
+
+### Patch Changes
+
+- Add a shared Lexion framework overview and logo at the top of each package README.
+
 ## 0.1.3
 
 ### Patch Changes

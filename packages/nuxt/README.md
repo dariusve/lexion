@@ -1,3 +1,9 @@
+![Lexion Logo](../../assets/images/logo.png)
+
+This package is part of the Lexion framework-agnostic rich text editor.
+
+Lexion is a framework-agnostic, headless rich text editor platform built on ProseMirror, designed to provide a shared core, reusable extensions, and framework-specific adapters.
+
 # @lexion-rte/nuxt
 
 Nuxt adapter for Lexion.
