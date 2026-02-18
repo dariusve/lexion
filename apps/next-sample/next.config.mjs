@@ -7,6 +7,11 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const nextConfig = {
   transpilePackages: ["@lexion-rte/next", "@lexion-rte/react", "@lexion-rte/core", "@lexion-rte/extensions"],
   webpack(config) {
+    config.resolve.extensionAlias = {
+      ...(config.resolve.extensionAlias ?? {}),
+      ".js": [".ts", ".tsx", ".js"]
+    };
+
     config.resolve.alias = {
       ...(config.resolve.alias ?? {}),
       "@lexion-rte/next": path.resolve(here, "../../packages/next/src/index.ts"),
