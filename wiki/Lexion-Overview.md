@@ -6,9 +6,9 @@ Lexion is a framework-agnostic, headless rich text editor platform for SaaS prod
 It provides:
 - a typed editor core (`@lexion-rte/core`)
 - a community starter-kit package (`@lexion-rte/starter-kit`)
-- premium extension packages for commercial capabilities such as AI and collaboration
+- a commercial feature track that is distributed outside this public repository
 - optional UI adapters (`@lexion-rte/web`, `@lexion-rte/react`, `@lexion-rte/vue`, `@lexion-rte/vue2`, `@lexion-rte/angular`, `@lexion-rte/svelte`, `@lexion-rte/solid`, `@lexion-rte/astro`, `@lexion-rte/next`, `@lexion-rte/nuxt`)
-- backend-ready collaboration and AI integration surfaces
+- backend-ready integration surfaces
 
 The architecture goal is simple: implement editor behavior once in core/extensions, then consume it from any UI stack.
 
@@ -37,7 +37,7 @@ If you integrate ProseMirror directly, you still need to design and maintain:
 With Lexion, those concerns are already structured:
 - `@lexion-rte/core` standardizes lifecycle, state, and command execution
 - `@lexion-rte/starter-kit` defines the baseline community feature boundary
-- premium packages extend the same editor contracts for commercial capabilities
+- commercial features can extend the same editor contracts from private codebases
 - `@lexion-rte/web`, `@lexion-rte/react`, `@lexion-rte/vue`, `@lexion-rte/vue2`, `@lexion-rte/angular`, `@lexion-rte/svelte`, `@lexion-rte/solid`, `@lexion-rte/astro`, `@lexion-rte/next`, and `@lexion-rte/nuxt` provide thin, consistent adapters
 - backend and tooling packages align around the same document model and APIs
 
@@ -71,7 +71,7 @@ For Lexion this means:
 ## Fit With Lexion Architecture
 - `@lexion-rte/core` hosts lifecycle, state, commands, and extension loading.
 - `@lexion-rte/starter-kit` provides the baseline community feature set.
-- premium packages such as `@lexion-rte/ai` and `@lexion-rte/collab` provide commercial features.
+- commercial features are implemented outside the public repo against the same core contracts.
 - UI adapters only bind rendering/lifecycle and do not implement domain rules.
 
 This keeps Lexion modular, testable, and ready for collaboration and AI-native workflows.

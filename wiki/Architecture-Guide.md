@@ -23,10 +23,9 @@
   - commands (paragraph/heading/bold/italic/lists/links/undo/redo)
   - ProseMirror plugins (history + base keymap)
 
-## Premium packages
-- `@lexion-rte/ai` provides AI extension primitives (`aiExtension`, `AIService`).
-- `@lexion-rte/collab` provides collaboration extension primitives (`createCollaborationExtension`).
-- Premium packages must stay private to the commercial distribution unless explicitly reclassified as community features.
+## Commercial Feature Track
+- Commercial features are implemented in private codebases against the public extension contracts.
+- Premium implementation code must stay out of the public repository unless it is intentionally reclassified as community functionality.
 
 ## Adapters (`@lexion-rte/web`, `@lexion-rte/react`, `@lexion-rte/vue`, `@lexion-rte/vue2`, `@lexion-rte/angular`, `@lexion-rte/svelte`, `@lexion-rte/solid`, `@lexion-rte/astro`, `@lexion-rte/next`, `@lexion-rte/nuxt`)
 - Render/editor view mounting and lifecycle only.
@@ -49,4 +48,4 @@
 - No feature business logic in adapters.
 - No framework runtime dependencies in core.
 - Community feature additions go to `@lexion-rte/starter-kit` or another public package.
-- Paid capabilities go to premium packages or commercial services.
+- Paid capabilities go to commercial packages or services outside this repository.

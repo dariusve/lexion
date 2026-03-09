@@ -120,68 +120,11 @@ editor.execute(starterKitCommandNames.setLink, {
 });
 ```
 
-## `@lexion-rte/ai` (commercial)
+## Commercial Features
 
-### Exports
-- `aiExtension`
-- `aiCommandNames`
-- `AIService`
-- `createAIService()`
+Commercial feature package APIs are intentionally not documented in this public repository.
 
-### Example: AI Service + Extension
-```ts
-import { LexionEditor } from "@lexion-rte/core";
-import {
-  AIService,
-  aiCommandNames,
-  aiExtension
-} from "@lexion-rte/ai";
-import { starterKitExtension } from "@lexion-rte/starter-kit";
-
-const editor = new LexionEditor({
-  extensions: [starterKitExtension, aiExtension]
-});
-
-const service = new AIService({
-  async generate(request) {
-    return `Rewrite: ${request.selection || "No selection"}`;
-  }
-});
-
-const suggestion = await service.generateForSelection(editor, "Rewrite clearly");
-editor.execute(aiCommandNames.applySuggestion, suggestion);
-```
-
-## `@lexion-rte/collab` (commercial)
-
-### Exports
-- `createCollaborationExtension()`
-- `collaborationCommandNames`
-
-### Example: Collaboration Extension
-```ts
-import { LexionEditor } from "@lexion-rte/core";
-import {
-  collaborationCommandNames,
-  createCollaborationExtension
-} from "@lexion-rte/collab";
-import { starterKitExtension } from "@lexion-rte/starter-kit";
-import * as Y from "yjs";
-import { Awareness } from "y-protocols/awareness";
-
-const ydoc = new Y.Doc();
-const awareness = new Awareness(ydoc);
-const fragment = ydoc.getXmlFragment("lexion");
-
-const editor = new LexionEditor({
-  extensions: [
-    starterKitExtension,
-    createCollaborationExtension({ fragment, awareness })
-  ]
-});
-
-editor.execute(collaborationCommandNames.undo);
-```
+The public repo documents only the community package surface. Commercial capabilities are implemented and distributed from private codebases.
 
 ## `@lexion-rte/web`
 

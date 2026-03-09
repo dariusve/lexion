@@ -113,30 +113,8 @@ Section title
 }
 ```
 
-## `apps/collab-server` WebSocket Messages
+## Commercial Data Flows
 
-### Client -> Server (`update`)
+Commercial collaboration and AI payload shapes are intentionally omitted from the public repository documentation.
 
-```json
-{
-  "type": "update",
-  "update": "BASE64_YJS_UPDATE"
-}
-```
-
-### Server -> Client (`sync`)
-
-```json
-{
-  "type": "sync",
-  "update": "BASE64_YJS_UPDATE"
-}
-```
-
-## `@lexion-rte/ai` AI Service Return
-
-`AIService.generateForSelection(...)` returns a `string` suggestion.
-
-```txt
-Rewrite this paragraph with a concise tone and active voice.
-```
+The public repo documents only community package inputs and outputs.
