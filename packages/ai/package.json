@@ -1,6 +1,6 @@
 {
   "name": "@lexion-rte/ai",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Commercial AI extensions for the Lexion editor platform.",
   "private": true,
   "type": "module",

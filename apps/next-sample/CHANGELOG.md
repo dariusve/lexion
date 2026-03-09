@@ -1,5 +1,13 @@
 # @lexion-rte/next-sample
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [1d74f2e]
+  - @lexion-rte/core@0.1.5
+  - @lexion-rte/next@0.1.5
+
 ## 0.1.1
 
 ### Patch Changes

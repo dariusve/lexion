@@ -1,6 +1,6 @@
 {
   "name": "@lexion-rte/starter-kit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Community starter-kit extensions for the Lexion editor platform.",
   "private": false,
   "type": "module",

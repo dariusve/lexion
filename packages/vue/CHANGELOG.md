@@ -1,5 +1,22 @@
 # @lexion-rte/vue
 
+## 0.1.5
+
+### Patch Changes
+
+- 1d74f2e: Introduce the open-core package split for Lexion.
+
+  Community editing features now ship in `@lexion-rte/starter-kit`, while commercial-only capabilities move behind private package boundaries. Public documentation and package metadata now describe the dual-license/open-core model consistently.
+
+  Migration note:
+
+  - replace imports from `@lexion-rte/extensions` with `@lexion-rte/starter-kit` for starter-kit commands and extensions
+  - use the new package/docs structure for community versus commercial features going forward
+
+- Updated dependencies [1d74f2e]
+  - @lexion-rte/starter-kit@0.2.0
+  - @lexion-rte/core@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes

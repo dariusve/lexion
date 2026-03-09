@@ -1,5 +1,14 @@
 # @lexion-rte/api
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies [1d74f2e]
+  - @lexion-rte/starter-kit@0.2.0
+  - @lexion-rte/core@0.1.5
+  - @lexion-rte/tools@0.1.5
+
 ## 0.1.3
 
 ### Patch Changes

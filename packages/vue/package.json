@@ -1,6 +1,6 @@
 {
   "name": "@lexion-rte/vue",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Vue 3 adapter for the Lexion editor platform.",
   "private": false,
   "type": "module",
