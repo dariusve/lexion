@@ -1,5 +1,14 @@
 # @lexion-rte/astro-sample
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies [7679d1f]
+  - @lexion-rte/starter-kit@0.2.1
+  - @lexion-rte/web@0.1.6
+  - @lexion-rte/astro@0.1.6
+
 ## 0.1.2
 
 ### Patch Changes

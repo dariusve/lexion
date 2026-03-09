@@ -1,5 +1,12 @@
 # @lexion-rte/nuxt-sample
 
+## 0.1.3
+
+### Patch Changes
+
+- @lexion-rte/vue@0.1.6
+- @lexion-rte/nuxt@0.1.6
+
 ## 0.1.2
 
 ### Patch Changes

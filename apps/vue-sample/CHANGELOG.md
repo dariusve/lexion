@@ -1,5 +1,13 @@
 # @lexion-rte/vue-sample
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies [7679d1f]
+  - @lexion-rte/starter-kit@0.2.1
+  - @lexion-rte/vue@0.1.6
+
 ## 0.1.4
 
 ### Patch Changes

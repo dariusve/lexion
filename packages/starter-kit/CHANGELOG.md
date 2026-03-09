@@ -1,5 +1,11 @@
 # @lexion-rte/starter-kit
 
+## 0.2.1
+
+### Patch Changes
+
+- 7679d1f: Improve the `@lexion-rte/starter-kit` package documentation with clearer command coverage, usage examples, migration notes, and related reference links.
+
 ## 0.2.0
 
 ### Minor Changes

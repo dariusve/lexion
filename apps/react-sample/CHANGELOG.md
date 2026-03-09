@@ -1,5 +1,11 @@
 # @lexion-rte/react-sample
 
+## 0.1.3
+
+### Patch Changes
+
+- @lexion-rte/react@0.1.6
+
 ## 0.1.2
 
 ### Patch Changes
