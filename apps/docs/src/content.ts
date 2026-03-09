@@ -1,7 +1,3 @@
-import aiContract from "../../../AI_CONTRACT.md?raw";
-import architecture from "../../../ARCHITECTURE.md?raw";
-import projectMap from "../../../PROJECT_MAP.md?raw";
-import taskList from "../../../TASK_LIST.md?raw";
 import adapterExamples from "../../../docs/ADAPTER_EXAMPLES.md?raw";
 import architectureGuide from "../../../docs/ARCHITECTURE_GUIDE.md?raw";
 import backendServices from "../../../docs/BACKEND_SERVICES.md?raw";
@@ -38,30 +34,6 @@ export const pages: readonly DocPage[] = [
     summary: "What Lexion is and why ProseMirror is used for the document model and engine.",
     sourcePath: "/docs/LEXION_OVERVIEW.md",
     markdown: lexionOverview
-  },
-  {
-    id: "ai-contract",
-    title: "AI Contract",
-    category: "Foundations",
-    summary: "Non-negotiable engineering constraints for core, adapters, and typing safety.",
-    sourcePath: "/AI_CONTRACT.md",
-    markdown: aiContract
-  },
-  {
-    id: "architecture-overview",
-    title: "Architecture",
-    category: "Foundations",
-    summary: "High-level responsibilities across core, adapters, extensions, collaboration, and AI.",
-    sourcePath: "/ARCHITECTURE.md",
-    markdown: architecture
-  },
-  {
-    id: "project-map",
-    title: "Project Map",
-    category: "Foundations",
-    summary: "System scope, package ownership, data flow, and feature placement rules.",
-    sourcePath: "/PROJECT_MAP.md",
-    markdown: projectMap
   },
   {
     id: "architecture-guide",
@@ -126,14 +98,6 @@ export const pages: readonly DocPage[] = [
     summary: "Changesets workflow, CI/release automation, and required publication secrets.",
     sourcePath: "/docs/RELEASE_PROCESS.md",
     markdown: releaseProcess
-  },
-  {
-    id: "task-list",
-    title: "Task List",
-    category: "Operations",
-    summary: "Implementation status tracker of completed, in-progress, and pending milestones.",
-    sourcePath: "/TASK_LIST.md",
-    markdown: taskList
   }
 ];
 
