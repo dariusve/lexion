@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import { LexionEditor, type JSONDocument, type LexionExtension } from "@lexion-rte/core";
-import { starterKitCommandNames, starterKitExtension } from "@lexion-rte/extensions";
+import { starterKitCommandNames, starterKitExtension } from "@lexion-rte/starter-kit";
 
 const createDoc = (text: string): JSONDocument => ({
   type: "doc",

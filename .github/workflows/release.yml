@@ -35,13 +35,6 @@ jobs:
       - name: Build Packages
         run: pnpm build:packages
 
-      - name: Verify npm auth
-        run: |
-          test -n "$NODE_AUTH_TOKEN"
-          npm whoami
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Create Release Pull Request or Publish
         uses: changesets/action@v1
         with:

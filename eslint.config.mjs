@@ -3,7 +3,15 @@ import tseslintPlugin from "@typescript-eslint/eslint-plugin";
 
 export default [
   {
-    ignores: ["**/dist/**"]
+    ignores: [
+      "**/dist/**",
+      "**/.next/**",
+      "**/.nuxt/**",
+      "**/.output/**",
+      "**/node_modules/.cache/**",
+      "**/*.d.ts",
+      "**/*.d.ts.map"
+    ]
   },
   {
     files: ["**/*.ts", "**/*.tsx"],

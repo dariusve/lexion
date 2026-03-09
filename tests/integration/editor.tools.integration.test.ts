@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import { LexionEditor } from "@lexion-rte/core";
-import { starterKitExtension } from "@lexion-rte/extensions";
+import { starterKitExtension } from "@lexion-rte/starter-kit";
 import { fromText, toText } from "@lexion-rte/tools";
 import { createLexionWebEditor } from "@lexion-rte/web";
 
