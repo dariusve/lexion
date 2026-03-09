@@ -25,6 +25,21 @@ export interface PluginLifecycleContext extends PluginFactoryContext {
   readonly editor: LexionEditor;
 }
 
+export type LexionStatusBarAlignment = "start" | "end";
+
+export interface LexionStatusBarItem {
+  readonly key: string;
+  readonly text: string;
+  readonly align?: LexionStatusBarAlignment;
+  readonly className?: string;
+  readonly style?: Readonly<Record<string, string>>;
+}
+
+export interface StatusBarContext extends PluginLifecycleContext {
+  readonly state: EditorState;
+  readonly doc: ProseMirrorNode;
+}
+
 export interface EditorCommandContext {
   readonly editor: LexionEditor;
   readonly schema: Schema;
@@ -44,6 +59,7 @@ export interface LexionExtension {
   readonly schema?: Schema | (() => Schema);
   readonly prosemirrorPlugins?: (context: PluginFactoryContext) => readonly Plugin[];
   readonly commands?: (context: PluginFactoryContext) => CommandMap;
+  readonly statusBarItems?: (context: StatusBarContext) => readonly LexionStatusBarItem[];
   readonly onCreate?: (context: PluginLifecycleContext) => void;
   readonly onDestroy?: (context: PluginLifecycleContext) => void;
 }
@@ -55,6 +71,7 @@ export interface LexionEditor {
   readonly state: EditorState;
   readonly doc: ProseMirrorNode;
   getJSON: () => JSONDocument;
+  getStatusBarItems: () => readonly LexionStatusBarItem[];
   setJSON: (document: JSONDocument) => void;
   dispatchTransaction: (transaction: Transaction) => void;
   execute: (command: string, ...args: readonly unknown[]) => boolean;

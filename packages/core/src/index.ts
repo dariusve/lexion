@@ -1,4 +1,5 @@
 export { LexionEditor } from "./editor.js";
+export { lexionBrandingStatusItem, lexionStatusBarAppearance } from "./branding.js";
 export { createCoreSchema, coreSchema } from "./schema.js";
 export type {
   CommandHandler,
@@ -12,6 +13,10 @@ export type {
   LexionEditorOptions,
   LexionExtension,
   LexionPlugin,
+  LexionStatusBarAlignment,
+  LexionStatusBarItem,
   PluginFactoryContext,
-  PluginLifecycleContext
+  PluginLifecycleContext,
+  StatusBarContext
 } from "./types.js";
+export type { LexionStatusBarAppearance } from "./branding.js";

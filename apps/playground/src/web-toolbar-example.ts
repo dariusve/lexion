@@ -1,5 +1,5 @@
 import type { JSONDocument } from "@lexion-rte/core";
-import { starterKitCommandNames } from "@lexion-rte/extensions";
+import { starterKitCommandNames } from "@lexion-rte/starter-kit";
 import { createLexionWebEditor, type LexionWebEditor } from "@lexion-rte/web";
 
 import type { PlaygroundExampleHandle } from "./vue-examples.js";

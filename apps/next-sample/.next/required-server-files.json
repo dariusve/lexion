@@ -291,7 +291,7 @@
       "@lexion-rte/next",
       "@lexion-rte/react",
       "@lexion-rte/core",
-      "@lexion-rte/extensions"
+      "@lexion-rte/starter-kit"
     ],
     "turbopack": {
       "root": "/Volumes/Dock/Data/DevProjects/lexion"

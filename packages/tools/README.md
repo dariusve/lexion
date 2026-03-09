@@ -26,14 +26,14 @@ pnpm add @lexion-rte/tools @lexion-rte/core
 Typical pairing:
 
 ```bash
-pnpm add @lexion-rte/tools @lexion-rte/core @lexion-rte/extensions
+pnpm add @lexion-rte/tools @lexion-rte/core @lexion-rte/starter-kit
 ```
 
 ## Browser Example
 
 ```ts
 import { LexionEditor } from "@lexion-rte/core";
-import { starterKitExtension } from "@lexion-rte/extensions";
+import { starterKitExtension } from "@lexion-rte/starter-kit";
 import { fromText, toHTML, toText } from "@lexion-rte/tools";
 
 const editor = new LexionEditor({ extensions: [starterKitExtension] });
@@ -50,7 +50,7 @@ console.log(toHTML(editor));
 ```ts
 import { JSDOM } from "jsdom";
 import { LexionEditor } from "@lexion-rte/core";
-import { starterKitExtension } from "@lexion-rte/extensions";
+import { starterKitExtension } from "@lexion-rte/starter-kit";
 import { fromHTML, toHTML } from "@lexion-rte/tools";
 
 const dom = new JSDOM("<!doctype html><html><body></body></html>");

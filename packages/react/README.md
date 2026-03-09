@@ -73,7 +73,7 @@ export function ControlledEditor({ initial }: { initial: JSONDocument }) {
 ```tsx
 import { useMemo } from "react";
 import { LexionEditor } from "@lexion-rte/core";
-import { starterKitExtension } from "@lexion-rte/extensions";
+import { starterKitExtension } from "@lexion-rte/starter-kit";
 import { LexionEditorView } from "@lexion-rte/react";
 
 export function SharedEditor() {

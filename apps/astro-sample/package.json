@@ -5,14 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
     "preview": "astro preview",
     "lint": "eslint src --ext .ts --no-error-on-unmatched-pattern"
   },
   "dependencies": {
     "@lexion-rte/astro": "workspace:*",
     "@lexion-rte/core": "workspace:*",
-    "@lexion-rte/extensions": "workspace:*",
+    "@lexion-rte/starter-kit": "workspace:*",
     "@lexion-rte/web": "workspace:*",
     "astro": "^5.0.0"
   },

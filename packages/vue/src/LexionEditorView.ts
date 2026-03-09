@@ -1,5 +1,10 @@
-import { LexionEditor, type JSONDocument } from "@lexion-rte/core";
-import { starterKitExtension } from "@lexion-rte/extensions";
+import {
+  LexionEditor,
+  lexionStatusBarAppearance,
+  type JSONDocument,
+  type LexionStatusBarItem
+} from "@lexion-rte/core";
+import { starterKitExtension } from "@lexion-rte/starter-kit";
 import { EditorView } from "prosemirror-view";
 import {
   defineComponent,
@@ -29,7 +34,6 @@ export interface LexionEditorViewEmits {
 }
 
 const serializeJSON = (document: JSONDocument): string => JSON.stringify(document);
-const FOOTER_TEXT = "Open Source Limited Version";
 
 export const LexionEditorView = defineComponent({
   name: "LexionEditorView",
@@ -70,9 +74,14 @@ export const LexionEditorView = defineComponent({
     const ownsEditorRef = ref(false);
     const activeEditorRef = shallowRef<LexionEditor | null>(null);
     const lastAppliedValueRef = ref<string | null>(null);
+    const statusBarItemsRef = ref<readonly LexionStatusBarItem[]>([]);
 
     const setActiveEditor = (nextEditor: LexionEditor): void => {
       activeEditorRef.value = nextEditor;
+    };
+
+    const syncStatusBar = (): void => {
+      statusBarItemsRef.value = activeEditorRef.value?.getStatusBarItems() ?? [];
     };
 
     const createInternalEditor = (): LexionEditor =>
@@ -106,6 +115,7 @@ export const LexionEditorView = defineComponent({
         dispatchTransaction: (transaction) => {
           editor.dispatchTransaction(transaction);
           view.updateState(editor.state);
+          syncStatusBar();
 
           const nextValue = editor.getJSON();
           lastAppliedValueRef.value = serializeJSON(nextValue);
@@ -132,6 +142,7 @@ export const LexionEditorView = defineComponent({
         lastAppliedValueRef.value = serializeJSON(props.modelValue);
       }
 
+      syncStatusBar();
       recreateView();
     });
 
@@ -156,6 +167,7 @@ export const LexionEditorView = defineComponent({
         }
 
         recreateView();
+        syncStatusBar();
       }
     );
 
@@ -188,6 +200,7 @@ export const LexionEditorView = defineComponent({
         editor.setJSON(nextValue);
         lastAppliedValueRef.value = serialized;
         viewRef.value?.updateState(editor.state);
+        syncStatusBar();
       },
       {
         immediate: true
@@ -216,20 +229,55 @@ export const LexionEditorView = defineComponent({
           h(
             "div",
             {
-              class: "lexion-editor-footer",
-              style: {
-                padding: "8px 12px",
-                borderTop: "1px solid #d7d7d7",
-                background: "#f7f7f7",
-                color: "#4a4a4a",
-                fontSize: "12px",
-                lineHeight: "1.3",
-                textAlign: "center",
-                fontFamily:
-                  "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
-              }
+              class: lexionStatusBarAppearance.className,
+              style: lexionStatusBarAppearance.style
             },
-            FOOTER_TEXT
+            [
+              h(
+                "div",
+                {
+                  class: `${lexionStatusBarAppearance.groupClassName} ${lexionStatusBarAppearance.groupClassName}--start`,
+                  style: lexionStatusBarAppearance.groupStyles.start
+                },
+                statusBarItemsRef.value
+                  .filter((item) => (item.align ?? "start") === "start")
+                  .map((item) =>
+                    h(
+                      "div",
+                      {
+                        key: item.key,
+                        class: item.className
+                          ? `${lexionStatusBarAppearance.itemClassName} ${item.className}`
+                          : lexionStatusBarAppearance.itemClassName,
+                        style: item.style
+                      },
+                      item.text
+                    )
+                  )
+              ),
+              h(
+                "div",
+                {
+                  class: `${lexionStatusBarAppearance.groupClassName} ${lexionStatusBarAppearance.groupClassName}--end`,
+                  style: lexionStatusBarAppearance.groupStyles.end
+                },
+                statusBarItemsRef.value
+                  .filter((item) => (item.align ?? "start") === "end")
+                  .map((item) =>
+                    h(
+                      "div",
+                      {
+                        key: item.key,
+                        class: item.className
+                          ? `${lexionStatusBarAppearance.itemClassName} ${item.className}`
+                          : lexionStatusBarAppearance.itemClassName,
+                        style: item.style
+                      },
+                      item.text
+                    )
+                  )
+              )
+            ]
           )
         ]
       );

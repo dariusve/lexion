@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@lexion-rte/core": "workspace:*",
-    "@lexion-rte/extensions": "workspace:*",
+    "@lexion-rte/starter-kit": "workspace:*",
     "@lexion-rte/vue2": "workspace:*",
     "@lexion-rte/web": "workspace:*",
     "vue": "^2.7.0"

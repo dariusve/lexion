@@ -1,6 +1,7 @@
 import { Node as ProseMirrorNode, type Schema } from "prosemirror-model";
 import { EditorState, type Plugin, type Transaction } from "prosemirror-state";
 
+import { lexionBrandingStatusItem } from "./branding.js";
 import { coreSchema } from "./schema.js";
 import type {
   CommandHandler,
@@ -11,7 +12,9 @@ import type {
   LexionEditorOptions,
   LexionExtension,
   PluginFactoryContext,
-  PluginLifecycleContext
+  PluginLifecycleContext,
+  StatusBarContext,
+  LexionStatusBarItem
 } from "./types.js";
 
 export class LexionEditor implements LexionEditorContract {
@@ -55,6 +58,19 @@ export class LexionEditor implements LexionEditorContract {
 
   public getJSON(): JSONDocument {
     return this._state.doc.toJSON() as JSONDocument;
+  }
+
+  public getStatusBarItems(): readonly LexionStatusBarItem[] {
+    this.assertNotDestroyed();
+    const context = this.createStatusBarContext();
+    const items: LexionStatusBarItem[] = [];
+
+    for (const extension of this.extensionsByKey.values()) {
+      items.push(...(extension.statusBarItems?.(context) ?? []));
+    }
+
+    items.push(lexionBrandingStatusItem);
+    return items;
   }
 
   public setJSON(document: JSONDocument): void {
@@ -240,6 +256,14 @@ export class LexionEditor implements LexionEditorContract {
     return {
       editor: this,
       schema: this._schema
+    };
+  }
+
+  private createStatusBarContext(): StatusBarContext {
+    return {
+      ...this.createPluginLifecycleContext(),
+      state: this._state,
+      doc: this._state.doc
     };
   }
 

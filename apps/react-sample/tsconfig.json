@@ -6,7 +6,7 @@
     "jsx": "react-jsx",
     "paths": {
       "@lexion-rte/core": ["../../packages/core/src/index.ts"],
-      "@lexion-rte/extensions": ["../../packages/extensions/src/index.ts"],
+      "@lexion-rte/starter-kit": ["../../packages/starter-kit/src/index.ts"],
       "@lexion-rte/react": ["../../packages/react/src/index.ts"]
     },
     "types": ["vite/client"],

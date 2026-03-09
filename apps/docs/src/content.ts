@@ -5,6 +5,7 @@ import dataExamples from "../../../docs/DATA_EXAMPLES.md?raw";
 import extensionDevelopment from "../../../docs/EXTENSION_DEVELOPMENT.md?raw";
 import extensionsReference from "../../../docs/EXTENSIONS_REFERENCE.md?raw";
 import gettingStarted from "../../../docs/GETTING_STARTED.md?raw";
+import licensingModel from "../../../docs/LICENSING_MODEL.md?raw";
 import lexionOverview from "../../../docs/LEXION_OVERVIEW.md?raw";
 import packageApis from "../../../docs/PACKAGE_APIS.md?raw";
 import releaseProcess from "../../../docs/RELEASE_PROCESS.md?raw";
@@ -34,6 +35,14 @@ export const pages: readonly DocPage[] = [
     summary: "What Lexion is and why ProseMirror is used for the document model and engine.",
     sourcePath: "/docs/LEXION_OVERVIEW.md",
     markdown: lexionOverview
+  },
+  {
+    id: "licensing-model",
+    title: "Licensing Model",
+    category: "Foundations",
+    summary: "Open-core package boundaries and the dual-license distribution model.",
+    sourcePath: "/docs/LICENSING_MODEL.md",
+    markdown: licensingModel
   },
   {
     id: "architecture-guide",

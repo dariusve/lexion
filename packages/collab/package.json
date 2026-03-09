@@ -1,0 +1,26 @@
+{
+  "name": "@lexion-rte/collab",
+  "version": "0.1.0",
+  "description": "Commercial collaboration extensions for the Lexion editor platform.",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "license": "LicenseRef-Lexion-Commercial",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint src --ext .ts"
+  },
+  "dependencies": {
+    "@lexion-rte/core": "workspace:*",
+    "y-prosemirror": "^1.2.12",
+    "y-protocols": "^1.0.6",
+    "yjs": "^13.6.23"
+  }
+}

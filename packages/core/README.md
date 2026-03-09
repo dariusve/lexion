@@ -14,10 +14,11 @@ Headless editor runtime for the Lexion platform.
 
 - editor state and schema management
 - command registration/execution
+- status bar item aggregation for adapter UIs
 - extension lifecycle hooks (`onCreate`, `onDestroy`)
 - JSON document input/output
 
-This package does not render UI by itself. Pair it with `@lexion-rte/extensions` and optionally an adapter package.
+This package does not render UI by itself. Pair it with `@lexion-rte/starter-kit` and optionally an adapter package.
 
 ## Install
 
@@ -28,14 +29,14 @@ pnpm add @lexion-rte/core
 Typical pairing:
 
 ```bash
-pnpm add @lexion-rte/core @lexion-rte/extensions
+pnpm add @lexion-rte/core @lexion-rte/starter-kit
 ```
 
 ## Quick Start
 
 ```ts
 import { LexionEditor } from "@lexion-rte/core";
-import { starterKitExtension, starterKitCommandNames } from "@lexion-rte/extensions";
+import { starterKitExtension, starterKitCommandNames } from "@lexion-rte/starter-kit";
 
 const editor = new LexionEditor({
   extensions: [starterKitExtension]
@@ -63,6 +64,7 @@ Main instance members:
 - `state`
 - `doc`
 - `getJSON()`
+- `getStatusBarItems()`
 - `setJSON(document)`
 - `dispatchTransaction(transaction)`
 - `execute(command, ...args)`
@@ -76,7 +78,7 @@ Main instance members:
 
 ```ts
 import { LexionEditor } from "@lexion-rte/core";
-import { starterKitExtension } from "@lexion-rte/extensions";
+import { starterKitExtension } from "@lexion-rte/starter-kit";
 
 const editor = new LexionEditor({ extensions: [starterKitExtension] });
 
@@ -105,6 +107,22 @@ const auditExtension: LexionExtension = {
 };
 ```
 
+## Status Bar Example
+
+```ts
+import type { LexionExtension } from "@lexion-rte/core";
+
+const metricsExtension: LexionExtension = {
+  key: "metrics",
+  statusBarItems: ({ doc }) => [
+    {
+      key: "characters",
+      text: `${doc.textContent.length} chars`
+    }
+  ]
+};
+```
+
 ## Error Behavior
 
 - Executing an unknown command throws `Unknown command: <name>`.
@@ -113,6 +131,7 @@ const auditExtension: LexionExtension = {
 
 ## Related Packages
 
-- `@lexion-rte/extensions` for starter-kit, AI, and collaboration features
+- `@lexion-rte/starter-kit` for community editing features
+- `@lexion-rte/ai` and `@lexion-rte/collab` for commercial features
 - `@lexion-rte/tools` for HTML/text conversions
 - adapter packages (`web`, `react`, `vue`, etc.) for UI integration

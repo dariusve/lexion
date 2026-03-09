@@ -36,8 +36,9 @@ describe("@lexion-rte/react", () => {
     });
 
     expect(container.querySelector(".ProseMirror")).not.toBeNull();
+    expect(container.querySelector(".lexion-editor-status-bar")).not.toBeNull();
     expect(readyEditorText).toContain("first");
-    expect(container.textContent ?? "").toContain("Open Source Limited Version");
+    expect(container.textContent ?? "").toContain("Powered by lexion");
 
     await act(async () => {
       root.render(<LexionEditorView value={createDoc("second")} />);

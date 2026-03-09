@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@lexion-rte/core": "workspace:*",
-    "@lexion-rte/extensions": "workspace:*",
+    "@lexion-rte/starter-kit": "workspace:*",
     "@lexion-rte/solid": "workspace:*",
     "@lexion-rte/web": "workspace:*",
     "solid-js": "^1.8.0"

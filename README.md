@@ -5,16 +5,17 @@
 Lexion is a framework-agnostic, headless rich text editor platform built on ProseMirror.
 
 ## Developer Docs
-- Getting started: [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)
-- Lexion overview: [docs/LEXION_OVERVIEW.md](docs/LEXION_OVERVIEW.md)
-- Architecture guide: [docs/ARCHITECTURE_GUIDE.md](docs/ARCHITECTURE_GUIDE.md)
-- Package APIs: [docs/PACKAGE_APIS.md](docs/PACKAGE_APIS.md)
-- Data examples: [docs/DATA_EXAMPLES.md](docs/DATA_EXAMPLES.md)
-- Extension development: [docs/EXTENSION_DEVELOPMENT.md](docs/EXTENSION_DEVELOPMENT.md)
-- Extensions reference: [docs/EXTENSIONS_REFERENCE.md](docs/EXTENSIONS_REFERENCE.md)
-- Adapter examples: [docs/ADAPTER_EXAMPLES.md](docs/ADAPTER_EXAMPLES.md)
-- Backend services: [docs/BACKEND_SERVICES.md](docs/BACKEND_SERVICES.md)
-- Release process: [docs/RELEASE_PROCESS.md](docs/RELEASE_PROCESS.md)
+- [Getting Started](docs/GETTING_STARTED.md)
+- [Lexion Overview](docs/LEXION_OVERVIEW.md)
+- [Architecture Guide](docs/ARCHITECTURE_GUIDE.md)
+- [Licensing Model](docs/LICENSING_MODEL.md)
+- [Package APIs](docs/PACKAGE_APIS.md)
+- [Data Examples](docs/DATA_EXAMPLES.md)
+- [Extension Development](docs/EXTENSION_DEVELOPMENT.md)
+- [Extensions Reference](docs/EXTENSIONS_REFERENCE.md)
+- [Adapter Examples](docs/ADAPTER_EXAMPLES.md)
+- [Backend Services](docs/BACKEND_SERVICES.md)
+- [Release Process](docs/RELEASE_PROCESS.md)
 
 ## Quick Start
 1. Install dependencies:
@@ -60,7 +61,25 @@ Lexion is a framework-agnostic, headless rich text editor platform built on Pros
 Sample apps use native framework runtimes/tooling where applicable (for example Next.js, Nuxt, Astro, Angular, Svelte, Solid, Vue, and React).
 
 ## Core Rule
-Feature behavior must be implemented as extensions (`@lexion-rte/extensions`), not directly in adapters.
+Feature behavior must be implemented as extensions (`@lexion-rte/starter-kit` or premium extension packages), not directly in adapters.
 
 ## License
-This project references the GNU General Public License v3.0 (GPL-3.0): [https://www.gnu.org/licenses/gpl-3.0.en.html](https://www.gnu.org/licenses/gpl-3.0.en.html)
+Lexion uses an open-core, dual-license model:
+
+- community packages in this repository are available under GPL-3.0-or-later
+- commercial licenses are available separately for proprietary use and premium packages
+
+See [LICENSE](LICENSE), [LICENSE-COMMERCIAL.md](LICENSE-COMMERCIAL.md), and [docs/LICENSING_MODEL.md](docs/LICENSING_MODEL.md).
+
+## Package Tracks
+
+Community packages:
+- `@lexion-rte/core`
+- `@lexion-rte/starter-kit`
+- `@lexion-rte/tools`
+- public adapter packages
+
+Commercial packages:
+- `@lexion-rte/ai`
+- `@lexion-rte/collab`
+- future premium packages and hosted services

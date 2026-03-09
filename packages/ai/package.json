@@ -1,0 +1,23 @@
+{
+  "name": "@lexion-rte/ai",
+  "version": "0.1.0",
+  "description": "Commercial AI extensions for the Lexion editor platform.",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "license": "LicenseRef-Lexion-Commercial",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint src --ext .ts"
+  },
+  "dependencies": {
+    "@lexion-rte/core": "workspace:*"
+  }
+}

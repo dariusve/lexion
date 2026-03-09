@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@lexion-rte/core": "workspace:*",
-    "@lexion-rte/extensions": "workspace:*",
+    "@lexion-rte/starter-kit": "workspace:*",
     "@lexion-rte/svelte": "workspace:*",
     "@lexion-rte/web": "workspace:*",
     "svelte": "^5.0.0"

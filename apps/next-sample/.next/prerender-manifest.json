@@ -1,30 +1,6 @@
 {
   "version": 4,
   "routes": {
-    "/": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/",
-      "dataRoute": "/index.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/_not-found": {
       "initialStatus": 404,
       "experimentalBypassFor": [
@@ -49,13 +25,37 @@
         "x-next-revalidated-tags",
         "x-next-revalidate-tag-token"
       ]
+    },
+    "/": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/",
+      "dataRoute": "/index.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
     }
   },
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "9b5ed7cc141d968a917b2014705cb333",
-    "previewModeSigningKey": "1349e6feac0f703d7c1c1e01df76b69d58d055de0124e5b929d6b27bee76af27",
-    "previewModeEncryptionKey": "a2d10d2751ed026c672f0787f3f0c7c1986bd3dfb44c53eea1648829ed74e588"
+    "previewModeId": "c5c994cd9f6f73d73386af299f6b4876",
+    "previewModeSigningKey": "070545090c051af16dbc326f2204e999d5e4fd590177ecd406bb8af34012f25e",
+    "previewModeEncryptionKey": "2f6e237836baca4f49657b3c8e522106c7b35ae053c21892ff69d285424e8c68"
   }
 }

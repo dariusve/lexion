@@ -12,7 +12,7 @@
       "import": "./dist/index.js"
     }
   },
-  "license": "GPL-3.0-only",
+  "license": "GPL-3.0-or-later",
   "repository": {
     "type": "git",
     "url": "https://github.com/dariusve/lexion.git",
@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@lexion-rte/core": "workspace:*",
-    "@lexion-rte/extensions": "workspace:*",
+    "@lexion-rte/starter-kit": "workspace:*",
     "prosemirror-view": "^1.37.2"
   },
   "peerDependencies": {

@@ -79,4 +79,4 @@ webEditor.update({ value: nextDoc, readOnly: false });
 ## Notes
 
 - If you pass a custom `editor`, the adapter will not destroy that editor on `destroy()`.
-- The adapter renders a footer bar with text: `Open Source Limited Version`.
+- The adapter renders an editor status bar and includes the core branding item: `Powered by lexion`.

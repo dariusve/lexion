@@ -1,8 +1,13 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { EditorView } from "prosemirror-view";
-import { LexionEditor, type JSONDocument } from "@lexion-rte/core";
-import { starterKitExtension } from "@lexion-rte/extensions";
+import {
+  LexionEditor,
+  lexionStatusBarAppearance,
+  type JSONDocument,
+  type LexionStatusBarItem
+} from "@lexion-rte/core";
+import { starterKitExtension } from "@lexion-rte/starter-kit";
 
 export interface LexionEditorViewProps {
   readonly editor?: LexionEditor;
@@ -16,18 +21,14 @@ export interface LexionEditorViewProps {
 }
 
 const serializeJSON = (document: JSONDocument): string => JSON.stringify(document);
-const FOOTER_TEXT = "Open Source Limited Version";
+const STATUS_BAR_STYLE = lexionStatusBarAppearance.style as CSSProperties;
+const STATUS_BAR_START_STYLE = lexionStatusBarAppearance.groupStyles.start as CSSProperties;
+const STATUS_BAR_END_STYLE = lexionStatusBarAppearance.groupStyles.end as CSSProperties;
 
-const FOOTER_STYLE: CSSProperties = {
-  padding: "8px 12px",
-  borderTop: "1px solid #d7d7d7",
-  background: "#f7f7f7",
-  color: "#4a4a4a",
-  fontSize: "12px",
-  lineHeight: 1.3,
-  textAlign: "center",
-  fontFamily: "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
-};
+const splitStatusBarItems = (items: readonly LexionStatusBarItem[]) => ({
+  start: items.filter((item) => (item.align ?? "start") === "start"),
+  end: items.filter((item) => (item.align ?? "start") === "end")
+});
 
 export const LexionEditorView = ({
   editor,
@@ -65,6 +66,10 @@ export const LexionEditorView = ({
 
   const activeEditor = editor ?? internalEditor;
   const isControlled = value !== undefined;
+  const [statusBarItems, setStatusBarItems] = useState<readonly LexionStatusBarItem[]>(
+    () => activeEditor.getStatusBarItems()
+  );
+  const statusBar = splitStatusBarItems(statusBarItems);
 
   latestOnChange.current = onChange;
   latestOnReady.current = onReady;
@@ -86,6 +91,7 @@ export const LexionEditorView = ({
       dispatchTransaction: (transaction) => {
         activeEditor.dispatchTransaction(transaction);
         view.updateState(activeEditor.state);
+        setStatusBarItems(activeEditor.getStatusBarItems());
 
         const nextValue = activeEditor.getJSON();
         lastAppliedValueRef.current = serializeJSON(nextValue);
@@ -94,6 +100,7 @@ export const LexionEditorView = ({
     });
 
     viewRef.current = view;
+    setStatusBarItems(activeEditor.getStatusBarItems());
     latestOnReady.current?.(activeEditor);
 
     return () => {
@@ -125,6 +132,7 @@ export const LexionEditorView = ({
     activeEditor.setJSON(value);
     lastAppliedValueRef.current = nextValue;
     viewRef.current?.updateState(activeEditor.state);
+    setStatusBarItems(activeEditor.getStatusBarItems());
   }, [activeEditor, isControlled, value]);
 
   useEffect(
@@ -146,8 +154,43 @@ export const LexionEditorView = ({
       }}
     >
       <div ref={containerRef} />
-      <div className="lexion-editor-footer" style={FOOTER_STYLE}>
-        {FOOTER_TEXT}
+      <div className={lexionStatusBarAppearance.className} style={STATUS_BAR_STYLE}>
+        <div
+          className={`${lexionStatusBarAppearance.groupClassName} ${lexionStatusBarAppearance.groupClassName}--start`}
+          style={STATUS_BAR_START_STYLE}
+        >
+          {statusBar.start.map((item) => (
+            <div
+              key={item.key}
+              className={
+                item.className
+                  ? `${lexionStatusBarAppearance.itemClassName} ${item.className}`
+                  : lexionStatusBarAppearance.itemClassName
+              }
+              style={item.style as CSSProperties | undefined}
+            >
+              {item.text}
+            </div>
+          ))}
+        </div>
+        <div
+          className={`${lexionStatusBarAppearance.groupClassName} ${lexionStatusBarAppearance.groupClassName}--end`}
+          style={STATUS_BAR_END_STYLE}
+        >
+          {statusBar.end.map((item) => (
+            <div
+              key={item.key}
+              className={
+                item.className
+                  ? `${lexionStatusBarAppearance.itemClassName} ${item.className}`
+                  : lexionStatusBarAppearance.itemClassName
+              }
+              style={item.style as CSSProperties | undefined}
+            >
+              {item.text}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

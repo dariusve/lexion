@@ -80,4 +80,49 @@ describe("LexionEditor", () => {
 
     editor.destroy();
   });
+
+  test("builds editor status bar items from core and extensions", () => {
+    const metricsExtension: LexionExtension = {
+      key: "metrics",
+      statusBarItems: ({ doc }) => [
+        {
+          key: "characters",
+          text: `${doc.textContent.length} chars`
+        }
+      ]
+    };
+
+    const editor = new LexionEditor({
+      extensions: [starterKitExtension, metricsExtension],
+      doc: createDoc("abc")
+    });
+
+    expect(editor.getStatusBarItems()).toEqual([
+      {
+        key: "characters",
+        text: "3 chars"
+      },
+      expect.objectContaining({
+        key: "branding",
+        text: "Powered by lexion",
+        align: "end"
+      })
+    ]);
+
+    editor.setJSON(createDoc("hello world"));
+
+    expect(editor.getStatusBarItems()).toEqual([
+      {
+        key: "characters",
+        text: "11 chars"
+      },
+      expect.objectContaining({
+        key: "branding",
+        text: "Powered by lexion",
+        align: "end"
+      })
+    ]);
+
+    editor.destroy();
+  });
 });

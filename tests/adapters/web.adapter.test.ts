@@ -22,7 +22,8 @@ describe("@lexion-rte/web", () => {
     });
 
     expect(container.querySelector(".ProseMirror")).not.toBeNull();
-    expect(container.textContent ?? "").toContain("Open Source Limited Version");
+    expect(container.querySelector(".lexion-editor-status-bar")).not.toBeNull();
+    expect(container.textContent ?? "").toContain("Powered by lexion");
 
     editor.setValue(createDoc("updated"));
     expect(editor.getJSON()).toMatchObject({

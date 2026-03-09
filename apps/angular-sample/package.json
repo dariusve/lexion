@@ -17,7 +17,7 @@
     "@angular/platform-browser": "^19.0.0",
     "@lexion-rte/angular": "workspace:*",
     "@lexion-rte/core": "workspace:*",
-    "@lexion-rte/extensions": "workspace:*",
+    "@lexion-rte/starter-kit": "workspace:*",
     "@lexion-rte/web": "workspace:*",
     "rxjs": "^7.8.0",
     "zone.js": "^0.15.0"

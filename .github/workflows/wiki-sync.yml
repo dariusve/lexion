@@ -7,6 +7,7 @@ on:
     paths:
       - "docs/**"
       - "README.md"
+      - "scripts/prepare-wiki.mjs"
       - ".github/workflows/wiki-sync.yml"
   workflow_dispatch:
 
@@ -57,13 +58,11 @@ jobs:
           git clone "$wiki_url" wiki
 
       - name: Sync Markdown Content
+        env:
+          GITHUB_SERVER_URL: ${{ github.server_url }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
-          find wiki -mindepth 1 -maxdepth 1 -type f -name "*.md" -delete
-          cp docs/*.md wiki/
-          cp README.md wiki/Project-README.md
-          if [ -f "wiki/LEXION_OVERVIEW.md" ]; then
-            cp wiki/LEXION_OVERVIEW.md wiki/Home.md
-          fi
+          node scripts/prepare-wiki.mjs
 
       - name: Commit and Push
         working-directory: wiki

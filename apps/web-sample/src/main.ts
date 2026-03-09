@@ -1,5 +1,5 @@
 import type { JSONDocument } from "@lexion-rte/core";
-import { starterKitCommandNames } from "@lexion-rte/extensions";
+import { starterKitCommandNames } from "@lexion-rte/starter-kit";
 import { createLexionWebEditor } from "@lexion-rte/web";
 
 import "./styles.css";

@@ -1,0 +1,49 @@
+{
+  "name": "@lexion-rte/starter-kit",
+  "version": "0.1.0",
+  "description": "Community starter-kit extensions for the Lexion editor platform.",
+  "private": false,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dariusve/lexion.git",
+    "directory": "packages/starter-kit"
+  },
+  "homepage": "https://github.com/dariusve/lexion/tree/main/packages/starter-kit",
+  "bugs": {
+    "url": "https://github.com/dariusve/lexion/issues"
+  },
+  "keywords": [
+    "lexion",
+    "editor",
+    "rich-text",
+    "prosemirror",
+    "starter-kit"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint src --ext .ts"
+  },
+  "dependencies": {
+    "@lexion-rte/core": "workspace:*",
+    "prosemirror-commands": "^1.6.2",
+    "prosemirror-history": "^1.4.1",
+    "prosemirror-keymap": "^1.2.2",
+    "prosemirror-model": "^1.22.3",
+    "prosemirror-schema-basic": "^1.2.3",
+    "prosemirror-schema-list": "^1.4.1",
+    "prosemirror-state": "^1.4.3"
+  }
+}

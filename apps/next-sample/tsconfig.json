@@ -2,21 +2,47 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "lib": ["ES2022", "DOM"],
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
     "jsx": "preserve",
     "allowJs": true,
     "noEmit": true,
     "incremental": true,
     "moduleResolution": "Bundler",
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "paths": {
-      "@lexion-rte/core": ["../../packages/core/src/index.ts"],
-      "@lexion-rte/extensions": ["../../packages/extensions/src/index.ts"],
-      "@lexion-rte/react": ["../../packages/react/src/index.ts"],
-      "@lexion-rte/next": ["../../packages/next/src/index.ts"]
+      "@lexion-rte/core": [
+        "../../packages/core/src/index.ts"
+      ],
+      "@lexion-rte/starter-kit": [
+        "../../packages/starter-kit/src/index.ts"
+      ],
+      "@lexion-rte/react": [
+        "../../packages/react/src/index.ts"
+      ],
+      "@lexion-rte/next": [
+        "../../packages/next/src/index.ts"
+      ]
     },
-    "plugins": [{ "name": "next" }]
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   },
-  "include": ["next-env.d.ts", "app/**/*.ts", "app/**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "next-env.d.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
