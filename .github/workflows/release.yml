@@ -26,6 +26,8 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
+          registry-url: https://registry.npmjs.org
+          scope: "@lexion-rte"
 
       - name: Install
         run: pnpm install --frozen-lockfile
@@ -33,20 +35,12 @@ jobs:
       - name: Build Packages
         run: pnpm build:packages
 
-      - name: Configure npm auth
-        run: |
-          cat << 'EOF' > "$HOME/.npmrc"
-          //registry.npmjs.org/:_authToken=${NPM_TOKEN}
-          registry=https://registry.npmjs.org/
-          always-auth=true
-          EOF
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Verify npm auth
-        run: npm whoami
+        run: |
+          test -n "$NODE_AUTH_TOKEN"
+          npm whoami
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create Release Pull Request or Publish
         uses: changesets/action@v1
@@ -56,3 +50,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
