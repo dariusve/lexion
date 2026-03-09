@@ -46,7 +46,6 @@ Lexion is a framework-agnostic, headless rich text editor platform built on Pros
 - `pnpm test`: run unit, adapter, and integration tests.
 - `pnpm dev:docs`: run docs site locally.
 - `pnpm dev:api`: build and run API server.
-- `pnpm dev:collab`: build and run collaboration server.
 - `pnpm dev:web-sample`: run vanilla web adapter sample.
 - `pnpm dev:react-sample`: run React adapter sample.
 - `pnpm dev:vue-sample`: run Vue 3 adapter sample.
@@ -79,7 +78,7 @@ Community packages:
 - `@lexion-rte/tools`
 - public adapter packages
 
-Commercial packages:
-- `@lexion-rte/ai`
-- `@lexion-rte/collab`
-- future premium packages and hosted services
+Commercial features:
+- private commercial packages kept outside this public repository
+- hosted commercial services
+- future premium offerings distributed separately

@@ -13,12 +13,7 @@ The following packages form the community distribution and are available under G
 
 ## Commercial Track
 
-Commercial distribution is available under separate written terms. Premium capabilities ship as private packages and commercial services.
-
-Current premium package boundaries:
-
-- `@lexion-rte/ai`
-- `@lexion-rte/collab`
+Commercial distribution is available under separate written terms. Premium capabilities ship from private codebases and commercial services.
 
 Commercial rights also cover hosted services, support, and any enterprise add-ons sold separately.
 
@@ -29,7 +24,7 @@ The root workspace commands are optimized for the community track:
 - `pnpm build` validates the public packages and sample apps
 - `pnpm lint` validates the public packages and sample apps
 
-Premium packages stay in the workspace for development, but they are excluded from the default community build flow and are not published publicly.
+Premium implementation code is kept out of the public workspace and is not published from this repository.
 
 ## Repository Rules
 

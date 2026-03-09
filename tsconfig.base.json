@@ -7,8 +7,6 @@
     "paths": {
       "@lexion-rte/core": ["packages/core/dist/index.d.ts"],
       "@lexion-rte/starter-kit": ["packages/starter-kit/dist/index.d.ts"],
-      "@lexion-rte/ai": ["packages/ai/dist/index.d.ts"],
-      "@lexion-rte/collab": ["packages/collab/dist/index.d.ts"],
       "@lexion-rte/tools": ["packages/tools/dist/index.d.ts"],
       "@lexion-rte/web": ["packages/web/dist/index.d.ts"],
       "@lexion-rte/react": ["packages/react/dist/index.d.ts"],

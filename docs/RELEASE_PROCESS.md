@@ -2,7 +2,7 @@
 
 Lexion uses Changesets for versioning and publishing.
 
-Public community packages are published from this workspace. Private premium packages remain internal to the commercial distribution and should not be published to the public npm registry.
+Public community packages are published from this workspace. Commercial packages are published from separate private infrastructure and do not live in this repo.
 
 ## Local Workflow
 1. Add a changeset:
@@ -18,7 +18,7 @@ pnpm version-packages
 pnpm release
 ```
 
-Use this workflow for public community packages. Premium packages are private and should follow the commercial release process you run outside the public npm publication path.
+Use this workflow for public community packages. Commercial packages should follow the separate private release process outside this repository.
 
 ## GitHub Automation
 - CI workflow: `.github/workflows/ci.yml`
@@ -32,5 +32,4 @@ Use this workflow for public community packages. Premium packages are private an
 
 ## Packaging Guidance
 - Add changesets for public community packages.
-- Do not publish `@lexion-rte/ai` or `@lexion-rte/collab` to the public npm registry.
 - Keep release notes explicit about whether a change affects the community track, the commercial track, or both.

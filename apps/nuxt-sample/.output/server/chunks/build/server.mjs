@@ -623,14 +623,14 @@ const revive_payload_server_T4SHJ0u_eSmXAvgCTczGkLN2HTusVhpup1X8kaIU2sw = /* @__
     }
   }
 });
-const components_plugin_z4hgvsiddfKkfXTP6M8M4zG5Cb7sGnDhcryKVM45Di4 = /* @__PURE__ */ defineNuxtPlugin({
+const components_plugin_4kY4pyzJIYX99vmMAAIorFf3CnAaptHitJgf7JxiED8 = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:global-components"
 });
 const plugins = [
   unhead_euz0I_SnzPrt9Za_H6IDq_lpGmd2QCbOwiai4C5vsV4,
   router_MkNMgv4ftXjegp7bTMvWWfFgO_0s_UYE15eDMqfods4,
   revive_payload_server_T4SHJ0u_eSmXAvgCTczGkLN2HTusVhpup1X8kaIU2sw,
-  components_plugin_z4hgvsiddfKkfXTP6M8M4zG5Cb7sGnDhcryKVM45Di4
+  components_plugin_4kY4pyzJIYX99vmMAAIorFf3CnAaptHitJgf7JxiED8
 ];
 defineComponent({
   name: "ServerPlaceholder",

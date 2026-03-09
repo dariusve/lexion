@@ -16,7 +16,7 @@ pnpm lint
 pnpm test
 ```
 
-These root commands verify the community/open-source workspace by default. Private premium packages are intentionally excluded from the default root build and lint flow.
+These root commands verify the full public workspace in this repository.
 
 ## Run Local Adapter Samples (No Registry Publish Needed)
 ```bash
@@ -39,13 +39,11 @@ The command names are unified at the repo root, while each sample runs its nativ
 ```bash
 pnpm dev:docs
 pnpm dev:api
-pnpm dev:collab
 ```
 
 ## Repository Layout
 - `packages/core`: headless editor runtime and extension host.
 - `packages/starter-kit`: community editing features.
-- `packages/ai` / `packages/collab`: commercial feature packages.
 - `packages/web`: vanilla JS adapter.
 - `packages/react`: React adapter.
 - `packages/vue`: Vue adapter.
@@ -69,12 +67,11 @@ pnpm dev:collab
 - `apps/next-sample`: runnable Next.js framework adapter sample.
 - `apps/nuxt-sample`: runnable Nuxt framework adapter sample.
 - `apps/api`: Fastify API service.
-- `apps/collab-server`: Yjs collaboration WebSocket service.
 - `apps/docs`: runnable documentation site.
 
 ## Contribution Workflow
-1. Implement or modify behavior in `packages/starter-kit` or the relevant premium package.
+1. Implement or modify community behavior in `packages/starter-kit`.
 2. Keep `packages/core` generic and extension-driven.
 3. Keep adapters UI-only.
 4. Run `pnpm build` and `pnpm lint` before opening PR for community changes.
-5. For commercial-only work, validate the affected premium package and service paths separately.
+5. Keep non-public commercial code out of this repository.

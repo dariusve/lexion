@@ -132,6 +132,6 @@ const metricsExtension: LexionExtension = {
 ## Related Packages
 
 - `@lexion-rte/starter-kit` for community editing features
-- `@lexion-rte/ai` and `@lexion-rte/collab` for commercial features
+- private commercial packages for non-public features
 - `@lexion-rte/tools` for HTML/text conversions
 - adapter packages (`web`, `react`, `vue`, etc.) for UI integration

@@ -24,35 +24,6 @@ pnpm --filter @lexion-rte/api build
 pnpm --filter @lexion-rte/api start
 ```
 
-## `apps/collab-server`
+## Commercial Services
 
-Fastify + WebSocket service with Yjs document synchronization.
-
-In the open-core packaging model, this service is intended to back the commercial collaboration feature set and should enforce entitlements in production deployments.
-
-Minimum production concerns for the commercial track:
-- authenticate the caller before room access
-- verify workspace or organization entitlements
-- enforce document, seat, and room limits server-side
-- keep usage/audit data outside the editor runtime
-
-### Endpoints
-- `GET /health`
-- `GET /collab/:docId` (WebSocket)
-
-### Message Protocol
-Client -> Server:
-- `{ "type": "update", "update": "<base64-yjs-update>" }`
-- `{ "type": "awareness", "update": "<base64-awareness-update>" }`
-
-Server -> Client:
-- `{ "type": "sync", "update": "<base64-yjs-update>" }`
-- `{ "type": "update", "update": "<base64-yjs-update>" }`
-- `{ "type": "awareness", "update": "<base64-awareness-update>" }`
-- `{ "type": "error", "message": string }`
-
-### Run
-```bash
-pnpm --filter @lexion-rte/collab-server build
-pnpm --filter @lexion-rte/collab-server start
-```
+Commercial collaboration and other premium backend services are intentionally not included in this public repository.
