@@ -20,7 +20,6 @@ const pageMap = new Map([
   ["ADAPTER_EXAMPLES.md", "Adapter-Examples.md"],
   ["BACKEND_SERVICES.md", "Backend-Services.md"],
   ["PRICING_MODEL.md", "Pricing-Model.md"],
-  ["PRICING_GAP_ANALYSIS.md", "Pricing-Gap-Analysis.md"],
   ["README.md", "Project-README.md"]
 ]);
 
@@ -47,7 +46,7 @@ const sidebarSections = [
   },
   {
     title: "Operations",
-    pages: ["Extension-Development.md", "Pricing-Model.md", "Pricing-Gap-Analysis.md", "Project-README.md"]
+    pages: ["Extension-Development.md", "Pricing-Model.md", "Project-README.md"]
   }
 ];
 
@@ -65,9 +64,7 @@ const rewriteContent = (content) => {
   }
 
   next = next.replaceAll("](README.md)", "](Project-README)");
-  next = next.replaceAll("[Release Process](docs/RELEASE_PROCESS.md)\n", "");
-  next = next.replaceAll("[Release Process](./docs/RELEASE_PROCESS.md)\n", "");
-  next = next.replaceAll("[Release Process](Release-Process)\n", "");
+  
 
   if (repoBaseUrl) {
     next = next.replaceAll("](LICENSE)", `](${repoBaseUrl}/blob/main/LICENSE)`);
@@ -149,7 +146,6 @@ Lexion is a framework-agnostic, headless rich text editor platform built on Pros
 
 - [Extension Development](Extension-Development)
 - [Pricing Model](Pricing-Model)
-- [Pricing Gap Analysis](Pricing-Gap-Analysis)
 - [Project README](Project-README)
 `;
 

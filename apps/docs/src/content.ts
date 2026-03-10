@@ -99,14 +99,6 @@ export const pages: readonly DocPage[] = [
     sourcePath: "/docs/BACKEND_SERVICES.md",
     markdown: backendServices
   },
-  {
-    id: "release-process",
-    title: "Release Process",
-    category: "Operations",
-    summary: "Changesets workflow, CI/release automation, and required publication secrets.",
-    sourcePath: "/docs/RELEASE_PROCESS.md",
-    markdown: releaseProcess
-  }
 ];
 
 export const categoryOrder: readonly DocPage["category"][] = [

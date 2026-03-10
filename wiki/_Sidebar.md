@@ -18,5 +18,4 @@
 
 - [Extension Development](Extension-Development)
 - [Pricing Model](Pricing-Model)
-- [Pricing Gap Analysis](Pricing-Gap-Analysis)
 - [Project README](Project-README)
