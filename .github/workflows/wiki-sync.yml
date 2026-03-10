@@ -55,6 +55,7 @@ jobs:
             exit 1
           fi
 
+          rm -rf wiki
           git clone "$wiki_url" wiki
 
       - name: Sync Markdown Content
