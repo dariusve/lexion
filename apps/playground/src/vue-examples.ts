@@ -90,6 +90,7 @@ export const mountVueToolbarExample = (element: HTMLElement): PlaygroundExampleH
                 "button",
                 {
                   type: "button",
+                  onMousedown: (event: MouseEvent) => event.preventDefault(),
                   onClick: () => runCommand(button)
                 },
                 button.label

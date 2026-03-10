@@ -11,7 +11,7 @@ interface ToolbarButtonConfig {
 }
 
 const LINK_ATTRIBUTES = {
-  href: "https://lexion.dev",
+  href: "https://lexion.app",
   title: "Lexion"
 } as const;
 
@@ -58,7 +58,16 @@ const createDoc = (): JSONDocument => ({
           content: [
             {
               type: "paragraph",
-              content: [{ type: "text", text: "List item for indent and outdent commands" }]
+              content: [{ type: "text", text: "Parent list item" }]
+            }
+          ]
+        },
+        {
+          type: "list_item",
+          content: [
+            {
+              type: "paragraph",
+              content: [{ type: "text", text: "Place the cursor here to test indent, then outdent." }]
             }
           ]
         }
@@ -75,7 +84,7 @@ if (!root) {
 root.innerHTML = `
   <main class="shell">
     <h1>Web Adapter Sample</h1>
-    <p>Select text to test inline formatting and links. Place the cursor in the list to test indent and outdent.</p>
+    <p>Select text to test inline formatting and links. Place the cursor in the second list item to test indent, then outdent.</p>
     <div class="toolbar">
       ${toolbarButtons
         .map(
@@ -92,7 +101,7 @@ root.innerHTML = `
 
 const editorElement = root.querySelector<HTMLElement>("#editor");
 const stateElement = root.querySelector<HTMLElement>("#state");
-const commandButtons = [...root.querySelectorAll<HTMLButtonElement>("[data-command-index]")];
+const commandButtons = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-command-index]"));
 const readOnlyButton = root.querySelector<HTMLButtonElement>("#readonly");
 
 if (!editorElement || !stateElement || commandButtons.length !== toolbarButtons.length || !readOnlyButton) {
@@ -112,12 +121,18 @@ const editor = createLexionWebEditor({
 stateElement.textContent = JSON.stringify(editor.getJSON(), null, 2);
 
 commandButtons.forEach((button, index) => {
-  const config = toolbarButtons[index];
+  const config = toolbarButtons[index]!;
+  button.addEventListener("mousedown", (event: MouseEvent) => {
+    event.preventDefault();
+  });
   button.addEventListener("click", () => {
     editor.execute(config.command, ...(config.args ?? []));
   });
 });
 
+readOnlyButton.addEventListener("mousedown", (event: MouseEvent) => {
+  event.preventDefault();
+});
 readOnlyButton.addEventListener("click", () => {
   readOnly = !readOnly;
   editor.setReadOnly(readOnly);

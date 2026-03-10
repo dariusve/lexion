@@ -1,17 +1,18 @@
 <template>
   <main class="shell">
     <h1>Nuxt Adapter Sample</h1>
-    <p>Select text to test inline formatting and links. Place the cursor in the list to test indent and outdent.</p>
+    <p>Select text to test inline formatting and links. Place the cursor in the second list item to test indent, then outdent.</p>
     <div class="toolbar">
       <button
         v-for="button in toolbarButtons"
         :key="button.label"
         type="button"
+        @mousedown.prevent
         @click="runCommand(button)"
       >
         {{ button.label }}
       </button>
-      <button type="button" @click="toggleReadOnly">
+      <button type="button" @mousedown.prevent @click="toggleReadOnly">
         {{ readOnly ? "Set Editable" : "Toggle Read Only" }}
       </button>
     </div>
@@ -42,7 +43,7 @@ interface ToolbarButtonConfig {
 }
 
 const LINK_ATTRIBUTES = {
-  href: "https://lexion.dev",
+  href: "https://lexion.app",
   title: "Lexion"
 } as const;
 
@@ -89,7 +90,16 @@ const createDoc = (): JSONDocument => ({
           content: [
             {
               type: "paragraph",
-              content: [{ type: "text", text: "List item for indent and outdent commands" }]
+              content: [{ type: "text", text: "Parent list item" }]
+            }
+          ]
+        },
+        {
+          type: "list_item",
+          content: [
+            {
+              type: "paragraph",
+              content: [{ type: "text", text: "Place the cursor here to test indent, then outdent." }]
             }
           ]
         }

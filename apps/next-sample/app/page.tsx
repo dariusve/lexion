@@ -12,7 +12,7 @@ interface ToolbarButtonConfig {
 }
 
 const LINK_ATTRIBUTES = {
-  href: "https://lexion.dev",
+  href: "https://lexion.app",
   title: "Lexion"
 } as const;
 
@@ -59,7 +59,16 @@ const createDoc = (): JSONDocument => ({
           content: [
             {
               type: "paragraph",
-              content: [{ type: "text", text: "List item for indent and outdent commands" }]
+              content: [{ type: "text", text: "Parent list item" }]
+            }
+          ]
+        },
+        {
+          type: "list_item",
+          content: [
+            {
+              type: "paragraph",
+              content: [{ type: "text", text: "Place the cursor here to test indent, then outdent." }]
             }
           ]
         }
@@ -95,14 +104,23 @@ export default function Page() {
   return (
     <main className="shell">
       <h1>Next Adapter Sample</h1>
-      <p>Select text to test inline formatting and links. Place the cursor in the list to test indent and outdent.</p>
+      <p>Select text to test inline formatting and links. Place the cursor in the second list item to test indent, then outdent.</p>
       <div className="toolbar">
         {toolbarButtons.map((button) => (
-          <button key={button.label} type="button" onClick={() => runCommand(button)}>
+          <button
+            key={button.label}
+            type="button"
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={() => runCommand(button)}
+          >
             {button.label}
           </button>
         ))}
-        <button type="button" onClick={() => setReadOnly((next) => !next)}>
+        <button
+          type="button"
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => setReadOnly((next) => !next)}
+        >
           {readOnly ? "Set Editable" : "Toggle Read Only"}
         </button>
       </div>

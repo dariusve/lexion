@@ -81,8 +81,11 @@ export const LexionEditorView = ({
     }
 
     if (isControlled && value !== undefined) {
-      activeEditor.setJSON(value);
-      lastAppliedValueRef.current = serializeJSON(value);
+      const nextValue = serializeJSON(value);
+      if (nextValue !== serializeJSON(activeEditor.getJSON())) {
+        activeEditor.setJSON(value);
+      }
+      lastAppliedValueRef.current = nextValue;
     }
 
     const view = new EditorView(containerRef.current, {
@@ -125,7 +128,10 @@ export const LexionEditorView = ({
     }
 
     const nextValue = serializeJSON(value);
-    if (nextValue === lastAppliedValueRef.current) {
+    if (nextValue === lastAppliedValueRef.current || nextValue === serializeJSON(activeEditor.getJSON())) {
+      lastAppliedValueRef.current = nextValue;
+      viewRef.current?.updateState(activeEditor.state);
+      setStatusBarItems(activeEditor.getStatusBarItems());
       return;
     }
 

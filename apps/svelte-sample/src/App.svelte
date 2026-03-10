@@ -10,7 +10,7 @@
   }
 
   const LINK_ATTRIBUTES = {
-    href: "https://lexion.dev",
+    href: "https://lexion.app",
     title: "Lexion"
   } as const;
 
@@ -57,7 +57,16 @@
             content: [
               {
                 type: "paragraph",
-                content: [{ type: "text", text: "List item for indent and outdent commands" }]
+                content: [{ type: "text", text: "Parent list item" }]
+              }
+            ]
+          },
+          {
+            type: "list_item",
+            content: [
+              {
+                type: "paragraph",
+                content: [{ type: "text", text: "Place the cursor here to test indent, then outdent." }]
               }
             ]
           }
@@ -101,12 +110,14 @@
 
 <main class="shell">
   <h1>Svelte Adapter Sample</h1>
-  <p>Select text to test inline formatting and links. Place the cursor in the list to test indent and outdent.</p>
+  <p>Select text to test inline formatting and links. Place the cursor in the second list item to test indent, then outdent.</p>
   <div class="toolbar">
     {#each toolbarButtons as button (button.label)}
-      <button type="button" on:click={() => runCommand(button)}>{button.label}</button>
+      <button type="button" on:mousedown|preventDefault on:click={() => runCommand(button)}>
+        {button.label}
+      </button>
     {/each}
-    <button type="button" on:click={toggleReadOnly}>
+    <button type="button" on:mousedown|preventDefault on:click={toggleReadOnly}>
       {readOnly ? "Set Editable" : "Toggle Read Only"}
     </button>
   </div>

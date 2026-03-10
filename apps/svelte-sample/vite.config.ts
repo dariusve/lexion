@@ -5,6 +5,7 @@ import { svelte } from "@sveltejs/vite-plugin-svelte";
 export default defineConfig({
   plugins: [svelte()],
   resolve: {
+    conditions: ["browser"],
     alias: {
       "@lexion-rte/core": fileURLToPath(new URL("../../packages/core/src/index.ts", import.meta.url)),
       "@lexion-rte/starter-kit": fileURLToPath(

@@ -10,7 +10,7 @@ interface ToolbarButtonConfig {
 }
 
 const LINK_ATTRIBUTES = {
-  href: "https://lexion.dev",
+  href: "https://lexion.app",
   title: "Lexion"
 } as const;
 
@@ -57,7 +57,16 @@ const createParagraphDoc = (): JSONDocument => ({
           content: [
             {
               type: "paragraph",
-              content: [{ type: "text", text: "List item for indent and outdent commands" }]
+              content: [{ type: "text", text: "Parent list item" }]
+            }
+          ]
+        },
+        {
+          type: "list_item",
+          content: [
+            {
+              type: "paragraph",
+              content: [{ type: "text", text: "Place the cursor here to test indent, then outdent." }]
             }
           ]
         }
@@ -93,7 +102,7 @@ export const App = defineComponent({
       h("main", { class: "page" }, [
         h("h1", "Lexion Vue Local Sample"),
         h("p", "Uses a shared toolbar plus the Vue 3 editor view to exercise the full starter-kit command set."),
-        h("p", "Select text for inline marks and links. Place the cursor in the list to test indent and outdent."),
+        h("p", "Select text for inline marks and links. Place the cursor in the second list item to test indent, then outdent."),
         h(
           "div",
           { class: "toolbar" },
@@ -103,6 +112,7 @@ export const App = defineComponent({
                 "button",
                 {
                   type: "button",
+                  onMousedown: (event: MouseEvent) => event.preventDefault(),
                   onClick: () => runCommand(button)
                 },
                 button.label
@@ -112,6 +122,7 @@ export const App = defineComponent({
               "button",
               {
                 type: "button",
+                onMousedown: (event: MouseEvent) => event.preventDefault(),
                 onClick: toggleReadOnly
               },
               readOnly.value ? "Set Editable" : "Toggle Read Only"

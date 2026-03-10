@@ -11,7 +11,7 @@
         "../../../node_modules/.pnpm/@vue+runtime-core@3.5.28/node_modules/@vue/runtime-core"
       ],
       "@vue/compiler-sfc": [
-        "../../../node_modules/.pnpm/@vue+compiler-sfc@2.7.16/node_modules/@vue/compiler-sfc"
+        "../../../node_modules/.pnpm/@vue+compiler-sfc@3.5.28/node_modules/@vue/compiler-sfc"
       ],
       "vue-router": [
         "../../../node_modules/.pnpm/vue-router@4.6.4_vue@3.5.28_typescript@5.9.3_/node_modules/vue-router"
@@ -29,7 +29,7 @@
         "../../../node_modules/.pnpm/nuxt@4.3.1_@parcel+watcher@2.5.6_@types+node@22.19.11_@vue+compiler-sfc@3.5.28_cac@6.7.14_db0_jn7yxn7siqpycyoueof5qqssuq/node_modules/nuxt"
       ],
       "vite/client": [
-        "../../../node_modules/.pnpm/vite@6.4.1_@types+node@22.19.11_jiti@2.6.1_terser@5.46.0_yaml@2.8.2/node_modules/vite/client"
+        "../../../node_modules/.pnpm/vite@5.4.21_@types+node@22.19.11_terser@5.46.0/node_modules/vite/client"
       ],
       "nitropack/types": [
         "../../../node_modules/.pnpm/nitropack@2.13.1/node_modules/nitropack/types"
@@ -122,7 +122,7 @@
         "./imports"
       ],
       "#app-manifest": [
-        "./manifest/meta/e2da48e4-d94e-4fbc-89e0-b414ed5618f6.json"
+        "./manifest/meta/dev"
       ],
       "#components": [
         "./components"
@@ -201,7 +201,7 @@
     "../../../node_modules/.pnpm/@nuxt+telemetry@2.7.0_@nuxt+kit@4.3.1_magicast@0.5.2_/node_modules/dist/runtime/server",
     "../../../node_modules/.pnpm/@nuxt+telemetry@2.7.0_@nuxt+kit@4.3.1_magicast@0.5.2_/node_modules/*.*",
     "../../../node_modules/.pnpm/@nuxt+telemetry@2.7.0_@nuxt+kit@4.3.1_magicast@0.5.2_/node_modules/dist/*.*",
-    "../.output",
+    "dev",
     "../server"
   ]
 }

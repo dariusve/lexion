@@ -192,6 +192,8 @@ editor.execute(starterKitCommandNames.sinkListItem);
 editor.execute(starterKitCommandNames.liftListItem);
 ```
 
+`sinkListItem` nests the current list item under its previous sibling, so it only succeeds when the cursor is in a non-first list item.
+
 Inside lists, the starter-kit also wires keyboard behavior by default:
 
 - `Enter` splits the current list item

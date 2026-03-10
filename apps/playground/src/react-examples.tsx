@@ -39,7 +39,12 @@ const ReactToolbarExample = () => {
       <h3>React Full Toolbar</h3>
       <div className="lexion-toolbar">
         {fullStarterKitToolbarButtons.map((button) => (
-          <button key={button.label} type="button" onClick={() => runCommand(button)}>
+          <button
+            key={button.label}
+            type="button"
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={() => runCommand(button)}
+          >
             {button.label}
           </button>
         ))}

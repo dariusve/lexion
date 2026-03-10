@@ -1,15 +1,16 @@
 <main class="shell">
   <h1>Angular Adapter Sample</h1>
-  <p>Select text to test inline formatting and links. Place the cursor in the list to test indent and outdent.</p>
+  <p>Select text to test inline formatting and links. Place the cursor in the second list item to test indent, then outdent.</p>
   <div class="toolbar">
     <button
       *ngFor="let button of toolbarButtons"
       type="button"
+      (mousedown)="$event.preventDefault()"
       (click)="runCommand(button)"
     >
       {{ button.label }}
     </button>
-    <button type="button" (click)="toggleReadOnly()">
+    <button type="button" (mousedown)="$event.preventDefault()" (click)="toggleReadOnly()">
       {{ readOnly() ? "Set Editable" : "Toggle Read Only" }}
     </button>
   </div>

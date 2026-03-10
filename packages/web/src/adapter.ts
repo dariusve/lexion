@@ -112,7 +112,9 @@ export class LexionWebEditor {
     this.destroyed = false;
 
     if (options.value !== undefined) {
-      this.editorInstance.setJSON(options.value);
+      if (this.lastAppliedValue !== serializeJSON(this.editorInstance.getJSON())) {
+        this.editorInstance.setJSON(options.value);
+      }
     }
 
     this.view = new EditorView(this.hostElement, {
@@ -167,7 +169,10 @@ export class LexionWebEditor {
   public setValue(value: JSONDocument): void {
     this.assertNotDestroyed();
     const serialized = serializeJSON(value);
-    if (serialized === this.lastAppliedValue) {
+    if (serialized === this.lastAppliedValue || serialized === serializeJSON(this.editorInstance.getJSON())) {
+      this.lastAppliedValue = serialized;
+      this.view.updateState(this.editorInstance.state);
+      this.renderStatusBar();
       return;
     }
 

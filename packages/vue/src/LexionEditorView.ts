@@ -138,8 +138,11 @@ export const LexionEditorView = defineComponent({
       }
 
       if (props.modelValue !== undefined && activeEditorRef.value) {
-        activeEditorRef.value.setJSON(props.modelValue);
-        lastAppliedValueRef.value = serializeJSON(props.modelValue);
+        const nextValue = serializeJSON(props.modelValue);
+        if (nextValue !== serializeJSON(activeEditorRef.value.getJSON())) {
+          activeEditorRef.value.setJSON(props.modelValue);
+        }
+        lastAppliedValueRef.value = nextValue;
       }
 
       syncStatusBar();
@@ -193,7 +196,10 @@ export const LexionEditorView = defineComponent({
         }
 
         const serialized = serializeJSON(nextValue);
-        if (serialized === lastAppliedValueRef.value) {
+        if (serialized === lastAppliedValueRef.value || serialized === serializeJSON(editor.getJSON())) {
+          lastAppliedValueRef.value = serialized;
+          viewRef.value?.updateState(editor.state);
+          syncStatusBar();
           return;
         }
 

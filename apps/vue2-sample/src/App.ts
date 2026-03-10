@@ -11,7 +11,7 @@ interface ToolbarButtonConfig {
 }
 
 const LINK_ATTRIBUTES = {
-  href: "https://lexion.dev",
+  href: "https://lexion.app",
   title: "Lexion"
 } as const;
 
@@ -58,7 +58,16 @@ const createDoc = (): JSONDocument => ({
           content: [
             {
               type: "paragraph",
-              content: [{ type: "text", text: "List item for indent and outdent commands" }]
+              content: [{ type: "text", text: "Parent list item" }]
+            }
+          ]
+        },
+        {
+          type: "list_item",
+          content: [
+            {
+              type: "paragraph",
+              content: [{ type: "text", text: "Place the cursor here to test indent, then outdent." }]
             }
           ]
         }
@@ -125,7 +134,7 @@ export const App = Vue.extend({
     const vm = this as AppVm;
     return h("main", { class: "shell" }, [
       h("h1", "Vue2 Adapter Sample"),
-      h("p", "Select text to test inline formatting and links. Place the cursor in the list to test indent and outdent."),
+      h("p", "Select text to test inline formatting and links. Place the cursor in the second list item to test indent, then outdent."),
       h("div", { class: "toolbar" }, [
         ...toolbarButtons.map((button) =>
           h(
@@ -134,6 +143,7 @@ export const App = Vue.extend({
               key: button.label,
               attrs: { type: "button" },
               on: {
+                mousedown: (event: MouseEvent) => event.preventDefault(),
                 click: () => vm.runCommand(button)
               }
             },
@@ -145,6 +155,7 @@ export const App = Vue.extend({
           {
             attrs: { type: "button" },
             on: {
+              mousedown: (event: MouseEvent) => event.preventDefault(),
               click: vm.toggleReadOnly
             }
           },

@@ -4,7 +4,7 @@ import "../styles/global.css";
 
 <main class="shell">
   <h1>Astro Adapter Sample</h1>
-  <p>Select text to test inline formatting and links. Place the cursor in the list to test indent and outdent.</p>
+  <p>Select text to test inline formatting and links. Place the cursor in the second list item to test indent, then outdent.</p>
   <div class="toolbar">
     <button id="readonly" type="button">Toggle Read Only</button>
   </div>
@@ -17,7 +17,7 @@ import "../styles/global.css";
   import { mountLexionAstroEditor } from "@lexion-rte/astro";
 
   const LINK_ATTRIBUTES = {
-    href: "https://lexion.dev",
+    href: "https://lexion.app",
     title: "Lexion"
   };
 
@@ -64,7 +64,16 @@ import "../styles/global.css";
             content: [
               {
                 type: "paragraph",
-                content: [{ type: "text", text: "List item for indent and outdent commands" }]
+                content: [{ type: "text", text: "Parent list item" }]
+              }
+            ]
+          },
+          {
+            type: "list_item",
+            content: [
+              {
+                type: "paragraph",
+                content: [{ type: "text", text: "Place the cursor here to test indent, then outdent." }]
               }
             ]
           }
@@ -89,6 +98,9 @@ import "../styles/global.css";
     const button = document.createElement("button");
     button.type = "button";
     button.textContent = buttonConfig.label;
+    button.addEventListener("mousedown", (event) => {
+      event.preventDefault();
+    });
     button.addEventListener("click", () => {
       adapter.execute(buttonConfig.command, ...(buttonConfig.args ?? []));
     });
@@ -108,6 +120,9 @@ import "../styles/global.css";
     stateElement.textContent = JSON.stringify(currentEditor.getJSON(), null, 2);
   }
 
+  readOnlyButton.addEventListener("mousedown", (event) => {
+    event.preventDefault();
+  });
   readOnlyButton.addEventListener("click", () => {
     readOnly = !readOnly;
     adapter.update({ readOnly });
