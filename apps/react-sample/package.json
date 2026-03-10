@@ -12,6 +12,7 @@
   "dependencies": {
     "@lexion-rte/core": "workspace:*",
     "@lexion-rte/react": "workspace:*",
+    "@lexion-rte/starter-kit": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

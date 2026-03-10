@@ -13,13 +13,20 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "lint": "eslint src --ext .ts"
+    "lint": "eslint src --ext .ts,.tsx"
   },
   "dependencies": {
     "@lexion-rte/core": "workspace:*",
+    "@lexion-rte/react": "workspace:*",
     "@lexion-rte/starter-kit": "workspace:*",
-    "@lexion-rte/web": "workspace:*",
     "@lexion-rte/vue": "workspace:*",
+    "@lexion-rte/web": "workspace:*",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.13",
+    "@types/react-dom": "^19.2.3"
   }
 }

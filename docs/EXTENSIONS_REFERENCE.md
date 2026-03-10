@@ -23,7 +23,7 @@ This document is the canonical API reference for the Lexion extension packages.
 | `key` | `string` | `"starter-kit"` |
 | `schema` | `Schema` | `starterKitSchema` |
 | `commands` | `() => CommandMap` | Returns `createStarterKitCommands()` |
-| `prosemirrorPlugins` | `() => Plugin[]` | Returns `[history(), keymap(baseKeymap)]` |
+| `prosemirrorPlugins` | `({ schema }) => Plugin[]` | Returns history, base keymap, list keymap, gap cursor, drop cursor, and trailing node plugins. |
 
 ### Starter-Kit Commands
 
@@ -33,12 +33,19 @@ This document is the canonical API reference for the Lexion extension packages.
 | `toggleHeading` | `"toggleHeading"` | `level: number` (`1..6`) | Sets block type to heading with provided level. |
 | `toggleBold` | `"toggleBold"` | none | Toggles `strong` mark in selection. |
 | `toggleItalic` | `"toggleItalic"` | none | Toggles `em` mark in selection. |
+| `toggleCode` | `"toggleCode"` | none | Toggles inline `code` mark in selection. |
+| `toggleStrike` | `"toggleStrike"` | none | Toggles `strike` mark in selection. |
+| `toggleUnderline` | `"toggleUnderline"` | none | Toggles `underline` mark in selection. |
+| `toggleBlockquote` | `"toggleBlockquote"` | none | Wraps current block in blockquote, or lifts it out. |
+| `toggleCodeBlock` | `"toggleCodeBlock"` | none | Sets block type to `code_block`, or back to paragraph. |
 | `wrapBulletList` | `"wrapBulletList"` | none | Wraps selection in bullet list. |
 | `wrapOrderedList` | `"wrapOrderedList"` | none | Wraps selection in ordered list. |
 | `liftListItem` | `"liftListItem"` | none | Lifts current list item one level. |
 | `sinkListItem` | `"sinkListItem"` | none | Sinks current list item one level. |
 | `setLink` | `"setLink"` | `LinkAttributes` | Applies link mark to non-empty selection. |
 | `unsetLink` | `"unsetLink"` | none | Removes link mark in selection range. |
+| `insertHorizontalRule` | `"insertHorizontalRule"` | none | Inserts `horizontal_rule` node at selection. |
+| `insertHardBreak` | `"insertHardBreak"` | none | Inserts `hard_break` node at selection. |
 | `undo` | `"undo"` | none | Executes history undo. |
 | `redo` | `"redo"` | none | Executes history redo. |
 
@@ -65,7 +72,10 @@ const editor = new LexionEditor({
 editor.execute(starterKitCommandNames.setParagraph);
 editor.execute(starterKitCommandNames.toggleHeading, 3);
 editor.execute(starterKitCommandNames.toggleBold);
+editor.execute(starterKitCommandNames.toggleStrike);
+editor.execute(starterKitCommandNames.toggleCodeBlock);
 editor.execute(starterKitCommandNames.wrapBulletList);
+editor.execute(starterKitCommandNames.insertHorizontalRule);
 editor.execute(starterKitCommandNames.undo);
 ```
 

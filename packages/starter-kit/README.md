@@ -34,13 +34,24 @@ The starter kit provides:
 - headings
 - bold
 - italic
+- inline code
+- strikethrough
+- underline
+- blockquotes
+- code blocks
 - links
 - bullet lists
 - ordered lists
+- horizontal rules
+- hard breaks
 - list indent and outdent commands
 - undo and redo
+- list keyboard shortcuts for split, indent, and outdent
+- gap cursor navigation between block nodes
+- drop cursor feedback during drag and drop
+- automatic trailing paragraph after block content
 
-It also provides the default ProseMirror history plugin and base keymap so a new editor instance is usable immediately.
+It also provides the default ProseMirror history plugin, base keymap, list keymap plugin, gap cursor plugin, drop cursor plugin, and trailing node plugin so a new editor instance is usable immediately.
 
 ## Exports
 
@@ -50,6 +61,17 @@ It also provides the default ProseMirror history plugin and base keymap so a new
 - `createStarterKitCommands()`
 - `starterKitCommandNames`
 
+## Default Plugins
+
+`starterKitExtension` enables these ProseMirror plugins by default:
+
+- `history()`
+- `keymap(baseKeymap)`
+- `createListKeymapPlugin(schema)`
+- `gapCursor()`
+- `dropCursor()`
+- `createTrailingNodePlugin()`
+
 ## Command Names
 
 `starterKitCommandNames` includes:
@@ -58,14 +80,45 @@ It also provides the default ProseMirror history plugin and base keymap so a new
 - `toggleHeading`
 - `toggleBold`
 - `toggleItalic`
+- `toggleCode`
+- `toggleStrike`
+- `toggleUnderline`
+- `toggleBlockquote`
+- `toggleCodeBlock`
 - `wrapBulletList`
 - `wrapOrderedList`
 - `liftListItem`
 - `sinkListItem`
 - `setLink`
 - `unsetLink`
+- `insertHorizontalRule`
+- `insertHardBreak`
 - `undo`
 - `redo`
+
+## Command Reference
+
+| Command | Args | Description | Notes |
+| --- | --- | --- | --- |
+| `setParagraph` | none | Sets the current block to a paragraph. | Useful after headings, blockquotes, or code blocks. |
+| `toggleHeading` | `level: 1..6` | Sets the current block to the requested heading level. | Use toolbar buttons such as `H1`, `H2`, or `H3` to pass the level. |
+| `toggleBold` | none | Toggles bold formatting on the current selection. | Requires a text selection for visible effect. |
+| `toggleItalic` | none | Toggles italic formatting on the current selection. | Requires a text selection for visible effect. |
+| `toggleCode` | none | Toggles inline code formatting on the current selection. | Best used on short inline text spans. |
+| `toggleStrike` | none | Toggles strikethrough formatting on the current selection. | Requires a text selection for visible effect. |
+| `toggleUnderline` | none | Toggles underline formatting on the current selection. | Requires a text selection for visible effect. |
+| `toggleBlockquote` | none | Wraps the current block in a blockquote, or lifts it back out. | Use when the cursor is inside a text block. |
+| `toggleCodeBlock` | none | Converts the current block to a code block, or back to paragraph. | Good for fenced-code style editing flows. |
+| `wrapBulletList` | none | Wraps the current selection in a bullet list. | Creates list structure from the active block. |
+| `wrapOrderedList` | none | Wraps the current selection in an ordered list. | Creates numbered list structure from the active block. |
+| `liftListItem` | none | Moves the current list item one level out. | Most useful when the cursor is already inside a list item. |
+| `sinkListItem` | none | Moves the current list item one level deeper. | Most useful when the cursor is already inside a list item. |
+| `setLink` | `{ href: string; title?: string \| null }` | Applies a link mark to the current selection. | Returns `false` if the selection is empty or the payload is invalid. |
+| `unsetLink` | none | Removes the link mark from the current selection range. | Works on the selected text range. |
+| `insertHorizontalRule` | none | Inserts a horizontal rule at the current selection. | Useful for section breaks. |
+| `insertHardBreak` | none | Inserts a hard line break. | Useful inside paragraphs or list items. |
+| `undo` | none | Reverts the last history step. | Powered by the history plugin. |
+| `redo` | none | Reapplies the last undone history step. | Powered by the history plugin. |
 
 ## Basic Example
 
@@ -77,6 +130,8 @@ const editor = new LexionEditor({ extensions: [starterKitExtension] });
 
 editor.execute(starterKitCommandNames.toggleHeading, 2);
 editor.execute(starterKitCommandNames.toggleBold);
+editor.execute(starterKitCommandNames.toggleStrike);
+editor.execute(starterKitCommandNames.toggleCodeBlock);
 editor.execute(starterKitCommandNames.setLink, {
   href: "https://example.com",
   title: "Example"
@@ -122,12 +177,32 @@ editor.execute(starterKitCommandNames.setLink, {
 });
 ```
 
+Inline formatting commands can be combined on the current selection:
+
+```ts
+editor.execute(starterKitCommandNames.toggleUnderline);
+editor.execute(starterKitCommandNames.toggleStrike);
+```
+
 List commands operate on the current selection:
 
 ```ts
 editor.execute(starterKitCommandNames.wrapBulletList);
 editor.execute(starterKitCommandNames.sinkListItem);
 editor.execute(starterKitCommandNames.liftListItem);
+```
+
+Inside lists, the starter-kit also wires keyboard behavior by default:
+
+- `Enter` splits the current list item
+- `Tab` indents into a nested list item
+- `Shift-Tab` outdents the current list item
+
+You can also insert structural content:
+
+```ts
+editor.execute(starterKitCommandNames.insertHorizontalRule);
+editor.execute(starterKitCommandNames.insertHardBreak);
 ```
 
 ## Schema and Command Factories

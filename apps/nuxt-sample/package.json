@@ -12,6 +12,7 @@
   "dependencies": {
     "@lexion-rte/core": "workspace:*",
     "@lexion-rte/nuxt": "workspace:*",
+    "@lexion-rte/starter-kit": "workspace:*",
     "@lexion-rte/vue": "workspace:*",
     "nuxt": "^4.0.0",
     "vue": "^3.4.0"

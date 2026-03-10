@@ -4,12 +4,65 @@ import type { JSONDocument } from "@lexion-rte/core";
 import { starterKitCommandNames } from "@lexion-rte/starter-kit";
 import { createLexionVue2Adapter, type LexionVue2Adapter } from "@lexion-rte/vue2";
 
-const createDoc = (text: string): JSONDocument => ({
+interface ToolbarButtonConfig {
+  readonly label: string;
+  readonly command: string;
+  readonly args?: readonly unknown[];
+}
+
+const LINK_ATTRIBUTES = {
+  href: "https://lexion.dev",
+  title: "Lexion"
+} as const;
+
+const toolbarButtons: readonly ToolbarButtonConfig[] = [
+  { label: "Paragraph", command: starterKitCommandNames.setParagraph },
+  { label: "H1", command: starterKitCommandNames.toggleHeading, args: [1] },
+  { label: "H2", command: starterKitCommandNames.toggleHeading, args: [2] },
+  { label: "H3", command: starterKitCommandNames.toggleHeading, args: [3] },
+  { label: "Bold", command: starterKitCommandNames.toggleBold },
+  { label: "Italic", command: starterKitCommandNames.toggleItalic },
+  { label: "Code", command: starterKitCommandNames.toggleCode },
+  { label: "Strike", command: starterKitCommandNames.toggleStrike },
+  { label: "Underline", command: starterKitCommandNames.toggleUnderline },
+  { label: "Quote", command: starterKitCommandNames.toggleBlockquote },
+  { label: "Code Block", command: starterKitCommandNames.toggleCodeBlock },
+  { label: "Bullet List", command: starterKitCommandNames.wrapBulletList },
+  { label: "Ordered List", command: starterKitCommandNames.wrapOrderedList },
+  { label: "Outdent", command: starterKitCommandNames.liftListItem },
+  { label: "Indent", command: starterKitCommandNames.sinkListItem },
+  { label: "Set Link", command: starterKitCommandNames.setLink, args: [LINK_ATTRIBUTES] },
+  { label: "Unset Link", command: starterKitCommandNames.unsetLink },
+  { label: "Rule", command: starterKitCommandNames.insertHorizontalRule },
+  { label: "Break", command: starterKitCommandNames.insertHardBreak },
+  { label: "Undo", command: starterKitCommandNames.undo },
+  { label: "Redo", command: starterKitCommandNames.redo }
+];
+
+const createDoc = (): JSONDocument => ({
   type: "doc",
   content: [
     {
       type: "paragraph",
-      content: [{ type: "text", text }]
+      content: [{ type: "text", text: "Select text to try inline marks, links, and block transforms." }]
+    },
+    {
+      type: "paragraph",
+      content: [{ type: "text", text: "Use the toolbar to compare the full starter-kit command set." }]
+    },
+    {
+      type: "bullet_list",
+      content: [
+        {
+          type: "list_item",
+          content: [
+            {
+              type: "paragraph",
+              content: [{ type: "text", text: "List item for indent and outdent commands" }]
+            }
+          ]
+        }
+      ]
     }
   ]
 });
@@ -26,7 +79,7 @@ export const App = Vue.extend({
     return {
       adapter: null as LexionVue2Adapter | null,
       readOnly: false,
-      state: JSON.stringify(createDoc("Hello from @lexion-rte/vue2"), null, 2)
+      state: JSON.stringify(createDoc(), null, 2)
     };
   },
   mounted() {
@@ -37,7 +90,7 @@ export const App = Vue.extend({
     }
 
     vm.adapter = createLexionVue2Adapter({
-      defaultValue: createDoc("Hello from @lexion-rte/vue2"),
+      defaultValue: createDoc(),
       onChange: (value) => {
         vm.state = JSON.stringify(value, null, 2);
       }
@@ -54,9 +107,9 @@ export const App = Vue.extend({
     vm.adapter?.destroy();
   },
   methods: {
-    toggleBold() {
+    runCommand(button: ToolbarButtonConfig) {
       const vm = this as AppVm;
-      vm.adapter?.execute(starterKitCommandNames.toggleBold);
+      vm.adapter?.execute(button.command, ...(button.args ?? []));
     },
     toggleReadOnly() {
       const vm = this as AppVm;
@@ -72,16 +125,20 @@ export const App = Vue.extend({
     const vm = this as AppVm;
     return h("main", { class: "shell" }, [
       h("h1", "Vue2 Adapter Sample"),
+      h("p", "Select text to test inline formatting and links. Place the cursor in the list to test indent and outdent."),
       h("div", { class: "toolbar" }, [
-        h(
-          "button",
-          {
-            attrs: { type: "button" },
-            on: {
-              click: vm.toggleBold
-            }
-          },
-          "Toggle Bold"
+        ...toolbarButtons.map((button) =>
+          h(
+            "button",
+            {
+              key: button.label,
+              attrs: { type: "button" },
+              on: {
+                click: () => vm.runCommand(button)
+              }
+            },
+            button.label
+          )
         ),
         h(
           "button",

@@ -96,12 +96,19 @@ editor.unregisterCommand("insertTimestamp");
 - `toggleHeading`
 - `toggleBold`
 - `toggleItalic`
+- `toggleCode`
+- `toggleStrike`
+- `toggleUnderline`
+- `toggleBlockquote`
+- `toggleCodeBlock`
 - `wrapBulletList`
 - `wrapOrderedList`
 - `liftListItem`
 - `sinkListItem`
 - `setLink`
 - `unsetLink`
+- `insertHorizontalRule`
+- `insertHardBreak`
 - `undo`
 - `redo`
 
@@ -114,10 +121,13 @@ const editor = new LexionEditor({ extensions: [starterKitExtension] });
 
 editor.execute(starterKitCommandNames.toggleHeading, 2);
 editor.execute(starterKitCommandNames.toggleBold);
+editor.execute(starterKitCommandNames.toggleUnderline);
+editor.execute(starterKitCommandNames.toggleCodeBlock);
 editor.execute(starterKitCommandNames.setLink, {
   href: "https://lexion.dev",
   title: "Lexion"
 });
+editor.execute(starterKitCommandNames.insertHorizontalRule);
 ```
 
 ## Commercial Features

@@ -10,13 +10,26 @@ Use `@lexion-rte/web` plus starter-kit command names:
 import { starterKitCommandNames } from "@lexion-rte/starter-kit";
 import { createLexionWebEditor } from "@lexion-rte/web";
 
+const toolbarButtons = [
+  { label: "Paragraph", command: starterKitCommandNames.setParagraph },
+  { label: "Bold", command: starterKitCommandNames.toggleBold },
+  { label: "Code Block", command: starterKitCommandNames.toggleCodeBlock },
+  { label: "Bullet List", command: starterKitCommandNames.wrapBulletList },
+  { label: "Undo", command: starterKitCommandNames.undo }
+];
+
 const editor = createLexionWebEditor({
   element: document.getElementById("editor")!
 });
 
-const boldButton = document.getElementById("toolbar-bold") as HTMLButtonElement;
-boldButton.addEventListener("click", () => {
-  editor.execute(starterKitCommandNames.toggleBold);
+toolbarButtons.forEach((buttonConfig) => {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.textContent = buttonConfig.label;
+  button.addEventListener("click", () => {
+    editor.execute(buttonConfig.command);
+  });
+  document.getElementById("toolbar")!.appendChild(button);
 });
 ```
 
@@ -280,10 +293,14 @@ const value = ref<JSONDocument>(doc);
 
 A runnable sample adapter is included in:
 - `apps/playground/src/web-toolbar-example.ts`
+- `apps/playground/src/vue-examples.ts`
+- `apps/playground/src/react-examples.tsx`
 
 Exports:
 - `SampleToolbarAdapter`
 - `mountWebToolbarExample(element)`
+- `mountVueToolbarExample(element)`
+- `mountReactToolbarExample(element)`
 
 ## Runnable Adapter Sample Apps
 

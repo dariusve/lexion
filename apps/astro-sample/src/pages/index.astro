@@ -4,8 +4,8 @@ import "../styles/global.css";
 
 <main class="shell">
   <h1>Astro Adapter Sample</h1>
+  <p>Select text to test inline formatting and links. Place the cursor in the list to test indent and outdent.</p>
   <div class="toolbar">
-    <button id="bold" type="button">Toggle Bold</button>
     <button id="readonly" type="button">Toggle Read Only</button>
   </div>
   <section class="editor" id="editor"></section>
@@ -16,31 +16,88 @@ import "../styles/global.css";
   import { starterKitCommandNames } from "@lexion-rte/starter-kit";
   import { mountLexionAstroEditor } from "@lexion-rte/astro";
 
-  const createDoc = (text) => ({
+  const LINK_ATTRIBUTES = {
+    href: "https://lexion.dev",
+    title: "Lexion"
+  };
+
+  const toolbarButtons = [
+    { label: "Paragraph", command: starterKitCommandNames.setParagraph },
+    { label: "H1", command: starterKitCommandNames.toggleHeading, args: [1] },
+    { label: "H2", command: starterKitCommandNames.toggleHeading, args: [2] },
+    { label: "H3", command: starterKitCommandNames.toggleHeading, args: [3] },
+    { label: "Bold", command: starterKitCommandNames.toggleBold },
+    { label: "Italic", command: starterKitCommandNames.toggleItalic },
+    { label: "Code", command: starterKitCommandNames.toggleCode },
+    { label: "Strike", command: starterKitCommandNames.toggleStrike },
+    { label: "Underline", command: starterKitCommandNames.toggleUnderline },
+    { label: "Quote", command: starterKitCommandNames.toggleBlockquote },
+    { label: "Code Block", command: starterKitCommandNames.toggleCodeBlock },
+    { label: "Bullet List", command: starterKitCommandNames.wrapBulletList },
+    { label: "Ordered List", command: starterKitCommandNames.wrapOrderedList },
+    { label: "Outdent", command: starterKitCommandNames.liftListItem },
+    { label: "Indent", command: starterKitCommandNames.sinkListItem },
+    { label: "Set Link", command: starterKitCommandNames.setLink, args: [LINK_ATTRIBUTES] },
+    { label: "Unset Link", command: starterKitCommandNames.unsetLink },
+    { label: "Rule", command: starterKitCommandNames.insertHorizontalRule },
+    { label: "Break", command: starterKitCommandNames.insertHardBreak },
+    { label: "Undo", command: starterKitCommandNames.undo },
+    { label: "Redo", command: starterKitCommandNames.redo }
+  ];
+
+  const createDoc = () => ({
     type: "doc",
     content: [
       {
         type: "paragraph",
-        content: [{ type: "text", text }]
+        content: [{ type: "text", text: "Select text to try inline marks, links, and block transforms." }]
+      },
+      {
+        type: "paragraph",
+        content: [{ type: "text", text: "Use the toolbar to compare the full starter-kit command set." }]
+      },
+      {
+        type: "bullet_list",
+        content: [
+          {
+            type: "list_item",
+            content: [
+              {
+                type: "paragraph",
+                content: [{ type: "text", text: "List item for indent and outdent commands" }]
+              }
+            ]
+          }
+        ]
       }
     ]
   });
 
   const editorElement = document.querySelector("#editor");
   const stateElement = document.querySelector("#state");
-  const boldButton = document.querySelector("#bold");
   const readOnlyButton = document.querySelector("#readonly");
+  const toolbarElement = document.querySelector(".toolbar");
 
   if (!(editorElement instanceof HTMLElement)) throw new Error("Missing editor element");
   if (!(stateElement instanceof HTMLElement)) throw new Error("Missing state element");
-  if (!(boldButton instanceof HTMLButtonElement)) throw new Error("Missing bold button");
   if (!(readOnlyButton instanceof HTMLButtonElement)) throw new Error("Missing readonly button");
+  if (!(toolbarElement instanceof HTMLElement)) throw new Error("Missing toolbar element");
 
   let readOnly = false;
 
+  toolbarButtons.forEach((buttonConfig) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = buttonConfig.label;
+    button.addEventListener("click", () => {
+      adapter.execute(buttonConfig.command, ...(buttonConfig.args ?? []));
+    });
+    toolbarElement.insertBefore(button, readOnlyButton);
+  });
+
   const adapter = mountLexionAstroEditor({
     element: editorElement,
-    defaultValue: createDoc("Hello from @lexion-rte/astro"),
+    defaultValue: createDoc(),
     onChange: (value) => {
       stateElement.textContent = JSON.stringify(value, null, 2);
     }
@@ -50,10 +107,6 @@ import "../styles/global.css";
   if (currentEditor) {
     stateElement.textContent = JSON.stringify(currentEditor.getJSON(), null, 2);
   }
-
-  boldButton.addEventListener("click", () => {
-    adapter.execute(starterKitCommandNames.toggleBold);
-  });
 
   readOnlyButton.addEventListener("click", () => {
     readOnly = !readOnly;

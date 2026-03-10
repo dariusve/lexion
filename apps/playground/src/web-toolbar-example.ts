@@ -1,14 +1,13 @@
 import type { JSONDocument } from "@lexion-rte/core";
-import { starterKitCommandNames } from "@lexion-rte/starter-kit";
 import { createLexionWebEditor, type LexionWebEditor } from "@lexion-rte/web";
 
 import type { PlaygroundExampleHandle } from "./vue-examples.js";
-
-export interface ToolbarButtonConfig {
-  readonly label: string;
-  readonly command: string;
-  readonly args?: readonly unknown[];
-}
+import {
+  createStarterKitSampleDocument,
+  fullStarterKitToolbarButtons,
+  type ToolbarButtonConfig
+} from "./starter-kit-buttons.js";
+export type { ToolbarButtonConfig } from "./starter-kit-buttons.js";
 
 export interface SampleToolbarAdapterOptions {
   readonly element: HTMLElement;
@@ -16,43 +15,7 @@ export interface SampleToolbarAdapterOptions {
   readonly buttons?: readonly ToolbarButtonConfig[];
 }
 
-const createInitialDocument = (): JSONDocument => ({
-  type: "doc",
-  content: [
-    {
-      type: "paragraph",
-      content: [{ type: "text", text: "Toolbar sample ready" }]
-    }
-  ]
-});
-
-const defaultToolbarButtons: readonly ToolbarButtonConfig[] = [
-  {
-    label: "Bold",
-    command: starterKitCommandNames.toggleBold
-  },
-  {
-    label: "Italic",
-    command: starterKitCommandNames.toggleItalic
-  },
-  {
-    label: "H2",
-    command: starterKitCommandNames.toggleHeading,
-    args: [2]
-  },
-  {
-    label: "Bullet List",
-    command: starterKitCommandNames.wrapBulletList
-  },
-  {
-    label: "Undo",
-    command: starterKitCommandNames.undo
-  },
-  {
-    label: "Redo",
-    command: starterKitCommandNames.redo
-  }
-];
+const defaultToolbarButtons: readonly ToolbarButtonConfig[] = fullStarterKitToolbarButtons;
 
 const createWrapper = (): {
   readonly root: HTMLDivElement;
@@ -94,7 +57,7 @@ export class SampleToolbarAdapter {
 
     this.editor = createLexionWebEditor({
       element: editorHost,
-      defaultValue: options.value ?? createInitialDocument()
+      defaultValue: options.value ?? createStarterKitSampleDocument()
     });
 
     for (const buttonConfig of options.buttons ?? defaultToolbarButtons) {
