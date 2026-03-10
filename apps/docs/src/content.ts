@@ -8,7 +8,6 @@ import gettingStarted from "../../../docs/GETTING_STARTED.md?raw";
 import licensingModel from "../../../docs/LICENSING_MODEL.md?raw";
 import lexionOverview from "../../../docs/LEXION_OVERVIEW.md?raw";
 import packageApis from "../../../docs/PACKAGE_APIS.md?raw";
-import releaseProcess from "../../../docs/RELEASE_PROCESS.md?raw";
 
 export interface DocPage {
   readonly id: string;
