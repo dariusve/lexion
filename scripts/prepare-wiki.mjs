@@ -19,7 +19,6 @@ const pageMap = new Map([
   ["EXTENSIONS_REFERENCE.md", "Extensions-Reference.md"],
   ["ADAPTER_EXAMPLES.md", "Adapter-Examples.md"],
   ["BACKEND_SERVICES.md", "Backend-Services.md"],
-  ["PRICING_MODEL.md", "Pricing-Model.md"],
   ["README.md", "Project-README.md"]
 ]);
 
@@ -46,7 +45,7 @@ const sidebarSections = [
   },
   {
     title: "Operations",
-    pages: ["Extension-Development.md", "Pricing-Model.md", "Project-README.md"]
+    pages: ["Extension-Development.md", "Project-README.md"]
   }
 ];
 
@@ -145,7 +144,6 @@ Lexion is a framework-agnostic, headless rich text editor platform built on Pros
 ## Operations
 
 - [Extension Development](Extension-Development)
-- [Pricing Model](Pricing-Model)
 - [Project README](Project-README)
 `;
 

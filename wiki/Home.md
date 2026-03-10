@@ -35,5 +35,4 @@ Lexion is a framework-agnostic, headless rich text editor platform built on Pros
 ## Operations
 
 - [Extension Development](Extension-Development)
-- [Pricing Model](Pricing-Model)
 - [Project README](Project-README)

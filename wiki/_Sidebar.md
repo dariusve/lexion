@@ -17,5 +17,4 @@
 ## Operations
 
 - [Extension Development](Extension-Development)
-- [Pricing Model](Pricing-Model)
 - [Project README](Project-README)
