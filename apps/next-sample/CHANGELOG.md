@@ -1,5 +1,11 @@
 # @lexion-rte/next-sample
 
+## 0.1.5
+
+### Patch Changes
+
+- @lexion-rte/next@0.1.8
+
 ## 0.1.4
 
 ### Patch Changes

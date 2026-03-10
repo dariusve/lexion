@@ -1,5 +1,12 @@
 # @lexion-rte/vue-sample
 
+## 0.1.7
+
+### Patch Changes
+
+- Updated dependencies
+  - @lexion-rte/vue@0.1.8
+
 ## 0.1.6
 
 ### Patch Changes

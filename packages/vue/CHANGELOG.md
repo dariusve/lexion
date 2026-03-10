@@ -1,5 +1,11 @@
 # @lexion-rte/vue
 
+## 0.1.8
+
+### Patch Changes
+
+- Preserve undo history when a controlled editor value is synced back into the adapter without any actual document change. This also keeps the rendered editor state and status bar aligned when React, Vue, or the web adapter receives the current document again.
+
 ## 0.1.7
 
 ### Patch Changes

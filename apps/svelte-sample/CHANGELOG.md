@@ -1,5 +1,13 @@
 # @lexion-rte/svelte-sample
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @lexion-rte/web@0.1.8
+  - @lexion-rte/svelte@0.1.8
+
 ## 0.1.4
 
 ### Patch Changes

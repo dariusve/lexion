@@ -1,5 +1,12 @@
 # @lexion-rte/nuxt
 
+## 0.1.8
+
+### Patch Changes
+
+- Updated dependencies
+  - @lexion-rte/vue@0.1.8
+
 ## 0.1.7
 
 ### Patch Changes
