@@ -67,7 +67,7 @@ Lexion uses an open-core, dual-license model:
 - community packages in this repository are available under GPL-3.0-or-later
 - commercial licenses are available separately for proprietary use and premium packages
 
-See [LICENSE](LICENSE), [LICENSE-COMMERCIAL.md](LICENSE-COMMERCIAL.md), and [docs/LICENSING_MODEL.md](docs/LICENSING_MODEL.md).
+See [LICENSE](LICENSE.md), [LICENSE-COMMERCIAL.md](LICENSE-COMMERCIAL.md), and [docs/LICENSING_MODEL.md](docs/LICENSING_MODEL.md).
 
 ## Package Tracks
 

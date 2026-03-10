@@ -18,7 +18,7 @@ A commercial license may grant rights that are not available under the community
 
 Commercial rights are granted only through a separate written agreement with the copyright holder.
 
-Until such an agreement exists, use of the community source code remains governed exclusively by the GPL terms in [LICENSE](./LICENSE).
+Until such an agreement exists, use of the community source code remains governed exclusively by the GPL terms in [LICENSE](./LICENSE.md).
 
 ## Premium Packages
 

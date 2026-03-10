@@ -41,4 +41,4 @@ Premium implementation code is kept out of the public workspace and is not publi
 
 ## Source of Truth
 
-The GPL text lives in [LICENSE](../LICENSE). Commercial availability is described in [LICENSE-COMMERCIAL.md](../LICENSE-COMMERCIAL.md).
+The GPL text lives in [LICENSE](../LICENSE.md). Commercial availability is described in [LICENSE-COMMERCIAL.md](../LICENSE-COMMERCIAL.md).
