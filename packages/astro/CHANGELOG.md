@@ -1,5 +1,11 @@
 # @lexion-rte/astro
 
+## 0.1.7
+
+### Patch Changes
+
+- @lexion-rte/web@0.1.7
+
 ## 0.1.6
 
 ### Patch Changes

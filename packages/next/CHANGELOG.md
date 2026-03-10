@@ -1,5 +1,11 @@
 # @lexion-rte/next
 
+## 0.1.7
+
+### Patch Changes
+
+- @lexion-rte/react@0.1.7
+
 ## 0.1.6
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @lexion-rte/starter-kit
 
+## 0.2.2
+
+### Patch Changes
+
+- Expand `@lexion-rte/starter-kit` with more built-in editing commands and default editor behavior. This release adds inline code, strike, underline, blockquote, code block, horizontal rule, and hard break commands, plus list keybindings, gap/drop cursor support, and automatic trailing paragraph handling.
+
 ## 0.2.1
 
 ### Patch Changes

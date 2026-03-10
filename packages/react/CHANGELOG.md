@@ -1,5 +1,12 @@
 # @lexion-rte/react
 
+## 0.1.7
+
+### Patch Changes
+
+- Updated dependencies
+  - @lexion-rte/starter-kit@0.2.2
+
 ## 0.1.6
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @lexion-rte/playground
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies
+  - @lexion-rte/starter-kit@0.2.2
+  - @lexion-rte/react@0.1.7
+  - @lexion-rte/vue@0.1.7
+  - @lexion-rte/web@0.1.7
+
 ## 0.1.5
 
 ### Patch Changes

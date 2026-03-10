@@ -1,6 +1,6 @@
 {
   "name": "@lexion-rte/angular",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Angular adapter utilities for the Lexion editor.",
   "private": false,
   "type": "module",
