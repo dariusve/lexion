@@ -19,6 +19,7 @@
     "@lexion-rte/core": "workspace:*",
     "@lexion-rte/react": "workspace:*",
     "@lexion-rte/starter-kit": "workspace:*",
+    "@lexion-rte/ui": "workspace:*",
     "@lexion-rte/vue": "workspace:*",
     "@lexion-rte/web": "workspace:*",
     "react": "^19.2.4",

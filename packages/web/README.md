@@ -17,6 +17,7 @@ It supports:
 - controlled and uncontrolled usage
 - read-only toggling
 - command execution
+- automatic ProseMirror base style injection (`white-space: pre-wrap`, etc.)
 - lifecycle cleanup
 
 ## Install
@@ -50,6 +51,8 @@ const editor = createLexionWebEditor({
 - `value?: JSONDocument` (controlled)
 - `defaultValue?: JSONDocument` (uncontrolled init)
 - `readOnly?: boolean`
+- `injectStyles?: boolean` (default `true`)
+- `styleInjectionOptions?: { document?: Document; id?: string; target?: HTMLElement }`
 - `onChange?: (value, editor) => void`
 - `onReady?: (editor) => void`
 
@@ -57,6 +60,7 @@ const editor = createLexionWebEditor({
 
 - `editor`
 - `getJSON()`
+- `focus()`
 - `execute(command, ...args)`
 - `setValue(value)`
 - `setReadOnly(readOnly)`
@@ -80,3 +84,4 @@ webEditor.update({ value: nextDoc, readOnly: false });
 
 - If you pass a custom `editor`, the adapter will not destroy that editor on `destroy()`.
 - The adapter renders an editor status bar and includes the core branding item: `Powered by lexion`.
+- Base editor styles are injected automatically. Set `injectStyles: false` if you want to provide your own ProseMirror CSS.

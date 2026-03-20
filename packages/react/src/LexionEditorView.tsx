@@ -24,6 +24,8 @@ const serializeJSON = (document: JSONDocument): string => JSON.stringify(documen
 const STATUS_BAR_STYLE = lexionStatusBarAppearance.style as CSSProperties;
 const STATUS_BAR_START_STYLE = lexionStatusBarAppearance.groupStyles.start as CSSProperties;
 const STATUS_BAR_END_STYLE = lexionStatusBarAppearance.groupStyles.end as CSSProperties;
+const PROSEMIRROR_REQUIRED_STYLE_ATTRIBUTE =
+  "white-space: pre-wrap !important; word-wrap: break-word !important; -webkit-font-variant-ligatures: none; font-variant-ligatures: none;";
 
 const splitStatusBarItems = (items: readonly LexionStatusBarItem[]) => ({
   start: items.filter((item) => (item.align ?? "start") === "start"),
@@ -90,6 +92,9 @@ export const LexionEditorView = ({
 
     const view = new EditorView(containerRef.current, {
       state: activeEditor.state,
+      attributes: {
+        style: PROSEMIRROR_REQUIRED_STYLE_ATTRIBUTE
+      },
       editable: () => !latestReadOnly.current,
       dispatchTransaction: (transaction) => {
         activeEditor.dispatchTransaction(transaction);

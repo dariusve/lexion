@@ -18,6 +18,7 @@ It supports:
 - uncontrolled mode (`defaultValue`)
 - custom external editor instances
 - read-only mode
+- automatic ProseMirror base white-space safeguards to avoid console CSS warnings
 
 ## Install
 
@@ -86,3 +87,4 @@ export function SharedEditor() {
 
 - In controlled mode, pass updated `value` back on every `onChange` call.
 - The component renders the same footer message as other adapters.
+- The editor root enforces required ProseMirror `white-space` styles, so users should not see the `prosemirror.css` warning.

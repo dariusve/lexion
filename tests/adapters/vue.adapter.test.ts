@@ -1,5 +1,5 @@
 import { createApp, defineComponent, h, nextTick, ref } from "vue";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 
 import type { JSONDocument, LexionEditor } from "@lexion-rte/core";
 import { starterKitCommandNames } from "@lexion-rte/starter-kit";
@@ -18,6 +18,7 @@ const createDoc = (text: string): JSONDocument => ({
 describe("@lexion-rte/vue", () => {
   test("mounts and syncs controlled model", async () => {
     const container = document.createElement("div");
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
     let editorRef: LexionEditor | null = null;
     const model = ref<JSONDocument>(createDoc("first"));
 
@@ -41,7 +42,9 @@ describe("@lexion-rte/vue", () => {
     app.mount(container);
     await nextTick();
 
-    expect(container.querySelector(".ProseMirror")).not.toBeNull();
+    const proseMirrorElement = container.querySelector<HTMLElement>(".ProseMirror");
+    expect(proseMirrorElement).not.toBeNull();
+    expect(getComputedStyle(proseMirrorElement!).whiteSpace).toBe("pre-wrap");
     expect(container.querySelector(".lexion-editor-status-bar")).not.toBeNull();
     expect(container.textContent ?? "").toContain("Powered by lexion");
     expect(editorRef?.getJSON()).toMatchObject({
@@ -64,6 +67,14 @@ describe("@lexion-rte/vue", () => {
     });
 
     app.unmount();
+
+    const prosemirrorWarnCalls = warnSpy.mock.calls.filter(([message]) =>
+      /ProseMirror expects the CSS white-space property|TextSelection endpoint not pointing into a node with inline content/.test(
+        String(message)
+      )
+    );
+    expect(prosemirrorWarnCalls).toHaveLength(0);
+    warnSpy.mockRestore();
   });
 
   test("preserves history when controlled state echoes editor commands", async () => {

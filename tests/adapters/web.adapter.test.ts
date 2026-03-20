@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 
 import type { JSONDocument } from "@lexion-rte/core";
 import { starterKitCommandNames } from "@lexion-rte/starter-kit";
@@ -17,12 +17,16 @@ const createDoc = (text: string): JSONDocument => ({
 describe("@lexion-rte/web", () => {
   test("creates and updates a web editor instance", () => {
     const container = document.createElement("div");
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
     const editor = createLexionWebEditor({
       element: container,
       defaultValue: createDoc("hello")
     });
 
-    expect(container.querySelector(".ProseMirror")).not.toBeNull();
+    expect(document.getElementById("lexion-web-editor-styles")).not.toBeNull();
+    const proseMirrorElement = container.querySelector<HTMLElement>(".ProseMirror");
+    expect(proseMirrorElement).not.toBeNull();
+    expect(getComputedStyle(proseMirrorElement!).whiteSpace).toBe("pre-wrap");
     expect(container.querySelector(".lexion-editor-status-bar")).not.toBeNull();
     expect(container.textContent ?? "").toContain("Powered by lexion");
 
@@ -37,6 +41,14 @@ describe("@lexion-rte/web", () => {
 
     editor.destroy();
     expect(() => editor.getJSON()).toThrow(/destroyed/);
+
+    const prosemirrorWarnCalls = warnSpy.mock.calls.filter(([message]) =>
+      /ProseMirror expects the CSS white-space property|TextSelection endpoint not pointing into a node with inline content/.test(
+        String(message)
+      )
+    );
+    expect(prosemirrorWarnCalls).toHaveLength(0);
+    warnSpy.mockRestore();
   });
 
   test("preserves history when syncing the current document back in", () => {
@@ -61,6 +73,21 @@ describe("@lexion-rte/web", () => {
       ]
     });
 
+    webEditor.destroy();
+  });
+
+  test("can skip base style injection when injectStyles is false", () => {
+    const styleId = "lexion-web-editor-styles-no-inject-test";
+    document.getElementById(styleId)?.remove();
+
+    const container = document.createElement("div");
+    const webEditor = createLexionWebEditor({
+      element: container,
+      injectStyles: false,
+      styleInjectionOptions: { id: styleId }
+    });
+
+    expect(document.getElementById(styleId)).toBeNull();
     webEditor.destroy();
   });
 });

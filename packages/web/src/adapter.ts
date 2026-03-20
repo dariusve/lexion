@@ -14,6 +14,8 @@ export interface LexionWebEditorOptions {
   readonly value?: JSONDocument;
   readonly defaultValue?: JSONDocument;
   readonly readOnly?: boolean;
+  readonly injectStyles?: boolean;
+  readonly styleInjectionOptions?: LexionWebEditorStyleInjectionOptions;
   readonly onChange?: (value: JSONDocument, editor: LexionEditor) => void;
   readonly onReady?: (editor: LexionEditor) => void;
 }
@@ -24,7 +26,43 @@ export interface LexionWebEditorUpdateOptions {
   readonly onChange?: (value: JSONDocument, editor: LexionEditor) => void;
 }
 
+export interface LexionWebEditorStyleInjectionOptions {
+  readonly document?: Document;
+  readonly id?: string;
+  readonly target?: HTMLElement;
+}
+
+export const lexionWebEditorStyles = `
+.ProseMirror {
+  position: relative;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  -webkit-font-variant-ligatures: none;
+  font-variant-ligatures: none;
+}
+
+.ProseMirror:focus {
+  outline: none;
+}
+
+.ProseMirror pre {
+  white-space: pre-wrap;
+}
+`;
+
 const serializeJSON = (document: JSONDocument): string => JSON.stringify(document);
+const PROSEMIRROR_REQUIRED_STYLE_ATTRIBUTE =
+  "white-space: pre-wrap !important; word-wrap: break-word !important; -webkit-font-variant-ligatures: none; font-variant-ligatures: none;";
+
+const getDefaultDocument = (): Document => {
+  if (typeof document !== "undefined") {
+    return document;
+  }
+
+  throw new Error(
+    "A DOM Document is required. Pass { document } when running outside the browser."
+  );
+};
 
 const toCSSPropertyName = (property: string): string =>
   property.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
@@ -56,6 +94,24 @@ const clearElement = (element: HTMLElement): void => {
   while (element.firstChild) {
     element.removeChild(element.firstChild);
   }
+};
+
+export const injectLexionWebEditorStyles = (
+  options: LexionWebEditorStyleInjectionOptions = {}
+): HTMLStyleElement => {
+  const documentNode = options.document ?? getDefaultDocument();
+  const styleId = options.id ?? "lexion-web-editor-styles";
+  const existing = documentNode.getElementById(styleId);
+  if (existing && existing.tagName.toLowerCase() === "style") {
+    return existing as HTMLStyleElement;
+  }
+
+  const style = documentNode.createElement("style");
+  style.id = styleId;
+  style.textContent = lexionWebEditorStyles;
+  const target = options.target ?? documentNode.head ?? documentNode.documentElement;
+  target.appendChild(style);
+  return style;
 };
 
 const renderStatusBarItems = (
@@ -91,6 +147,12 @@ export class LexionWebEditor {
 
   public constructor(options: LexionWebEditorOptions) {
     this.hostElement = options.element;
+    if (options.injectStyles !== false) {
+      injectLexionWebEditorStyles({
+        document: this.hostElement.ownerDocument,
+        ...(options.styleInjectionOptions ?? {})
+      });
+    }
     this.ownsEditor = options.editor === undefined;
     if (options.editor) {
       this.editorInstance = options.editor;
@@ -119,6 +181,9 @@ export class LexionWebEditor {
 
     this.view = new EditorView(this.hostElement, {
       state: this.editorInstance.state,
+      attributes: {
+        style: PROSEMIRROR_REQUIRED_STYLE_ATTRIBUTE
+      },
       editable: () => !this.isReadOnly,
       dispatchTransaction: (transaction) => {
         this.editorInstance.dispatchTransaction(transaction);
@@ -151,6 +216,11 @@ export class LexionWebEditor {
   public getJSON(): JSONDocument {
     this.assertNotDestroyed();
     return this.editorInstance.getJSON();
+  }
+
+  public focus(): void {
+    this.assertNotDestroyed();
+    this.view.focus();
   }
 
   public execute(command: string, ...args: readonly unknown[]): boolean {

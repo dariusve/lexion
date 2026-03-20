@@ -1,2 +1,11 @@
-export { LexionWebEditor, createLexionWebEditor } from "./adapter.js";
-export type { LexionWebEditorOptions, LexionWebEditorUpdateOptions } from "./adapter.js";
+export {
+  LexionWebEditor,
+  createLexionWebEditor,
+  injectLexionWebEditorStyles,
+  lexionWebEditorStyles
+} from "./adapter.js";
+export type {
+  LexionWebEditorOptions,
+  LexionWebEditorStyleInjectionOptions,
+  LexionWebEditorUpdateOptions
+} from "./adapter.js";

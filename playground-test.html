@@ -51,7 +51,15 @@
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
-        margin-bottom: 0.75rem;
+        margin-bottom: 0;
+      }
+
+      .lexion-toolbar .lexion-toolbar-ui {
+        border-bottom: 0;
+      }
+
+      .lexion-toolbar + .lexion-editor-host .ProseMirror {
+        border-top: 0;
       }
 
       .lexion-toolbar-button {
@@ -87,6 +95,14 @@
         font-size: 0.95rem;
       }
 
+      .status ul {
+        margin: 0.4rem 0 0 1.1rem;
+      }
+
+      .status li {
+        margin: 0.2rem 0;
+      }
+
       .status.ok {
         color: #166534;
       }
@@ -95,11 +111,13 @@
         color: #991b1b;
       }
     </style>
+    <link rel="stylesheet" href="./node_modules/remixicon/fonts/remixicon.css" />
     <script type="importmap">
       {
         "imports": {
           "@lexion-rte/core": "./packages/core/dist/index.js",
-          "@lexion-rte/extensions": "./playground-test.extensions-shim.js",
+          "@lexion-rte/starter-kit": "./packages/starter-kit/dist/index.js",
+          "@lexion-rte/ui": "./packages/ui/dist/index.js",
           "@lexion-rte/vue": "./packages/vue/dist/index.js",
           "@lexion-rte/web": "./packages/web/dist/index.js",
           "vue": "./node_modules/vue/dist/vue.runtime.esm-browser.js",
@@ -107,6 +125,8 @@
           "prosemirror-state": "./node_modules/.pnpm/prosemirror-state@1.4.4/node_modules/prosemirror-state/dist/index.js",
           "prosemirror-view": "./node_modules/.pnpm/prosemirror-view@1.41.6/node_modules/prosemirror-view/dist/index.js",
           "prosemirror-commands": "./node_modules/.pnpm/prosemirror-commands@1.7.1/node_modules/prosemirror-commands/dist/index.js",
+          "prosemirror-dropcursor": "./node_modules/.pnpm/prosemirror-dropcursor@1.8.2/node_modules/prosemirror-dropcursor/dist/index.js",
+          "prosemirror-gapcursor": "./node_modules/.pnpm/prosemirror-gapcursor@1.4.0/node_modules/prosemirror-gapcursor/dist/index.js",
           "prosemirror-history": "./node_modules/.pnpm/prosemirror-history@1.5.0/node_modules/prosemirror-history/dist/index.js",
           "prosemirror-keymap": "./node_modules/.pnpm/prosemirror-keymap@1.2.3/node_modules/prosemirror-keymap/dist/index.js",
           "prosemirror-schema-basic": "./node_modules/.pnpm/prosemirror-schema-basic@1.2.4/node_modules/prosemirror-schema-basic/dist/index.js",
@@ -151,22 +171,38 @@
     <script type="module">
       import {
         mountVueUncontrolledExample,
-        mountVueControlledExample,
-        mountWebToolbarExample
-      } from "./apps/playground/dist/index.js";
+        mountVueControlledExample
+      } from "./apps/playground/dist/vue-examples.js";
+      import { mountWebToolbarExample } from "./apps/playground/dist/web-toolbar-example.js";
 
       const status = document.getElementById("status");
+      const results = [];
 
-      try {
-        mountVueUncontrolledExample(document.getElementById("vue-uncontrolled"));
-        mountVueControlledExample(document.getElementById("vue-controlled"));
-        mountWebToolbarExample(document.getElementById("web-toolbar"));
-        status.textContent = "Examples mounted successfully.";
-        status.className = "status ok";
-      } catch (error) {
-        status.textContent = `Failed to mount examples: ${error instanceof Error ? error.message : String(error)}`;
-        status.className = "status err";
-      }
+      const mountExample = (name, mount, elementId) => {
+        const element = document.getElementById(elementId);
+        if (!element) {
+          results.push(`${name}: missing #${elementId}`);
+          return;
+        }
+
+        try {
+          mount(element);
+          results.push(`${name}: ok`);
+        } catch (error) {
+          results.push(`${name}: ${error instanceof Error ? error.message : String(error)}`);
+        }
+      };
+
+      mountExample("Web Toolbar Adapter", mountWebToolbarExample, "web-toolbar");
+      mountExample("Vue Uncontrolled", mountVueUncontrolledExample, "vue-uncontrolled");
+      mountExample("Vue Controlled", mountVueControlledExample, "vue-controlled");
+
+      const hasError = results.some((entry) => !entry.endsWith(": ok"));
+      status.className = hasError ? "status err" : "status ok";
+      status.innerHTML = `
+        <strong>${hasError ? "Mounted with issues." : "Examples mounted successfully."}</strong>
+        <ul>${results.map((entry) => `<li>${entry}</li>`).join("")}</ul>
+      `;
     </script>
   </body>
 </html>

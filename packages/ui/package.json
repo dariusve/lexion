@@ -1,0 +1,51 @@
+{
+  "name": "@lexion-rte/ui",
+  "version": "0.1.0",
+  "description": "Toolbar UI primitives for integrating Lexion editors.",
+  "private": false,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dariusve/lexion.git",
+    "directory": "packages/ui"
+  },
+  "homepage": "https://github.com/dariusve/lexion/tree/main/packages/ui",
+  "bugs": {
+    "url": "https://github.com/dariusve/lexion/issues"
+  },
+  "keywords": [
+    "lexion",
+    "editor",
+    "toolbar",
+    "ui",
+    "remixicon"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint src --ext .ts"
+  },
+  "dependencies": {
+    "@lexion-rte/core": "workspace:*",
+    "@lexion-rte/starter-kit": "workspace:*"
+  },
+  "peerDependencies": {
+    "remixicon": ">=4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "remixicon": {
+      "optional": true
+    }
+  }
+}

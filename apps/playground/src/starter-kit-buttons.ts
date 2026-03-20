@@ -1,5 +1,5 @@
 import type { JSONDocument } from "@lexion-rte/core";
-import { starterKitCommandNames } from "@lexion-rte/starter-kit";
+import { createStarterKitToolbarItems, type LexionToolbarItemInput } from "@lexion-rte/ui";
 
 export interface ToolbarButtonConfig {
   readonly label: string;
@@ -7,34 +7,20 @@ export interface ToolbarButtonConfig {
   readonly args?: readonly unknown[];
 }
 
-const LINK_ATTRIBUTES = {
-  href: "https://lexion.app",
-  title: "Lexion"
-} as const;
+const toToolbarButtonConfig = (item: LexionToolbarItemInput): ToolbarButtonConfig => {
+  if (!item.label || !item.command) {
+    throw new Error(`Starter-kit preset item "${item.id}" is missing label or command.`);
+  }
 
-export const fullStarterKitToolbarButtons: readonly ToolbarButtonConfig[] = [
-  { label: "Paragraph", command: starterKitCommandNames.setParagraph },
-  { label: "H1", command: starterKitCommandNames.toggleHeading, args: [1] },
-  { label: "H2", command: starterKitCommandNames.toggleHeading, args: [2] },
-  { label: "H3", command: starterKitCommandNames.toggleHeading, args: [3] },
-  { label: "Bold", command: starterKitCommandNames.toggleBold },
-  { label: "Italic", command: starterKitCommandNames.toggleItalic },
-  { label: "Code", command: starterKitCommandNames.toggleCode },
-  { label: "Strike", command: starterKitCommandNames.toggleStrike },
-  { label: "Underline", command: starterKitCommandNames.toggleUnderline },
-  { label: "Quote", command: starterKitCommandNames.toggleBlockquote },
-  { label: "Code Block", command: starterKitCommandNames.toggleCodeBlock },
-  { label: "Bullet List", command: starterKitCommandNames.wrapBulletList },
-  { label: "Ordered List", command: starterKitCommandNames.wrapOrderedList },
-  { label: "Outdent", command: starterKitCommandNames.liftListItem },
-  { label: "Indent", command: starterKitCommandNames.sinkListItem },
-  { label: "Set Link", command: starterKitCommandNames.setLink, args: [LINK_ATTRIBUTES] },
-  { label: "Unset Link", command: starterKitCommandNames.unsetLink },
-  { label: "Rule", command: starterKitCommandNames.insertHorizontalRule },
-  { label: "Break", command: starterKitCommandNames.insertHardBreak },
-  { label: "Undo", command: starterKitCommandNames.undo },
-  { label: "Redo", command: starterKitCommandNames.redo }
-];
+  return {
+    label: item.label,
+    command: item.command,
+    ...(item.args !== undefined ? { args: item.args } : {})
+  };
+};
+
+export const fullStarterKitToolbarButtons: readonly ToolbarButtonConfig[] =
+  createStarterKitToolbarItems({ withLabels: true }).map(toToolbarButtonConfig);
 
 export const createStarterKitSampleDocument = (): JSONDocument => ({
   type: "doc",

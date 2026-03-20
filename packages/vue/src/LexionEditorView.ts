@@ -34,6 +34,8 @@ export interface LexionEditorViewEmits {
 }
 
 const serializeJSON = (document: JSONDocument): string => JSON.stringify(document);
+const PROSEMIRROR_REQUIRED_STYLE_ATTRIBUTE =
+  "white-space: pre-wrap !important; word-wrap: break-word !important; -webkit-font-variant-ligatures: none; font-variant-ligatures: none;";
 
 export const LexionEditorView = defineComponent({
   name: "LexionEditorView",
@@ -111,6 +113,9 @@ export const LexionEditorView = defineComponent({
       const editor = activeEditorRef.value;
       const view = new EditorView(containerRef.value, {
         state: editor.state,
+        attributes: {
+          style: PROSEMIRROR_REQUIRED_STYLE_ATTRIBUTE
+        },
         editable: () => !props.readOnly,
         dispatchTransaction: (transaction) => {
           editor.dispatchTransaction(transaction);

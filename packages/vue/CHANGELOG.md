@@ -1,5 +1,11 @@
 # @lexion-rte/vue
 
+## 0.1.9
+
+### Patch Changes
+
+- Harden ProseMirror rendering defaults by enforcing required root editor white-space styles in `LexionEditorView`, preventing the common `prosemirror.css` console warning from appearing in Vue integrations.
+
 ## 0.1.8
 
 ### Patch Changes

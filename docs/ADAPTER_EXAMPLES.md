@@ -5,6 +5,7 @@ This guide shows practical patterns for adding a toolbar and creating a custom a
 ## Web Toolbar Example
 
 Use `@lexion-rte/web` plus starter-kit command names:
+The web adapter injects base ProseMirror styles automatically, so you should not see the `white-space: pre-wrap` warning.
 
 ```ts
 import { starterKitCommandNames } from "@lexion-rte/starter-kit";
@@ -30,6 +31,46 @@ toolbarButtons.forEach((buttonConfig) => {
     editor.execute(buttonConfig.command);
   });
   document.getElementById("toolbar")!.appendChild(button);
+});
+```
+
+## Toolbar UI Package (`@lexion-rte/ui`)
+
+Use the shared toolbar UI package when you want icon buttons, tooltips, and grouped dropdown menus without wiring DOM events manually.
+If the editor instance exposes `focus()`, the toolbar will call it before command execution to preserve selection behavior while clicking toolbar buttons.
+
+```ts
+import { createLexionWebEditor } from "@lexion-rte/web";
+import {
+  createLexionToolbar,
+  createToolbarSeparatorItem,
+  lexionToolbarIcons,
+  injectLexionToolbarStyles
+} from "@lexion-rte/ui";
+
+injectLexionToolbarStyles();
+
+const editor = createLexionWebEditor({
+  element: document.getElementById("editor")!
+});
+
+createLexionToolbar({
+  element: document.getElementById("toolbar")!,
+  editor,
+  items: [
+    {
+      id: "inline-format",
+      iconClass: lexionToolbarIcons.textFormat,
+      title: "Inline format",
+      items: [
+        { id: "bold", iconClass: lexionToolbarIcons.bold, label: "Bold", command: "toggleBold" },
+        { id: "italic", iconClass: lexionToolbarIcons.italic, label: "Italic", command: "toggleItalic" },
+        { id: "underline", iconClass: lexionToolbarIcons.underline, label: "Underline", command: "toggleUnderline" }
+      ]
+    },
+    createToolbarSeparatorItem("sep-main"),
+    { id: "undo", iconClass: lexionToolbarIcons.undo, title: "Undo", command: "undo" }
+  ]
 });
 ```
 

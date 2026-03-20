@@ -141,6 +141,8 @@ The public repo documents only the community package surface. Commercial capabil
 ### Exports
 - `createLexionWebEditor(options)`
 - `LexionWebEditor`
+- `injectLexionWebEditorStyles(options?)`
+- `lexionWebEditorStyles`
 
 ### Example: Uncontrolled Editor
 ```ts
@@ -168,10 +170,100 @@ webEditor.update({ value: externalDoc, readOnly: false });
 webEditor.execute(starterKitCommandNames.toggleItalic);
 ```
 
+### Styling Notes
+- The web adapter auto-injects base ProseMirror styles (including `white-space: pre-wrap`) by default.
+- Disable this with `injectStyles: false` if your app already includes custom ProseMirror CSS.
+
+## `@lexion-rte/ui`
+
+### Exports
+- `createLexionToolbar(options)`
+- `LexionToolbar`
+- `createStarterKitToolbarItems(options?)`
+- `createToolbarSeparatorItem(id, state?)`
+- `lexionToolbarIcons`
+- `injectLexionToolbarStyles(options?)`
+- `lexionToolbarStyles`
+- `lexionToolbarAppearance`
+
+### Toolbar Item States
+- `enabled`
+- `disabled`
+- `hidden`
+
+### Toolbar Editor Contract
+- Required: `execute(command, ...args): boolean`
+- Optional: `focus(): void` (used automatically before command execution to keep editor selection behavior consistent)
+
+### Toolbar Item Shapes
+- command button item: `id`, `iconClass`, optional `label/title`, `command`, `args`
+- dropdown group item: `id`, `iconClass`, optional `label/title`, `items[]`
+- dropdown option item: `id`, `iconClass`, `label`, optional `command`, `args`, and `state`
+- separator item: `id`, `separator: true`, optional `state`
+
+### Example: Toolbar + Core Command Integration
+```ts
+import { LexionEditor } from "@lexion-rte/core";
+import { starterKitExtension } from "@lexion-rte/starter-kit";
+import {
+  createStarterKitToolbarItems,
+  createToolbarSeparatorItem,
+  createLexionToolbar,
+  lexionToolbarIcons,
+  injectLexionToolbarStyles
+} from "@lexion-rte/ui";
+
+injectLexionToolbarStyles();
+
+const editor = new LexionEditor({ extensions: [starterKitExtension] });
+const toolbar = createLexionToolbar({
+  element: document.getElementById("toolbar")!,
+  editor,
+  items: [
+    ...createStarterKitToolbarItems({ withLabels: false }).slice(0, 5),
+    createToolbarSeparatorItem("sep-main"),
+    { id: "undo", iconClass: lexionToolbarIcons.undo, title: "Undo", command: "undo" },
+    ...createStarterKitToolbarItems({ withLabels: false }).slice(5, 9)
+  ]
+});
+
+toolbar.disableItem("undo");
+toolbar.hideItem("unset-link");
+```
+
+### Example: Grouped Dropdown Toolbar
+```ts
+import { createLexionToolbar, lexionToolbarIcons } from "@lexion-rte/ui";
+
+const toolbar = createLexionToolbar({
+  element: document.getElementById("toolbar")!,
+  editor,
+  items: [
+    {
+      id: "inline-format",
+      iconClass: lexionToolbarIcons.textFormat,
+      title: "Inline format",
+      items: [
+        { id: "bold", iconClass: lexionToolbarIcons.bold, label: "Bold", command: "toggleBold" },
+        { id: "italic", iconClass: lexionToolbarIcons.italic, label: "Italic", command: "toggleItalic" },
+        { id: "underline", iconClass: lexionToolbarIcons.underline, label: "Underline", command: "toggleUnderline" }
+      ]
+    }
+  ],
+  onItemExecute: (event) => {
+    // event.groupId is set when the executed item came from a dropdown group
+    console.log(event.groupId, event.item.id, event.executed);
+  }
+});
+```
+
 ## `@lexion-rte/react`
 
 ### Exports
 - `LexionEditorView`
+
+### Styling Notes
+- The React view enforces required ProseMirror `white-space` styling on the editor root to prevent CSS console warnings.
 
 ### Example: Uncontrolled
 ```tsx
@@ -202,6 +294,9 @@ export const ControlledEditor = ({ initial }: { initial: JSONDocument }) => {
 
 ### Exports
 - `LexionEditorView`
+
+### Styling Notes
+- The Vue view enforces required ProseMirror `white-space` styling on the editor root to prevent CSS console warnings.
 
 ### Example: Uncontrolled
 ```vue

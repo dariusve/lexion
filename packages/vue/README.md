@@ -18,6 +18,7 @@ It supports:
 - uncontrolled mode (`defaultValue`)
 - custom editor instances
 - read-only mode
+- automatic ProseMirror base white-space safeguards to avoid console CSS warnings
 
 ## Install
 
@@ -73,3 +74,4 @@ export default defineComponent({
 
 - In controlled mode, update `modelValue` from `update:modelValue`.
 - The component renders the shared footer message.
+- The editor root enforces required ProseMirror `white-space` styles, so users should not see the `prosemirror.css` warning.

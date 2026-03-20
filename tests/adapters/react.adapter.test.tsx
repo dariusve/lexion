@@ -1,7 +1,7 @@
 import React from "react";
 import { act } from "react";
 import { createRoot } from "react-dom/client";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 
 import type { JSONDocument } from "@lexion-rte/core";
 import { LexionEditorView } from "@lexion-rte/react";
@@ -20,6 +20,7 @@ describe("@lexion-rte/react", () => {
   test("mounts and syncs controlled value", async () => {
     const container = document.createElement("div");
     document.body.appendChild(container);
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
     const root = createRoot(container);
     let readyEditorText = "";
@@ -35,7 +36,9 @@ describe("@lexion-rte/react", () => {
       );
     });
 
-    expect(container.querySelector(".ProseMirror")).not.toBeNull();
+    const proseMirrorElement = container.querySelector<HTMLElement>(".ProseMirror");
+    expect(proseMirrorElement).not.toBeNull();
+    expect(getComputedStyle(proseMirrorElement!).whiteSpace).toBe("pre-wrap");
     expect(container.querySelector(".lexion-editor-status-bar")).not.toBeNull();
     expect(readyEditorText).toContain("first");
     expect(container.textContent ?? "").toContain("Powered by lexion");
@@ -49,5 +52,13 @@ describe("@lexion-rte/react", () => {
     await act(async () => {
       root.unmount();
     });
+
+    const prosemirrorWarnCalls = warnSpy.mock.calls.filter(([message]) =>
+      /ProseMirror expects the CSS white-space property|TextSelection endpoint not pointing into a node with inline content/.test(
+        String(message)
+      )
+    );
+    expect(prosemirrorWarnCalls).toHaveLength(0);
+    warnSpy.mockRestore();
   });
 });

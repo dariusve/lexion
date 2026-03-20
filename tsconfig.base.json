@@ -8,6 +8,7 @@
       "@lexion-rte/core": ["packages/core/dist/index.d.ts"],
       "@lexion-rte/starter-kit": ["packages/starter-kit/dist/index.d.ts"],
       "@lexion-rte/tools": ["packages/tools/dist/index.d.ts"],
+      "@lexion-rte/ui": ["packages/ui/dist/index.d.ts"],
       "@lexion-rte/web": ["packages/web/dist/index.d.ts"],
       "@lexion-rte/react": ["packages/react/dist/index.d.ts"],
       "@lexion-rte/vue": ["packages/vue/dist/index.d.ts"],

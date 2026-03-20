@@ -75,6 +75,7 @@ Community packages:
 - `@lexion-rte/core`
 - `@lexion-rte/starter-kit`
 - `@lexion-rte/tools`
+- `@lexion-rte/ui`
 - public adapter packages
 
 Commercial features:

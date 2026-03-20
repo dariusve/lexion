@@ -12,6 +12,7 @@ export default defineConfig({
       "@lexion-rte/react": path.resolve(rootDir, "packages/react/src/index.ts"),
       "@lexion-rte/vue": path.resolve(rootDir, "packages/vue/src/index.ts"),
       "@lexion-rte/web": path.resolve(rootDir, "packages/web/src/index.ts"),
+      "@lexion-rte/ui": path.resolve(rootDir, "packages/ui/src/index.ts"),
       "@lexion-rte/tools": path.resolve(rootDir, "packages/tools/src/index.ts")
     }
   },

@@ -1,5 +1,15 @@
 # @lexion-rte/web
 
+## 0.1.9
+
+### Patch Changes
+
+- Add built-in ProseMirror base style protection to prevent editor console warnings by:
+  - auto-injecting base editor CSS (`white-space: pre-wrap`, related defaults) unless `injectStyles: false`
+  - enforcing required root editor styles through `EditorView` attributes for resilience against external CSS overrides
+  - exposing `injectLexionWebEditorStyles` and `lexionWebEditorStyles` for explicit style control
+- Add `focus()` to the web editor instance API to allow toolbar integrations to restore editor focus before command execution.
+
 ## 0.1.8
 
 ### Patch Changes
