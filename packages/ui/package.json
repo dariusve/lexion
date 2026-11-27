@@ -1,6 +1,6 @@
 {
   "name": "@lexion-rte/ui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Toolbar UI primitives for integrating Lexion editors.",
   "private": false,
   "type": "module",

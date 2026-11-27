@@ -1,5 +1,18 @@
 # @lexion-rte/angular-sample
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies [785eb57]
+- Updated dependencies [785eb57]
+- Updated dependencies [785eb57]
+- Updated dependencies [785eb57]
+  - @lexion-rte/core@0.2.0
+  - @lexion-rte/web@0.2.0
+  - @lexion-rte/starter-kit@0.3.0
+  - @lexion-rte/angular@0.2.0
+
 ## 0.1.5
 
 ### Patch Changes
