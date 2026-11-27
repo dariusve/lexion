@@ -1,8 +1,8 @@
 import { type JSONDocument, type LexionEditor } from "@lexion-rte/core";
 import {
-  DOMParser as ProseMirrorDOMParser,
+  DOMParser as SchemaDOMParser,
   DOMSerializer,
-  type Node as ProseMirrorNode,
+  type Node as DocNode,
   type Schema
 } from "prosemirror-model";
 
@@ -19,10 +19,12 @@ const getDocument = (context?: ToolsDOMContext): Document => {
     return document;
   }
 
-  throw new Error("A DOM Document is required. Pass { document } when running outside the browser.");
+  throw new Error(
+    "A DOM Document is required. Pass { document } when running outside the browser."
+  );
 };
 
-const setEditorDocument = (editor: LexionEditor, documentNode: ProseMirrorNode): void => {
+const setEditorDocument = (editor: LexionEditor, documentNode: DocNode): void => {
   editor.setJSON(documentNode.toJSON() as JSONDocument);
 };
 
@@ -42,7 +44,7 @@ export const toText = (editor: LexionEditor): string =>
 export const fromHTML = (editor: LexionEditor, html: string, context?: ToolsDOMContext): void => {
   const schema = editor.schema;
   const doc = getDocument(context);
-  const parser = ProseMirrorDOMParser.fromSchema(schema);
+  const parser = SchemaDOMParser.fromSchema(schema);
   const container = doc.createElement("div");
   container.innerHTML = html;
   const parsedDocument = parser.parse(container);
@@ -57,11 +59,11 @@ const requireNodeType = (schema: Schema, name: string) => {
   return nodeType;
 };
 
-const createParagraphNode = (schema: Schema, value: string): ProseMirrorNode => {
+const createParagraphNode = (schema: Schema, value: string): DocNode => {
   const paragraphType = requireNodeType(schema, "paragraph");
   const hardBreakType = schema.nodes["hard_break"];
   const lines = value.split("\n");
-  const inlineNodes: ProseMirrorNode[] = [];
+  const inlineNodes: DocNode[] = [];
 
   for (const [index, line] of lines.entries()) {
     if (index > 0) {

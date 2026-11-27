@@ -1,10 +1,5 @@
 import { CommonModule } from "@angular/common";
-import {
-  Component,
-  ViewChild,
-  signal,
-  computed
-} from "@angular/core";
+import { Component, ViewChild, signal, computed } from "@angular/core";
 import type { AfterViewInit, ElementRef, OnDestroy } from "@angular/core";
 
 import type { JSONDocument } from "@lexion-rte/core";
@@ -51,11 +46,15 @@ const createDoc = (): JSONDocument => ({
   content: [
     {
       type: "paragraph",
-      content: [{ type: "text", text: "Select text to try inline marks, links, and block transforms." }]
+      content: [
+        { type: "text", text: "Select text to try inline marks, links, and block transforms." }
+      ]
     },
     {
       type: "paragraph",
-      content: [{ type: "text", text: "Use the toolbar to compare the full starter-kit command set." }]
+      content: [
+        { type: "text", text: "Use the toolbar to compare the full starter-kit command set." }
+      ]
     },
     {
       type: "bullet_list",
@@ -74,7 +73,9 @@ const createDoc = (): JSONDocument => ({
           content: [
             {
               type: "paragraph",
-              content: [{ type: "text", text: "Place the cursor here to test indent, then outdent." }]
+              content: [
+                { type: "text", text: "Place the cursor here to test indent, then outdent." }
+              ]
             }
           ]
         }
@@ -90,7 +91,10 @@ const createDoc = (): JSONDocument => ({
   template: `
     <main class="shell">
       <h1>Angular Adapter Sample</h1>
-      <p>Select text to test inline formatting and links. Place the cursor in the second list item to test indent, then outdent.</p>
+      <p>
+        Select text to test inline formatting and links. Place the cursor in the second list item to
+        test indent, then outdent.
+      </p>
       <div class="toolbar">
         <button
           *ngFor="let button of toolbarButtons"
@@ -108,53 +112,55 @@ const createDoc = (): JSONDocument => ({
       <pre class="state">{{ state() }}</pre>
     </main>
   `,
-  styles: [`
-    :host {
-      display: block;
-      color-scheme: light;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    }
+  styles: [
+    `
+      :host {
+        display: block;
+        color-scheme: light;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
 
-    .shell {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 24px;
-    }
+      .shell {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 24px;
+      }
 
-    .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
 
-    button {
-      border: 1px solid #cbd5e1;
-      background: #ffffff;
-      border-radius: 8px;
-      padding: 8px 12px;
-      cursor: pointer;
-    }
+      button {
+        border: 1px solid #cbd5e1;
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 8px 12px;
+        cursor: pointer;
+      }
 
-    button:hover {
-      background: #e2e8f0;
-    }
+      button:hover {
+        background: #e2e8f0;
+      }
 
-    .editor {
-      border: 1px solid #cbd5e1;
-      background: #ffffff;
-    }
+      .editor {
+        border: 1px solid #cbd5e1;
+        background: #ffffff;
+      }
 
-    .state {
-      margin-top: 12px;
-      background: #0b1220;
-      color: #d0e2ff;
-      padding: 12px;
-      border-radius: 10px;
-      overflow: auto;
-      font-size: 12px;
-    }
-  `]
+      .state {
+        margin-top: 12px;
+        background: #0b1220;
+        color: #d0e2ff;
+        padding: 12px;
+        border-radius: 10px;
+        overflow: auto;
+        font-size: 12px;
+      }
+    `
+  ]
 })
 export class AppComponent implements AfterViewInit, OnDestroy {
   @ViewChild("editorHost", { static: true })

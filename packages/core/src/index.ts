@@ -1,5 +1,14 @@
 export { LexionEditor } from "./editor.js";
-export { lexionBrandingStatusItem, lexionStatusBarAppearance } from "./branding.js";
+export {
+  LEXION_BRANDING_CLASS_NAME,
+  getStatusBarGroupClassName,
+  getStatusBarItemClassName,
+  lexionBrandingStatusItem,
+  lexionStatusBarAppearance,
+  lexionStatusBarStyles,
+  resolveBrandingStatusItem,
+  splitStatusBarItems
+} from "./branding.js";
 export { createCoreSchema, coreSchema } from "./schema.js";
 export type {
   CommandHandler,
@@ -10,7 +19,11 @@ export type {
   JSONObject,
   JSONPrimitive,
   JSONValue,
+  LexionBrandingOptions,
   LexionEditorOptions,
+  LexionEditorUpdateEvent,
+  LexionEditorUpdateListener,
+  LexionEditorUpdateSource,
   LexionExtension,
   LexionPlugin,
   LexionStatusBarAlignment,
@@ -19,4 +32,4 @@ export type {
   PluginLifecycleContext,
   StatusBarContext
 } from "./types.js";
-export type { LexionStatusBarAppearance } from "./branding.js";
+export type { LexionStatusBarAppearance, LexionStatusBarGroups } from "./branding.js";

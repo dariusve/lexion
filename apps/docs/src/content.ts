@@ -55,7 +55,8 @@ export const pages: readonly DocPage[] = [
     id: "extension-development",
     title: "Extension Development",
     category: "Guides",
-    summary: "Extension contract, lifecycle hooks, and concrete extension implementation templates.",
+    summary:
+      "Extension contract, lifecycle hooks, and concrete extension implementation templates.",
     sourcePath: "/docs/EXTENSION_DEVELOPMENT.md",
     markdown: extensionDevelopment
   },
@@ -79,7 +80,8 @@ export const pages: readonly DocPage[] = [
     id: "data-examples",
     title: "Data Examples",
     category: "Reference",
-    summary: "Concrete examples of JSON documents, adapter values, HTML/text output, and service payloads.",
+    summary:
+      "Concrete examples of JSON documents, adapter values, HTML/text output, and service payloads.",
     sourcePath: "/docs/DATA_EXAMPLES.md",
     markdown: dataExamples
   },
@@ -95,10 +97,10 @@ export const pages: readonly DocPage[] = [
     id: "backend-services",
     title: "Backend Services",
     category: "Reference",
-    summary: "Fastify API and collaboration server protocols with operational commands.",
+    summary: "Fastify API endpoints, payloads, and operational commands.",
     sourcePath: "/docs/BACKEND_SERVICES.md",
     markdown: backendServices
-  },
+  }
 ];
 
 export const categoryOrder: readonly DocPage["category"][] = [

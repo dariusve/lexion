@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { LexionEditor, type JSONDocument } from "@lexion-rte/core";
 import { starterKitCommandNames, starterKitExtension } from "@lexion-rte/starter-kit";
@@ -44,11 +44,15 @@ const createDoc = (): JSONDocument => ({
   content: [
     {
       type: "paragraph",
-      content: [{ type: "text", text: "Select text to try inline marks, links, and block transforms." }]
+      content: [
+        { type: "text", text: "Select text to try inline marks, links, and block transforms." }
+      ]
     },
     {
       type: "paragraph",
-      content: [{ type: "text", text: "Use the toolbar to compare the full starter-kit command set." }]
+      content: [
+        { type: "text", text: "Use the toolbar to compare the full starter-kit command set." }
+      ]
     },
     {
       type: "bullet_list",
@@ -67,7 +71,9 @@ const createDoc = (): JSONDocument => ({
           content: [
             {
               type: "paragraph",
-              content: [{ type: "text", text: "Place the cursor here to test indent, then outdent." }]
+              content: [
+                { type: "text", text: "Place the cursor here to test indent, then outdent." }
+              ]
             }
           ]
         }
@@ -77,33 +83,34 @@ const createDoc = (): JSONDocument => ({
 });
 
 export const App = () => {
-  const editor = useMemo(
-    () =>
-      new LexionEditor({
-        doc: createDoc(),
-        extensions: [starterKitExtension]
-      }),
-    []
-  );
-  const [value, setValue] = useState<JSONDocument>(() => editor.getJSON());
+  // Own the editor in an effect so create/destroy stay paired under StrictMode.
+  const [editor, setEditor] = useState<LexionEditor | null>(null);
+  const [value, setValue] = useState<JSONDocument>(createDoc);
   const [readOnly, setReadOnly] = useState(false);
 
-  useEffect(
-    () => () => {
-      editor.destroy();
-    },
-    [editor]
-  );
+  useEffect(() => {
+    const created = new LexionEditor({
+      doc: createDoc(),
+      extensions: [starterKitExtension]
+    });
+    setEditor(created);
+    return () => {
+      created.destroy();
+    };
+  }, []);
 
   const runCommand = (button: ToolbarButtonConfig): void => {
-    editor.execute(button.command, ...(button.args ?? []));
-    setValue(editor.getJSON());
+    // The view and `onChange` update through the editor subscription.
+    editor?.execute(button.command, ...(button.args ?? []));
   };
 
   return (
     <main className="shell">
       <h1>React Adapter Sample</h1>
-      <p>Select text to test inline formatting and links. Place the cursor in the second list item to test indent, then outdent.</p>
+      <p>
+        Select text to test inline formatting and links. Place the cursor in the second list item to
+        test indent, then outdent.
+      </p>
       <div className="toolbar">
         {toolbarButtons.map((button) => (
           <button
@@ -124,12 +131,14 @@ export const App = () => {
         </button>
       </div>
       <section className="editor">
-        <LexionEditorView
-          editor={editor}
-          value={value}
-          onChange={(nextValue) => setValue(nextValue)}
-          readOnly={readOnly}
-        />
+        {editor ? (
+          <LexionEditorView
+            editor={editor}
+            value={value}
+            onChange={(nextValue) => setValue(nextValue)}
+            readOnly={readOnly}
+          />
+        ) : null}
       </section>
       <pre className="state">{JSON.stringify(value, null, 2)}</pre>
     </main>

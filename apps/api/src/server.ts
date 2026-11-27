@@ -23,7 +23,8 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 
 const isString = (value: unknown): value is string => typeof value === "string";
 
-const isJSONDocument = (value: unknown): value is JSONDocument => isRecord(value) && isString(value.type);
+const isJSONDocument = (value: unknown): value is JSONDocument =>
+  isRecord(value) && isString(value.type);
 
 const createEditor = (document?: JSONDocument): LexionEditor =>
   new LexionEditor(
@@ -83,7 +84,11 @@ export const buildApiServer = (): FastifyInstance => {
   });
 
   app.post<{ Body: ExecuteCommandBody }>("/commands/execute", async (request, reply) => {
-    if (!isRecord(request.body) || !isJSONDocument(request.body.document) || !isString(request.body.command)) {
+    if (
+      !isRecord(request.body) ||
+      !isJSONDocument(request.body.document) ||
+      !isString(request.body.command)
+    ) {
       return reply.code(400).send({ error: "Invalid request body" });
     }
 

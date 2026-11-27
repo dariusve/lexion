@@ -32,6 +32,8 @@ pnpm add @lexion-rte/vue vue
 - `modelValue?: JSONDocument`
 - `defaultValue?: JSONDocument`
 - `readOnly?: boolean`
+- `ariaLabel?: string` / `ariaLabelledBy?: string` (accessible name of the editable area, which has `role="textbox"` and `aria-multiline="true"`)
+- `injectStyles?: boolean` (default `true`; injects the editor and status bar stylesheet)
 - `className?: string`
 - `style?: StyleValue`
 

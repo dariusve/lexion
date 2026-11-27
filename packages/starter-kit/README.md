@@ -14,7 +14,7 @@ Community starter-kit extensions for Lexion.
 
 - the starter-kit schema
 - default editing commands
-- the base ProseMirror history and keymap plugins
+- ProseMirror history, keyboard shortcuts, Markdown input rules, and the base keymap
 
 Commercial features such as AI and collaboration live in separate premium packages.
 
@@ -46,12 +46,14 @@ The starter kit provides:
 - hard breaks
 - list indent and outdent commands
 - undo and redo
+- keyboard shortcuts for history, marks, block types and lists (see [Keyboard Shortcuts](#keyboard-shortcuts))
+- Markdown input rules such as `# `, `> `, `- `, `1. `, ```` ``` ```` and `---` (see [Markdown Input Rules](#markdown-input-rules))
 - list keyboard shortcuts for split, indent, and outdent
 - gap cursor navigation between block nodes
 - drop cursor feedback during drag and drop
 - automatic trailing paragraph after block content
 
-It also provides the default ProseMirror history plugin, base keymap, list keymap plugin, gap cursor plugin, drop cursor plugin, and trailing node plugin so a new editor instance is usable immediately.
+It also provides the default ProseMirror history plugin, starter-kit keymap, Markdown input rules, base keymap, list keymap plugin, gap cursor plugin, drop cursor plugin, and trailing node plugin so a new editor instance is usable immediately.
 
 ## Exports
 
@@ -66,11 +68,45 @@ It also provides the default ProseMirror history plugin, base keymap, list keyma
 `starterKitExtension` enables these ProseMirror plugins by default:
 
 - `history()`
-- `keymap(baseKeymap)`
+- `createStarterKitInputRulesPlugin(schema)`
 - `createListKeymapPlugin(schema)`
+- `createStarterKitKeymapPlugin(schema)`
+- `keymap(baseKeymap)`
 - `gapCursor()`
 - `dropCursor()`
 - `createTrailingNodePlugin()`
+
+## Keyboard Shortcuts
+
+`Mod` is Cmd on macOS and Ctrl elsewhere.
+
+| Shortcut | Action |
+| --- | --- |
+| `Mod-z` | Undo |
+| `Shift-Mod-z`, `Mod-y` (not macOS) | Redo |
+| `Mod-b` / `Mod-i` / `Mod-u` | Bold / italic / underline |
+| `Mod-e` | Inline code |
+| `Shift-Mod-s` | Strikethrough |
+| `Mod-Alt-0` | Paragraph |
+| `Mod-Alt-1` … `Mod-Alt-6` | Heading level 1–6 |
+| `Mod-Alt-c` | Code block |
+| `Shift-Mod-b` | Blockquote |
+| `Shift-Mod-8` / `Shift-Mod-7` | Bullet / ordered list |
+| `Shift-Enter`, `Mod-Enter` | Hard break |
+| `Enter` / `Tab` / `Shift-Tab` in lists | Split / indent / outdent list item |
+
+## Markdown Input Rules
+
+Typed at the start of an empty or plain paragraph:
+
+| Type | Result |
+| --- | --- |
+| `#` … `######` then space | Heading level 1–6 |
+| `>` then space | Blockquote |
+| `-`, `+` or `*` then space | Bullet list |
+| `1.` then space | Ordered list (starting at that number) |
+| ```` ``` ```` | Code block |
+| `---`, `___` or `***` on an empty line | Horizontal rule |
 
 ## Command Names
 

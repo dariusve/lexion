@@ -1,7 +1,10 @@
 <template>
   <main class="shell">
     <h1>Nuxt Adapter Sample</h1>
-    <p>Select text to test inline formatting and links. Place the cursor in the second list item to test indent, then outdent.</p>
+    <p>
+      Select text to test inline formatting and links. Place the cursor in the second list item to
+      test indent, then outdent.
+    </p>
     <div class="toolbar">
       <button
         v-for="button in toolbarButtons"
@@ -76,11 +79,15 @@ const createDoc = (): JSONDocument => ({
   content: [
     {
       type: "paragraph",
-      content: [{ type: "text", text: "Select text to try inline marks, links, and block transforms." }]
+      content: [
+        { type: "text", text: "Select text to try inline marks, links, and block transforms." }
+      ]
     },
     {
       type: "paragraph",
-      content: [{ type: "text", text: "Use the toolbar to compare the full starter-kit command set." }]
+      content: [
+        { type: "text", text: "Use the toolbar to compare the full starter-kit command set." }
+      ]
     },
     {
       type: "bullet_list",
@@ -99,7 +106,9 @@ const createDoc = (): JSONDocument => ({
           content: [
             {
               type: "paragraph",
-              content: [{ type: "text", text: "Place the cursor here to test indent, then outdent." }]
+              content: [
+                { type: "text", text: "Place the cursor here to test indent, then outdent." }
+              ]
             }
           ]
         }

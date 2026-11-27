@@ -17,13 +17,15 @@ Lexion is a framework-agnostic, headless rich text editor platform built on Pros
 - [Backend Services](docs/BACKEND_SERVICES.md)
 
 ## Quick Start
+Requires Node.js 22 (see `.nvmrc`; `>=20` is supported) and pnpm 9.15 (`corepack enable`).
+
 1. Install dependencies:
    - `pnpm install`
 2. Build all packages/apps:
    - `pnpm build`
 3. Run lints:
    - `pnpm lint`
-4. Run tests:
+4. Run tests (no build needed; Vitest resolves `@lexion-rte/*` to package sources):
    - `pnpm test`
 5. Run adapter sample apps:
    - `pnpm dev:web-sample`
@@ -42,7 +44,12 @@ Lexion is a framework-agnostic, headless rich text editor platform built on Pros
 - `pnpm build:packages`: build `packages/*`.
 - `pnpm build:apps`: build `apps/*`.
 - `pnpm lint`: run lint across all workspaces.
+- `pnpm format` / `pnpm format:check`: format with Prettier, or check formatting.
+- `pnpm typecheck`: type-check tests and package sources together, without a build.
 - `pnpm test`: run unit, adapter, and integration tests.
+- `pnpm test:coverage`: run tests with coverage thresholds (as CI does).
+- `pnpm run ci`: run every CI check in order (format, lint, typecheck, build, test with coverage).
+- `pnpm changeset`: describe a change for the next release (see [CONTRIBUTING.md](CONTRIBUTING.md#releases)).
 - `pnpm dev:docs`: run docs site locally.
 - `pnpm dev:api`: build and run API server.
 - `pnpm dev:web-sample`: run vanilla web adapter sample.
@@ -57,6 +64,9 @@ Lexion is a framework-agnostic, headless rich text editor platform built on Pros
 - `pnpm dev:nuxt-sample`: run Nuxt framework adapter sample.
 
 Sample apps use native framework runtimes/tooling where applicable (for example Next.js, Nuxt, Astro, Angular, Svelte, Solid, Vue, and React).
+
+## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md) for dev setup, the checks CI runs, and the Changesets release flow. For how the packages fit together, see [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Core Rule
 Feature behavior must be implemented as extensions (`@lexion-rte/starter-kit` or premium extension packages), not directly in adapters.

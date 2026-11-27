@@ -44,11 +44,15 @@ const createDoc = (): JSONDocument => ({
   content: [
     {
       type: "paragraph",
-      content: [{ type: "text", text: "Select text to try inline marks, links, and block transforms." }]
+      content: [
+        { type: "text", text: "Select text to try inline marks, links, and block transforms." }
+      ]
     },
     {
       type: "paragraph",
-      content: [{ type: "text", text: "Use the toolbar to compare the full starter-kit command set." }]
+      content: [
+        { type: "text", text: "Use the toolbar to compare the full starter-kit command set." }
+      ]
     },
     {
       type: "bullet_list",
@@ -67,7 +71,9 @@ const createDoc = (): JSONDocument => ({
           content: [
             {
               type: "paragraph",
-              content: [{ type: "text", text: "Place the cursor here to test indent, then outdent." }]
+              content: [
+                { type: "text", text: "Place the cursor here to test indent, then outdent." }
+              ]
             }
           ]
         }
@@ -104,7 +110,12 @@ const stateElement = root.querySelector<HTMLElement>("#state");
 const commandButtons = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-command-index]"));
 const readOnlyButton = root.querySelector<HTMLButtonElement>("#readonly");
 
-if (!editorElement || !stateElement || commandButtons.length !== toolbarButtons.length || !readOnlyButton) {
+if (
+  !editorElement ||
+  !stateElement ||
+  commandButtons.length !== toolbarButtons.length ||
+  !readOnlyButton
+) {
   throw new Error("Missing sample DOM nodes");
 }
 

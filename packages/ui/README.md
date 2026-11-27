@@ -218,6 +218,7 @@ injectLexionToolbarStyles({
 - `editor?: { execute(command, ...args): boolean; focus?(): void }`
 - `items?: LexionToolbarItemInput[]`
 - `className?: string`
+- `ariaLabel?: string` (default `"Editor toolbar"`)
 - `onItemExecute?: (event) => void`
 
 `LexionToolbarItemInput` supports:
@@ -225,6 +226,7 @@ injectLexionToolbarStyles({
 - command button item (`command`, `args`, `label`, `iconClass`, ...)
 - dropdown group item (`items`) where each nested item has `iconClass` + `label` + command config
 - separator item (`separator: true`) for visual grouping in the same toolbar row
+- `active?: boolean` on toggle buttons (bold, list types, ...): renders `aria-pressed` and the `lexion-toolbar-ui__button--active` class. Leave it undefined for plain action buttons.
 
 ### `LexionToolbarItemState`
 
@@ -247,7 +249,16 @@ injectLexionToolbarStyles({
 - `disableItem(id)`
 - `hideItem(id)`
 - `showItem(id, state?)`
+- `setItemActive(id, active)`
+- `setItemsActive(record)`
 - `destroy()`
+
+### Accessibility
+
+- The toolbar has `role="toolbar"` and an `aria-label`.
+- It is a single Tab stop. `ArrowLeft` / `ArrowRight` / `Home` / `End` move between enabled buttons.
+- Dropdown triggers open with `ArrowDown` (or `Enter` / `Space`). Menu items have `role="menuitem"` and support `ArrowUp` / `ArrowDown` / `Home` / `End`. `Escape` closes the menu and returns focus to the trigger.
+- Keep `active` in sync with the selection, e.g. from `editor.subscribe()`.
 
 ### Styling helpers
 

@@ -1,6 +1,6 @@
 {
   "name": "@lexion-rte/vue",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Vue 3 adapter for the Lexion editor platform.",
   "private": false,
   "type": "module",
@@ -35,12 +35,11 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "lint": "eslint src --ext .ts"
+    "lint": "eslint src"
   },
   "dependencies": {
     "@lexion-rte/core": "workspace:*",
-    "@lexion-rte/starter-kit": "workspace:*",
-    "prosemirror-view": "^1.37.2"
+    "@lexion-rte/web": "workspace:*"
   },
   "peerDependencies": {
     "vue": "^3.4.0"

@@ -1,0 +1,36 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "types": ["node"],
+    "baseUrl": "..",
+    "paths": {
+      "@lexion-rte/core": ["packages/core/src/index.ts"],
+      "@lexion-rte/starter-kit": ["packages/starter-kit/src/index.ts"],
+      "@lexion-rte/tools": ["packages/tools/src/index.ts"],
+      "@lexion-rte/ui": ["packages/ui/src/index.ts"],
+      "@lexion-rte/web": ["packages/web/src/index.ts"],
+      "@lexion-rte/react": ["packages/react/src/index.ts"],
+      "@lexion-rte/vue": ["packages/vue/src/index.ts"],
+      "@lexion-rte/vue2": ["packages/vue2/src/index.ts"],
+      "@lexion-rte/angular": ["packages/angular/src/index.ts"],
+      "@lexion-rte/svelte": ["packages/svelte/src/index.ts"],
+      "@lexion-rte/solid": ["packages/solid/src/index.ts"],
+      "@lexion-rte/astro": ["packages/astro/src/index.ts"],
+      "@lexion-rte/next": ["packages/next/src/index.ts"],
+      "@lexion-rte/nuxt": ["packages/nuxt/src/index.ts"]
+    }
+  },
+  "include": [
+    "./**/*.ts",
+    "./**/*.tsx",
+    "../packages/*/src/**/*.ts",
+    "../packages/*/src/**/*.tsx",
+    "../vitest.config.ts"
+  ]
+}

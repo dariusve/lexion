@@ -36,6 +36,8 @@ pnpm add @lexion-rte/react react react-dom
 - `onChange?: (value, editor) => void`
 - `onReady?: (editor) => void`
 - `readOnly?: boolean`
+- `ariaLabel?: string` / `ariaLabelledBy?: string` (accessible name of the editable area, which has `role="textbox"` and `aria-multiline="true"`)
+- `injectStyles?: boolean` (default `true`; injects the editor and status bar stylesheet)
 - `className?: string`
 - `style?: CSSProperties`
 
@@ -71,20 +73,40 @@ export function ControlledEditor({ initial }: { initial: JSONDocument }) {
 
 ## External Editor Instance Example
 
+Pass your own `LexionEditor` to share it with a toolbar or other views. Create and destroy it in the same effect so it works under `<StrictMode>`; the view never destroys an editor it did not create.
+
 ```tsx
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { LexionEditor } from "@lexion-rte/core";
-import { starterKitExtension } from "@lexion-rte/starter-kit";
+import { starterKitCommandNames, starterKitExtension } from "@lexion-rte/starter-kit";
 import { LexionEditorView } from "@lexion-rte/react";
 
 export function SharedEditor() {
-  const editor = useMemo(() => new LexionEditor({ extensions: [starterKitExtension] }), []);
-  return <LexionEditorView editor={editor} />;
+  const [editor, setEditor] = useState<LexionEditor | null>(null);
+
+  useEffect(() => {
+    const created = new LexionEditor({ extensions: [starterKitExtension] });
+    setEditor(created);
+    return () => created.destroy();
+  }, []);
+
+  if (!editor) {
+    return null;
+  }
+
+  return (
+    <>
+      <button onClick={() => editor.execute(starterKitCommandNames.toggleBold)}>Bold</button>
+      <LexionEditorView editor={editor} ariaLabel="Document body" />
+    </>
+  );
 }
 ```
 
 ## Notes
 
 - In controlled mode, pass updated `value` back on every `onChange` call.
-- The component renders the same footer message as other adapters.
+- `onChange` fires only when the document changes (not on selection-only changes), including changes made through a shared `editor` (e.g. `editor.execute()` from a toolbar). Values applied through `value` are not echoed back.
+- Works under `<StrictMode>`. When no `editor` is passed, the view creates its own (with `starterKitExtension`) and destroys it on unmount.
+- The component renders the same status bar as other adapters. Hide or change the "Powered by lexion" item with the `branding` option of `LexionEditor`, and theme it with the `--lexion-status-bar-*` custom properties (see `@lexion-rte/web`).
 - The editor root enforces required ProseMirror `white-space` styles, so users should not see the `prosemirror.css` warning.

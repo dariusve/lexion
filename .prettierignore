@@ -1,0 +1,19 @@
+# Generated / vendored
+**/node_modules
+**/dist
+**/coverage
+**/.next
+**/.nuxt
+**/.output
+**/.astro
+**/.svelte-kit
+**/.angular
+**/out
+.pnpm-store
+pnpm-lock.yaml
+wiki
+.changeset/*.md
+
+# Prose: formatted by hand (Prettier would reflow tables and lists)
+**/*.md
+**/CHANGELOG.md

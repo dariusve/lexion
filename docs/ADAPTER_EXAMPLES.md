@@ -74,6 +74,40 @@ createLexionToolbar({
 });
 ```
 
+The toolbar is keyboard accessible out of the box: `role="toolbar"` (label it with `ariaLabel`), one Tab stop, arrow-key navigation, and dropdown menus that open with `ArrowDown` and close with `Escape`.
+
+### Reflecting the Selection (`active`)
+
+Toggle items can show a pressed state (`aria-pressed` plus the `lexion-toolbar-ui__button--active` class). Keep it in sync from the editor's change events:
+
+```ts
+import { LexionEditor } from "@lexion-rte/core";
+import { starterKitExtension } from "@lexion-rte/starter-kit";
+import { createLexionToolbar, createStarterKitToolbarItems } from "@lexion-rte/ui";
+import { createLexionWebEditor } from "@lexion-rte/web";
+
+const core = new LexionEditor({ extensions: [starterKitExtension] });
+createLexionWebEditor({ element: document.getElementById("editor")!, editor: core });
+
+const toolbar = createLexionToolbar({
+  element: document.getElementById("toolbar")!,
+  editor: core,
+  ariaLabel: "Formatting",
+  items: createStarterKitToolbarItems()
+});
+
+core.subscribe(({ state }) => {
+  const { from, $from, to, empty } = state.selection;
+  const isActive = (markName: string): boolean => {
+    const type = state.schema.marks[markName];
+    return empty
+      ? Boolean(type.isInSet(state.storedMarks ?? $from.marks()))
+      : state.doc.rangeHasMark(from, to, type);
+  };
+  toolbar.setItemsActive({ bold: isActive("strong"), italic: isActive("em") });
+});
+```
+
 ## Sample Adapter Class
 
 A minimal adapter composes:
@@ -117,19 +151,26 @@ export class MyToolbarAdapter {
 
 ## React Toolbar Pattern
 
-Use an external `LexionEditor` so toolbar and editor view share one instance:
+Use an external `LexionEditor` so toolbar and editor view share one instance. Create and destroy it in the same effect so it works under `<StrictMode>`. The view subscribes to the editor, so commands run from the toolbar update it (and fire `onChange`) without extra wiring:
 
 ```tsx
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { LexionEditor } from "@lexion-rte/core";
 import { starterKitExtension, starterKitCommandNames } from "@lexion-rte/starter-kit";
 import { LexionEditorView } from "@lexion-rte/react";
 
 export const ReactToolbarExample = () => {
-  const editor = useMemo(
-    () => new LexionEditor({ extensions: [starterKitExtension] }),
-    []
-  );
+  const [editor, setEditor] = useState<LexionEditor | null>(null);
+
+  useEffect(() => {
+    const created = new LexionEditor({ extensions: [starterKitExtension] });
+    setEditor(created);
+    return () => created.destroy();
+  }, []);
+
+  if (!editor) {
+    return null;
+  }
 
   return (
     <>

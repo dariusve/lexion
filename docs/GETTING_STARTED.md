@@ -1,8 +1,8 @@
 # Getting Started
 
 ## Prerequisites
-- Node.js 22+
-- pnpm 9+
+- Node.js 22 (pinned in `.nvmrc`; `>=20` is supported). With nvm: `nvm use`.
+- pnpm 9.15 (pinned in `packageManager`). With Corepack: `corepack enable`.
 
 ## Install
 ```bash
@@ -11,12 +11,16 @@ pnpm install
 
 ## Verify Workspace
 ```bash
-pnpm build
+pnpm format:check
 pnpm lint
+pnpm typecheck
+pnpm build
 pnpm test
 ```
 
-These root commands verify the full public workspace in this repository.
+These root commands verify the full public workspace in this repository. `pnpm run ci` runs the same checks CI runs, in order, with coverage thresholds (`pnpm test:coverage`).
+
+Tests and `pnpm typecheck` resolve `@lexion-rte/*` imports to package sources, so they do not need a prior build. Sample apps use the built packages, so run `pnpm build:packages` before starting one.
 
 ## Run Local Adapter Samples (No Registry Publish Needed)
 ```bash
@@ -55,7 +59,9 @@ pnpm dev:api
 - `packages/next`: Next.js adapter.
 - `packages/nuxt`: Nuxt adapter.
 - `packages/tools`: format conversion helpers (`toHTML`, `toText`, `fromHTML`, `fromText`).
-- `apps/playground`: lightweight integration playground helpers.
+- `packages/ui`: framework-agnostic, accessible toolbar (`LexionToolbar`).
+- `tests/`: Vitest suites for core, starter-kit, every adapter, the API and repo hygiene.
+- `apps/playground`: combined React / Vue / web toolbar examples.
 - `apps/web-sample`: runnable vanilla web adapter sample.
 - `apps/react-sample`: runnable React adapter sample.
 - `apps/vue-sample`: runnable Vue 3 adapter sample.
@@ -73,5 +79,7 @@ pnpm dev:api
 1. Implement or modify community behavior in `packages/starter-kit`.
 2. Keep `packages/core` generic and extension-driven.
 3. Keep adapters UI-only.
-4. Run `pnpm build` and `pnpm lint` before opening PR for community changes.
-5. Keep non-public commercial code out of this repository.
+4. Run `pnpm run ci` before opening a pull request.
+5. Add a changeset (`pnpm changeset`) for any change to a published package. Never edit `version` fields or `CHANGELOG.md` by hand; see [CONTRIBUTING.md](../CONTRIBUTING.md#releases).
+6. Keep compiled output in `dist/`. A test fails if `.js` or `.d.ts` files appear under `packages/*/src`.
+7. Keep non-public commercial code out of this repository.

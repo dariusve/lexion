@@ -44,6 +44,8 @@ const value = ref<JSONDocument | undefined>(undefined);
 - `modelValue?: JSONDocument`
 - `defaultValue?: JSONDocument`
 - `readOnly?: boolean`
+- `ariaLabel?: string` / `ariaLabelledBy?: string` (accessible name of the editable area, which has `role="textbox"` and `aria-multiline="true"`)
+- `injectStyles?: boolean` (default `true`)
 - `className?: string`
 - `style?: StyleValue`
 

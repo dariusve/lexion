@@ -14,10 +14,13 @@ Keep neutral contracts in `@lexion-rte/core` only when they are reusable across 
 ## Extension Contract
 A `LexionExtension` can provide:
 - `key`: unique id.
-- `schema`: schema instance or factory.
+- `schema`: schema instance or factory. Only allowed for extensions passed to the `LexionEditor` constructor; the schema is fixed at construction, so `editor.use()` throws for an extension that sets `schema`.
 - `commands(context)`: command map.
-- `prosemirrorPlugins(context)`: ProseMirror plugins.
+- `editorPlugins(context)`: editor plugins (ProseMirror `Plugin` instances).
+- `statusBarItems(context)`: status bar entries.
 - `onCreate` / `onDestroy`: lifecycle hooks.
+
+Extensions added later with `editor.use(extension)` can be removed with `editor.removeExtension(key)` (`removePlugin` is a deprecated alias).
 
 ## Minimal Template
 ```ts
@@ -31,7 +34,7 @@ export const myExtension: LexionExtension = {
       return true;
     }
   }),
-  prosemirrorPlugins: () => []
+  editorPlugins: () => []
 };
 ```
 
@@ -50,19 +53,23 @@ const editor = new LexionEditor({
 
 ### React (`.tsx`)
 ```tsx
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { LexionEditor } from "@lexion-rte/core";
 import { starterKitExtension } from "@lexion-rte/starter-kit";
 import { LexionEditorView } from "@lexion-rte/react";
 import { myExtension } from "./my-extension";
 
 export const EditorScreen = () => {
-  const editor = useMemo(
-    () => new LexionEditor({ extensions: [starterKitExtension, myExtension] }),
-    []
-  );
+  // Create and destroy in the same effect so the editor survives <StrictMode> remounts.
+  const [editor, setEditor] = useState<LexionEditor | null>(null);
 
-  return <LexionEditorView editor={editor} />;
+  useEffect(() => {
+    const created = new LexionEditor({ extensions: [starterKitExtension, myExtension] });
+    setEditor(created);
+    return () => created.destroy();
+  }, []);
+
+  return editor ? <LexionEditorView editor={editor} /> : null;
 };
 ```
 
@@ -118,7 +125,7 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
 1. Put feature logic in `packages/starter-kit` or the relevant premium package, not adapters.
 2. Keep extension command names stable and explicit.
 3. Avoid side effects in extension module scope.
-4. Keep schema ownership clear: use one schema-providing extension per editor instance.
+4. Keep schema ownership clear: use one schema-providing extension per editor instance, passed to the constructor (not `editor.use()`).
 5. Do not add entitlement or plan logic to adapters or `@lexion-rte/core`.
 
 ## Validation Checklist

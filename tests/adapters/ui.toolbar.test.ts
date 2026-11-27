@@ -281,8 +281,139 @@ describe("@lexion-rte/ui", () => {
 
     expect(focus).toHaveBeenCalledTimes(1);
     expect(execute).toHaveBeenCalledTimes(1);
-    expect(focus.mock.invocationCallOrder[0]).toBeLessThan(execute.mock.invocationCallOrder[0]);
+    expect(focus.mock.invocationCallOrder[0]).toBeLessThan(execute.mock.invocationCallOrder[0]!);
 
     toolbar.destroy();
+  });
+});
+
+describe("@lexion-rte/ui accessibility", () => {
+  const key = (element: Element, keyName: string): void => {
+    element.dispatchEvent(
+      new KeyboardEvent("keydown", { key: keyName, bubbles: true, cancelable: true })
+    );
+  };
+
+  const setup = () => {
+    const host = document.createElement("div");
+    document.body.appendChild(host);
+    const execute = vi.fn(() => true);
+    const toolbar = createLexionToolbar({
+      element: host,
+      editor: { execute },
+      items: [
+        { id: "bold", iconClass: "ri-bold", title: "Bold", command: "toggleBold", active: false },
+        {
+          id: "italic",
+          iconClass: "ri-italic",
+          title: "Italic",
+          command: "toggleItalic",
+          state: "disabled"
+        },
+        { id: "sep", separator: true },
+        {
+          id: "heading",
+          iconClass: "ri-heading",
+          title: "Heading",
+          items: [
+            { id: "h1", iconClass: "ri-h-1", label: "H1", command: "toggleHeading", args: [1] },
+            { id: "h2", iconClass: "ri-h-2", label: "H2", command: "toggleHeading", args: [2] }
+          ]
+        },
+        { id: "undo", iconClass: "ri-undo", title: "Undo", command: "undo" }
+      ]
+    });
+    const button = (id: string) =>
+      host.querySelector<HTMLButtonElement>(
+        `button[${lexionToolbarAppearance.itemIdAttribute}="${id}"]`
+      )!;
+    return { host, toolbar, execute, button };
+  };
+
+  test("exposes toolbar semantics and a single tab stop", () => {
+    const { host, toolbar, button } = setup();
+    const element = host.querySelector(`.${lexionToolbarAppearance.className}`)!;
+
+    expect(element.getAttribute("role")).toBe("toolbar");
+    expect(element.getAttribute("aria-label")).toBe("Editor toolbar");
+    expect(button("bold").tabIndex).toBe(0);
+    expect(button("heading").tabIndex).toBe(-1);
+    expect(button("undo").tabIndex).toBe(-1);
+    expect(host.querySelectorAll('[role="menuitem"]')).toHaveLength(2);
+
+    toolbar.destroy();
+    host.remove();
+  });
+
+  test("arrow keys move focus and skip disabled buttons", () => {
+    const { host, toolbar, button } = setup();
+    button("bold").focus();
+
+    key(button("bold"), "ArrowRight");
+    expect(document.activeElement).toBe(button("heading"));
+    expect(button("heading").tabIndex).toBe(0);
+    expect(button("bold").tabIndex).toBe(-1);
+
+    key(button("heading"), "End");
+    expect(document.activeElement).toBe(button("undo"));
+    key(button("undo"), "ArrowRight");
+    expect(document.activeElement).toBe(button("bold"));
+    key(button("bold"), "ArrowLeft");
+    expect(document.activeElement).toBe(button("undo"));
+
+    toolbar.destroy();
+    host.remove();
+  });
+
+  test("dropdown menus are keyboard operable", () => {
+    const { host, toolbar, button, execute } = setup();
+    const menuItem = (id: string) =>
+      host.querySelector<HTMLButtonElement>(
+        `button[${lexionToolbarAppearance.dropdownOptionIdAttribute}="${id}"]`
+      )!;
+    button("heading").focus();
+
+    key(button("heading"), "ArrowDown");
+    expect(button("heading").getAttribute("aria-expanded")).toBe("true");
+    expect(document.activeElement).toBe(menuItem("h1"));
+
+    key(menuItem("h1"), "ArrowDown");
+    expect(document.activeElement).toBe(menuItem("h2"));
+    key(menuItem("h2"), "ArrowDown");
+    expect(document.activeElement).toBe(menuItem("h1"));
+
+    key(menuItem("h1"), "Escape");
+    expect(button("heading").getAttribute("aria-expanded")).toBe("false");
+    expect(document.activeElement).toBe(button("heading"));
+
+    key(button("heading"), "ArrowDown");
+    menuItem("h2").click();
+    expect(execute).toHaveBeenCalledWith("toggleHeading", 2);
+
+    toolbar.destroy();
+    host.remove();
+  });
+
+  test("active items expose aria-pressed and keep focus across re-render", () => {
+    const { host, toolbar, button } = setup();
+    expect(button("bold").getAttribute("aria-pressed")).toBe("false");
+    expect(button("undo").hasAttribute("aria-pressed")).toBe(false);
+
+    button("bold").focus();
+    toolbar.setItemActive("bold", true);
+    expect(button("bold").getAttribute("aria-pressed")).toBe("true");
+    expect(button("bold").classList.contains(lexionToolbarAppearance.buttonActiveClassName)).toBe(
+      true
+    );
+    expect(document.activeElement).toBe(button("bold"));
+
+    toolbar.setItemsActive({ bold: false });
+    expect(button("bold").getAttribute("aria-pressed")).toBe("false");
+
+    toolbar.updateItem("bold", { active: null });
+    expect(button("bold").hasAttribute("aria-pressed")).toBe(false);
+
+    toolbar.destroy();
+    host.remove();
   });
 });

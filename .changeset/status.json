@@ -64,117 +64,91 @@
       "name": "@lexion-rte/starter-kit",
       "type": "minor",
       "oldVersion": "0.1.0",
-      "changesets": [
-        "open-core-release"
-      ],
+      "changesets": ["open-core-release"],
       "newVersion": "0.2.0"
     },
     {
       "name": "@lexion-rte/core",
       "type": "patch",
       "oldVersion": "0.1.4",
-      "changesets": [
-        "open-core-release"
-      ],
+      "changesets": ["open-core-release"],
       "newVersion": "0.1.5"
     },
     {
       "name": "@lexion-rte/tools",
       "type": "patch",
       "oldVersion": "0.1.4",
-      "changesets": [
-        "open-core-release"
-      ],
+      "changesets": ["open-core-release"],
       "newVersion": "0.1.5"
     },
     {
       "name": "@lexion-rte/web",
       "type": "patch",
       "oldVersion": "0.1.4",
-      "changesets": [
-        "open-core-release"
-      ],
+      "changesets": ["open-core-release"],
       "newVersion": "0.1.5"
     },
     {
       "name": "@lexion-rte/react",
       "type": "patch",
       "oldVersion": "0.1.4",
-      "changesets": [
-        "open-core-release"
-      ],
+      "changesets": ["open-core-release"],
       "newVersion": "0.1.5"
     },
     {
       "name": "@lexion-rte/vue",
       "type": "patch",
       "oldVersion": "0.1.4",
-      "changesets": [
-        "open-core-release"
-      ],
+      "changesets": ["open-core-release"],
       "newVersion": "0.1.5"
     },
     {
       "name": "@lexion-rte/vue2",
       "type": "patch",
       "oldVersion": "0.1.4",
-      "changesets": [
-        "open-core-release"
-      ],
+      "changesets": ["open-core-release"],
       "newVersion": "0.1.5"
     },
     {
       "name": "@lexion-rte/angular",
       "type": "patch",
       "oldVersion": "0.1.4",
-      "changesets": [
-        "open-core-release"
-      ],
+      "changesets": ["open-core-release"],
       "newVersion": "0.1.5"
     },
     {
       "name": "@lexion-rte/svelte",
       "type": "patch",
       "oldVersion": "0.1.4",
-      "changesets": [
-        "open-core-release"
-      ],
+      "changesets": ["open-core-release"],
       "newVersion": "0.1.5"
     },
     {
       "name": "@lexion-rte/solid",
       "type": "patch",
       "oldVersion": "0.1.4",
-      "changesets": [
-        "open-core-release"
-      ],
+      "changesets": ["open-core-release"],
       "newVersion": "0.1.5"
     },
     {
       "name": "@lexion-rte/astro",
       "type": "patch",
       "oldVersion": "0.1.4",
-      "changesets": [
-        "open-core-release"
-      ],
+      "changesets": ["open-core-release"],
       "newVersion": "0.1.5"
     },
     {
       "name": "@lexion-rte/next",
       "type": "patch",
       "oldVersion": "0.1.4",
-      "changesets": [
-        "open-core-release"
-      ],
+      "changesets": ["open-core-release"],
       "newVersion": "0.1.5"
     },
     {
       "name": "@lexion-rte/nuxt",
       "type": "patch",
       "oldVersion": "0.1.4",
-      "changesets": [
-        "open-core-release"
-      ],
+      "changesets": ["open-core-release"],
       "newVersion": "0.1.5"
     },
     {

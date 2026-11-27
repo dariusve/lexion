@@ -1,7 +1,7 @@
-import { Node as ProseMirrorNode, type Schema } from "prosemirror-model";
+import { Node as DocNode, type Schema } from "prosemirror-model";
 import { EditorState, type Plugin, type Transaction } from "prosemirror-state";
 
-import { lexionBrandingStatusItem } from "./branding.js";
+import { resolveBrandingStatusItem } from "./branding.js";
 import { coreSchema } from "./schema.js";
 import type {
   CommandHandler,
@@ -10,6 +10,9 @@ import type {
   JSONDocument,
   LexionEditor as LexionEditorContract,
   LexionEditorOptions,
+  LexionEditorUpdateEvent,
+  LexionEditorUpdateListener,
+  LexionEditorUpdateSource,
   LexionExtension,
   PluginFactoryContext,
   PluginLifecycleContext,
@@ -23,6 +26,8 @@ export class LexionEditor implements LexionEditorContract {
   private readonly commandMap: Map<string, CommandHandler>;
   private readonly extensionsByKey: Map<string, LexionExtension>;
   private readonly extensionCommandsByKey: Map<string, readonly string[]>;
+  private readonly updateListeners: Set<LexionEditorUpdateListener>;
+  private readonly brandingItem: LexionStatusBarItem | null;
   private destroyed: boolean;
 
   public constructor(options: LexionEditorOptions = {}) {
@@ -31,6 +36,8 @@ export class LexionEditor implements LexionEditorContract {
     this.commandMap = new Map();
     this.extensionsByKey = new Map();
     this.extensionCommandsByKey = new Map();
+    this.updateListeners = new Set();
+    this.brandingItem = resolveBrandingStatusItem(options.branding);
     this.destroyed = false;
 
     this.registerCommands(options.commands ?? {});
@@ -44,20 +51,42 @@ export class LexionEditor implements LexionEditorContract {
     this.runExtensionOnCreate();
   }
 
+  // `schema` and `isDestroyed` stay readable after `destroy()`; everything that touches
+  // editor state or behavior throws on a destroyed instance.
   public get schema(): Schema {
     return this._schema;
   }
 
+  public get isDestroyed(): boolean {
+    return this.destroyed;
+  }
+
   public get state(): EditorState {
+    this.assertNotDestroyed();
     return this._state;
   }
 
-  public get doc(): ProseMirrorNode {
+  public get doc(): DocNode {
+    this.assertNotDestroyed();
     return this._state.doc;
   }
 
   public getJSON(): JSONDocument {
+    this.assertNotDestroyed();
     return this._state.doc.toJSON() as JSONDocument;
+  }
+
+  /**
+   * Registers a listener called after every state change: dispatched transactions
+   * (including those from `execute()`), `setJSON()`, and extension add/remove.
+   * Returns an unsubscribe function. All listeners are removed on `destroy()`.
+   */
+  public subscribe(listener: LexionEditorUpdateListener): () => void {
+    this.assertNotDestroyed();
+    this.updateListeners.add(listener);
+    return () => {
+      this.updateListeners.delete(listener);
+    };
   }
 
   public getStatusBarItems(): readonly LexionStatusBarItem[] {
@@ -69,19 +98,25 @@ export class LexionEditor implements LexionEditorContract {
       items.push(...(extension.statusBarItems?.(context) ?? []));
     }
 
-    items.push(lexionBrandingStatusItem);
+    if (this.brandingItem) {
+      items.push(this.brandingItem);
+    }
     return items;
   }
 
   public setJSON(document: JSONDocument): void {
     this.assertNotDestroyed();
     const nextDocument = this.parseDocument(document);
+    const previousState = this._state;
     this._state = this.createState(nextDocument);
+    this.emitUpdate("setJSON", null, previousState, !previousState.doc.eq(nextDocument));
   }
 
   public dispatchTransaction(transaction: Transaction): void {
     this.assertNotDestroyed();
+    const previousState = this._state;
     this._state = this._state.apply(transaction);
+    this.emitUpdate("transaction", transaction, previousState, transaction.docChanged);
   }
 
   public execute(command: string, ...args: readonly unknown[]): boolean {
@@ -118,6 +153,12 @@ export class LexionEditor implements LexionEditorContract {
 
   public use(extension: LexionExtension): void {
     this.assertNotDestroyed();
+    if (extension.schema !== undefined) {
+      throw new Error(
+        `Extension "${extension.key}" provides a schema; schema-providing extensions must be passed ` +
+          "to the LexionEditor constructor because the schema is fixed at construction"
+      );
+    }
     const previousState = this._state;
     this.addExtension(extension);
 
@@ -133,9 +174,10 @@ export class LexionEditor implements LexionEditorContract {
       this._state = previousState;
       throw error;
     }
+    this.emitUpdate("extensions", null, previousState, false);
   }
 
-  public removePlugin(key: string): void {
+  public removeExtension(key: string): void {
     this.assertNotDestroyed();
     const extension = this.extensionsByKey.get(key);
     if (!extension) {
@@ -151,7 +193,14 @@ export class LexionEditor implements LexionEditorContract {
 
     this.extensionCommandsByKey.delete(key);
     this.extensionsByKey.delete(key);
+    const previousState = this._state;
     this._state = this.createState(this._state.doc);
+    this.emitUpdate("extensions", null, previousState, false);
+  }
+
+  /** @deprecated Use `removeExtension` instead. */
+  public removePlugin(key: string): void {
+    this.removeExtension(key);
   }
 
   public destroy(): void {
@@ -167,12 +216,38 @@ export class LexionEditor implements LexionEditorContract {
     this.commandMap.clear();
     this.extensionCommandsByKey.clear();
     this.extensionsByKey.clear();
+    this.updateListeners.clear();
     this.destroyed = true;
   }
 
   private assertNotDestroyed(): void {
     if (this.destroyed) {
       throw new Error("LexionEditor instance has been destroyed");
+    }
+  }
+
+  private emitUpdate(
+    source: LexionEditorUpdateSource,
+    transaction: Transaction | null,
+    previousState: EditorState,
+    docChanged: boolean
+  ): void {
+    if (this.updateListeners.size === 0) {
+      return;
+    }
+
+    const event: LexionEditorUpdateEvent = {
+      editor: this,
+      source,
+      transaction,
+      previousState,
+      state: this._state,
+      docChanged
+    };
+
+    // Snapshot so listeners can unsubscribe (or subscribe) while being notified.
+    for (const listener of [...this.updateListeners]) {
+      listener(event);
     }
   }
 
@@ -189,8 +264,7 @@ export class LexionEditor implements LexionEditorContract {
       if (!extension.schema) {
         continue;
       }
-      const schema =
-        typeof extension.schema === "function" ? extension.schema() : extension.schema;
+      const schema = typeof extension.schema === "function" ? extension.schema() : extension.schema;
       schemaCandidates.push(schema);
     }
 
@@ -201,17 +275,18 @@ export class LexionEditor implements LexionEditorContract {
     return schemaCandidates[0] ?? coreSchema;
   }
 
-  private parseDocument(document: JSONDocument): ProseMirrorNode {
-    return ProseMirrorNode.fromJSON(this._schema, document as unknown as Record<string, unknown>);
+  private parseDocument(document: JSONDocument): DocNode {
+    return DocNode.fromJSON(this._schema, document as unknown as Record<string, unknown>);
   }
 
-  private createState(document?: ProseMirrorNode): EditorState {
+  private createState(document?: DocNode): EditorState {
     const pluginContext: PluginFactoryContext = { schema: this._schema };
     const plugins: Plugin[] = [];
 
     for (const extension of this.extensionsByKey.values()) {
-      for (const prosemirrorPlugin of extension.prosemirrorPlugins?.(pluginContext) ?? []) {
-        plugins.push(prosemirrorPlugin);
+      const createPlugins = extension.editorPlugins ?? extension.prosemirrorPlugins;
+      for (const plugin of createPlugins?.(pluginContext) ?? []) {
+        plugins.push(plugin);
       }
     }
 

@@ -35,7 +35,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "lint": "eslint src --ext .ts"
+    "lint": "eslint src"
   },
   "peerDependencies": {
     "vue": "^2.7.0"

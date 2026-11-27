@@ -5,6 +5,12 @@ on:
     branches:
       - main
 
+# Never run two releases at once; a newer push waits for the running one instead of cancelling it
+# mid-publish.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -18,13 +24,11 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 9.15.0
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version-file: .nvmrc
           cache: pnpm
           registry-url: https://registry.npmjs.org
           scope: "@lexion-rte"
@@ -32,8 +36,21 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
-      - name: Build Packages
-        run: pnpm build:packages
+      # Same gates as CI: nothing is versioned or published unless they pass.
+      - name: Format
+        run: pnpm format:check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Build
+        run: pnpm build
+
+      - name: Test
+        run: pnpm test:coverage
 
       - name: Create Release Pull Request or Publish
         uses: changesets/action@v1

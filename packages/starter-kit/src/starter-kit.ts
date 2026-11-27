@@ -16,12 +16,18 @@ import type { CommandHandler, CommandMap, LexionExtension } from "@lexion-rte/co
 
 import { starterKitCommandNames } from "./command-names.js";
 import { createListKeymapPlugin } from "./list-keymap.js";
+import { createStarterKitInputRulesPlugin, createStarterKitKeymapPlugin } from "./shortcuts.js";
 import { createTrailingNodePlugin, createTrailingParagraphTransaction } from "./trailing-node.js";
 import type { HeadingAttributes, LinkAttributes } from "./types.js";
 
 const starterKitNodes = addListNodes(basicSchema.spec.nodes, "paragraph block*", "block");
 const strikeMarkSpec: MarkSpec = {
-  parseDOM: [{ tag: "s" }, { tag: "del" }, { tag: "strike" }, { style: "text-decoration=line-through" }],
+  parseDOM: [
+    { tag: "s" },
+    { tag: "del" },
+    { tag: "strike" },
+    { style: "text-decoration=line-through" }
+  ],
   toDOM() {
     return ["s", 0];
   }
@@ -44,8 +50,10 @@ export const createStarterKitSchema = (): Schema =>
 
 export const starterKitSchema = createStarterKitSchema();
 
-const asProseMirrorCommand = (command: Command): CommandHandler => (context) =>
-  command(context.state, context.dispatch);
+const asEditorCommand =
+  (command: Command): CommandHandler =>
+  (context) =>
+    command(context.state, context.dispatch);
 
 const getNodeType = (name: string, schema: Schema): NodeType => {
   const nodeType = schema.nodes[name];
@@ -63,7 +71,8 @@ const getMarkType = (name: string, schema: Schema): MarkType => {
   return markType;
 };
 
-const isSelectionInNodeType = (nodeType: NodeType, command: CommandHandler): CommandHandler =>
+const isSelectionInNodeType =
+  (nodeType: NodeType, command: CommandHandler): CommandHandler =>
   (context, ...args) => {
     const { $from } = context.state.selection;
     for (let depth = $from.depth; depth > 0; depth -= 1) {
@@ -74,15 +83,17 @@ const isSelectionInNodeType = (nodeType: NodeType, command: CommandHandler): Com
     return false;
   };
 
-const insertNode = (nodeType: NodeType): CommandHandler => (context) => {
-  try {
-    const transaction = context.state.tr.replaceSelectionWith(nodeType.create()).scrollIntoView();
-    context.dispatch(transaction);
-    return true;
-  } catch {
-    return false;
-  }
-};
+const insertNode =
+  (nodeType: NodeType): CommandHandler =>
+  (context) => {
+    try {
+      const transaction = context.state.tr.replaceSelectionWith(nodeType.create()).scrollIntoView();
+      context.dispatch(transaction);
+      return true;
+    } catch {
+      return false;
+    }
+  };
 
 const asHeadingAttributes = (value: unknown): HeadingAttributes | null => {
   if (typeof value !== "number") {
@@ -127,7 +138,10 @@ export const createStarterKitCommands = (): CommandMap => ({
       return false;
     }
 
-    return setBlockType(heading, { level: headingAttributes.level })(context.state, context.dispatch);
+    return setBlockType(heading, { level: headingAttributes.level })(
+      context.state,
+      context.dispatch
+    );
   },
 
   [starterKitCommandNames.toggleBold]: (context) => {
@@ -157,21 +171,17 @@ export const createStarterKitCommands = (): CommandMap => ({
 
   [starterKitCommandNames.toggleBlockquote]: (context) => {
     const blockquote = getNodeType("blockquote", context.schema);
-    const removeBlockquote = isSelectionInNodeType(blockquote, asProseMirrorCommand(lift));
+    const removeBlockquote = isSelectionInNodeType(blockquote, asEditorCommand(lift));
     return removeBlockquote(context) || wrapIn(blockquote)(context.state, context.dispatch);
   },
 
   [starterKitCommandNames.toggleCodeBlock]: (context) => {
     const paragraph = getNodeType("paragraph", context.schema);
     const codeBlock = getNodeType("code_block", context.schema);
-    const unsetCodeBlock = isSelectionInNodeType(
-      codeBlock,
-      (commandContext) => setBlockType(paragraph)(commandContext.state, commandContext.dispatch)
+    const unsetCodeBlock = isSelectionInNodeType(codeBlock, (commandContext) =>
+      setBlockType(paragraph)(commandContext.state, commandContext.dispatch)
     );
-    return (
-      unsetCodeBlock(context) ||
-      setBlockType(codeBlock)(context.state, context.dispatch)
-    );
+    return unsetCodeBlock(context) || setBlockType(codeBlock)(context.state, context.dispatch);
   },
 
   [starterKitCommandNames.wrapBulletList]: (context) => {
@@ -202,7 +212,9 @@ export const createStarterKitCommands = (): CommandMap => ({
     }
 
     const { from, to } = context.state.selection;
-    const transaction = context.state.tr.removeMark(from, to, link).addMark(from, to, link.create(attributes));
+    const transaction = context.state.tr
+      .removeMark(from, to, link)
+      .addMark(from, to, link.create(attributes));
     context.dispatch(transaction.scrollIntoView());
     return true;
   },
@@ -225,17 +237,19 @@ export const createStarterKitCommands = (): CommandMap => ({
     return insertNode(hardBreak)(context);
   },
 
-  [starterKitCommandNames.undo]: asProseMirrorCommand(undo),
-  [starterKitCommandNames.redo]: asProseMirrorCommand(redo)
+  [starterKitCommandNames.undo]: asEditorCommand(undo),
+  [starterKitCommandNames.redo]: asEditorCommand(redo)
 });
 
 export const starterKitExtension: LexionExtension = {
   key: "starter-kit",
   schema: starterKitSchema,
   commands: () => createStarterKitCommands(),
-  prosemirrorPlugins: ({ schema }) => [
+  editorPlugins: ({ schema }) => [
     history(),
+    createStarterKitInputRulesPlugin(schema),
     createListKeymapPlugin(schema),
+    createStarterKitKeymapPlugin(schema),
     keymap(baseKeymap),
     gapCursor(),
     dropCursor(),

@@ -1,4 +1,12 @@
-import { copyFileSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import {
+  copyFileSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  statSync,
+  writeFileSync
+} from "node:fs";
 import path from "node:path";
 
 const docsDir = path.resolve("docs");
@@ -63,7 +71,6 @@ const rewriteContent = (content) => {
   }
 
   next = next.replaceAll("](README.md)", "](Project-README)");
-  
 
   if (repoBaseUrl) {
     next = next.replaceAll("](LICENSE)", `](${repoBaseUrl}/blob/main/LICENSE)`);

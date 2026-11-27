@@ -1,11 +1,12 @@
 import type { JSONDocument, LexionEditor } from "@lexion-rte/core";
 import {
   createLexionWebEditor,
+  type LexionAccessibilityOptions,
   type LexionWebEditor,
   type LexionWebEditorOptions
 } from "@lexion-rte/web";
 
-export interface LexionSvelteActionOptions {
+export interface LexionSvelteActionOptions extends LexionAccessibilityOptions {
   readonly editor?: LexionEditor;
   readonly value?: JSONDocument;
   readonly defaultValue?: JSONDocument;
@@ -32,11 +33,11 @@ const buildWebEditor = (
     onChange,
     ...(options.editor !== undefined ? { editor: options.editor } : {}),
     ...(options.value !== undefined ? { value: options.value } : {}),
-    ...(options.defaultValue !== undefined
-      ? { defaultValue: options.defaultValue }
-      : {}),
+    ...(options.defaultValue !== undefined ? { defaultValue: options.defaultValue } : {}),
     ...(options.readOnly !== undefined ? { readOnly: options.readOnly } : {}),
-    ...(options.onReady !== undefined ? { onReady: options.onReady } : {})
+    ...(options.onReady !== undefined ? { onReady: options.onReady } : {}),
+    ...(options.ariaLabel !== undefined ? { ariaLabel: options.ariaLabel } : {}),
+    ...(options.ariaLabelledBy !== undefined ? { ariaLabelledBy: options.ariaLabelledBy } : {})
   };
 
   return createLexionWebEditor(editorOptions);
@@ -55,7 +56,8 @@ export const lexion = (
 
   return {
     update(nextOptions: LexionSvelteActionOptions): void {
-      const editorChanged = nextOptions.editor !== undefined && nextOptions.editor !== currentOptions.editor;
+      const editorChanged =
+        nextOptions.editor !== undefined && nextOptions.editor !== currentOptions.editor;
       currentOptions = {
         ...currentOptions,
         ...nextOptions

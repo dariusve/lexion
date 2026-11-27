@@ -1,4 +1,4 @@
-import type { Node as ProseMirrorNode, Schema } from "prosemirror-model";
+import type { Node as DocNode, Schema } from "prosemirror-model";
 import type { Plugin, EditorState, Transaction } from "prosemirror-state";
 
 export type JSONPrimitive = string | number | boolean | null;
@@ -13,8 +13,21 @@ export interface LexionEditorOptions {
   readonly schema?: Schema;
   readonly doc?: JSONDocument;
   readonly extensions?: readonly LexionExtension[];
+  /** @deprecated Use `extensions` instead. */
   readonly plugins?: readonly LexionPlugin[];
   readonly commands?: CommandMap;
+  /**
+   * Controls the "Powered by lexion" status bar item. `false` hides it; an object
+   * customizes it. Defaults to the standard item.
+   */
+  readonly branding?: boolean | LexionBrandingOptions;
+}
+
+export interface LexionBrandingOptions {
+  readonly text?: string;
+  readonly align?: LexionStatusBarAlignment;
+  readonly className?: string;
+  readonly style?: Readonly<Record<string, string>>;
 }
 
 export interface PluginFactoryContext {
@@ -37,7 +50,7 @@ export interface LexionStatusBarItem {
 
 export interface StatusBarContext extends PluginLifecycleContext {
   readonly state: EditorState;
-  readonly doc: ProseMirrorNode;
+  readonly doc: DocNode;
 }
 
 export interface EditorCommandContext {
@@ -57,6 +70,8 @@ export type CommandMap = Readonly<Record<string, CommandHandler>>;
 export interface LexionExtension {
   readonly key: string;
   readonly schema?: Schema | (() => Schema);
+  readonly editorPlugins?: (context: PluginFactoryContext) => readonly Plugin[];
+  /** @deprecated Use `editorPlugins` instead. */
   readonly prosemirrorPlugins?: (context: PluginFactoryContext) => readonly Plugin[];
   readonly commands?: (context: PluginFactoryContext) => CommandMap;
   readonly statusBarItems?: (context: StatusBarContext) => readonly LexionStatusBarItem[];
@@ -64,12 +79,35 @@ export interface LexionExtension {
   readonly onDestroy?: (context: PluginLifecycleContext) => void;
 }
 
+/** @deprecated Use `LexionExtension` instead. */
 export type LexionPlugin = LexionExtension;
+
+/**
+ * What caused an editor update:
+ * - `transaction`: a ProseMirror transaction was dispatched (user input or a command)
+ * - `setJSON`: the document was replaced via `setJSON()`
+ * - `extensions`: an extension was added or removed, which rebuilds the state (the document is kept)
+ */
+export type LexionEditorUpdateSource = "transaction" | "setJSON" | "extensions";
+
+export interface LexionEditorUpdateEvent {
+  readonly editor: LexionEditor;
+  readonly source: LexionEditorUpdateSource;
+  /** The dispatched transaction, or `null` when `source` is not `"transaction"`. */
+  readonly transaction: Transaction | null;
+  readonly previousState: EditorState;
+  readonly state: EditorState;
+  /** `true` when the document content changed (not just the selection or stored marks). */
+  readonly docChanged: boolean;
+}
+
+export type LexionEditorUpdateListener = (event: LexionEditorUpdateEvent) => void;
 
 export interface LexionEditor {
   readonly schema: Schema;
   readonly state: EditorState;
-  readonly doc: ProseMirrorNode;
+  readonly doc: DocNode;
+  readonly isDestroyed: boolean;
   getJSON: () => JSONDocument;
   getStatusBarItems: () => readonly LexionStatusBarItem[];
   setJSON: (document: JSONDocument) => void;
@@ -78,6 +116,9 @@ export interface LexionEditor {
   registerCommand: (name: string, command: CommandHandler) => void;
   unregisterCommand: (name: string) => void;
   use: (extension: LexionExtension) => void;
+  removeExtension: (key: string) => void;
+  /** @deprecated Use `removeExtension` instead. */
   removePlugin: (key: string) => void;
+  subscribe: (listener: LexionEditorUpdateListener) => () => void;
   destroy: () => void;
 }

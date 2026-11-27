@@ -33,6 +33,8 @@ pnpm add @lexion-rte/vue2 vue@^2.7.0
 - `destroy()`
 - `editor` getter
 
+Options also accept `ariaLabel` / `ariaLabelledBy` (set at creation) for the accessible name of the editable area, which has `role="textbox"` and `aria-multiline="true"`. `onChange` fires only when the document changes; values set through `value` / `update()` are not echoed back.
+
 ## Vue 2 Options API Example
 
 ```ts

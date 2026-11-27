@@ -1,13 +1,6 @@
 import type { JSONDocument, LexionEditor } from "@lexion-rte/core";
 import { LexionEditorView } from "@lexion-rte/vue";
-import {
-  defineComponent,
-  h,
-  onMounted,
-  ref,
-  type PropType,
-  type StyleValue
-} from "vue";
+import { defineComponent, h, onMounted, ref, type PropType, type StyleValue } from "vue";
 
 export interface LexionNuxtEditorViewProps {
   readonly editor?: LexionEditor;
@@ -16,6 +9,9 @@ export interface LexionNuxtEditorViewProps {
   readonly readOnly?: boolean;
   readonly className?: string;
   readonly style?: StyleValue;
+  readonly ariaLabel?: string;
+  readonly ariaLabelledBy?: string;
+  readonly injectStyles?: boolean;
 }
 
 export interface LexionNuxtEditorViewEmits {
@@ -50,6 +46,18 @@ export const LexionNuxtEditorView = defineComponent({
     style: {
       type: [Object, Array, String] as PropType<StyleValue>,
       default: undefined
+    },
+    ariaLabel: {
+      type: String,
+      default: undefined
+    },
+    ariaLabelledBy: {
+      type: String,
+      default: undefined
+    },
+    injectStyles: {
+      type: Boolean,
+      default: true
     }
   },
   emits: {
@@ -74,6 +82,9 @@ export const LexionNuxtEditorView = defineComponent({
         modelValue?: JSONDocument;
         defaultValue?: JSONDocument;
         readOnly: boolean;
+        injectStyles: boolean;
+        ariaLabel?: string;
+        ariaLabelledBy?: string;
         className?: string;
         style?: StyleValue;
         "onUpdate:modelValue": (value: JSONDocument) => void;
@@ -81,6 +92,7 @@ export const LexionNuxtEditorView = defineComponent({
         onReady: (editor: LexionEditor) => void;
       } = {
         readOnly: props.readOnly,
+        injectStyles: props.injectStyles,
         "onUpdate:modelValue": (value: JSONDocument) => {
           emit("update:modelValue", value);
         },
@@ -100,6 +112,12 @@ export const LexionNuxtEditorView = defineComponent({
       }
       if (props.defaultValue !== undefined) {
         viewProps.defaultValue = props.defaultValue;
+      }
+      if (props.ariaLabel !== undefined) {
+        viewProps.ariaLabel = props.ariaLabel;
+      }
+      if (props.ariaLabelledBy !== undefined) {
+        viewProps.ariaLabelledBy = props.ariaLabelledBy;
       }
       if (props.className !== undefined) {
         viewProps.className = props.className;

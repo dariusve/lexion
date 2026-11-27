@@ -1,13 +1,15 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { EditorView } from "prosemirror-view";
 import {
-  LexionEditor,
+  getStatusBarGroupClassName,
+  getStatusBarItemClassName,
   lexionStatusBarAppearance,
+  splitStatusBarItems,
   type JSONDocument,
+  type LexionEditor,
   type LexionStatusBarItem
 } from "@lexion-rte/core";
-import { starterKitExtension } from "@lexion-rte/starter-kit";
+import { LexionViewController } from "@lexion-rte/web";
 
 export interface LexionEditorViewProps {
   readonly editor?: LexionEditor;
@@ -18,142 +20,100 @@ export interface LexionEditorViewProps {
   readonly readOnly?: boolean;
   readonly className?: string;
   readonly style?: CSSProperties;
+  /** Accessible name for the editable area. */
+  readonly ariaLabel?: string;
+  /** Id(s) of the element(s) labelling the editable area. */
+  readonly ariaLabelledBy?: string;
+  /** Inject the default editor/status bar stylesheet (default `true`). */
+  readonly injectStyles?: boolean;
 }
 
-const serializeJSON = (document: JSONDocument): string => JSON.stringify(document);
-const STATUS_BAR_STYLE = lexionStatusBarAppearance.style as CSSProperties;
-const STATUS_BAR_START_STYLE = lexionStatusBarAppearance.groupStyles.start as CSSProperties;
-const STATUS_BAR_END_STYLE = lexionStatusBarAppearance.groupStyles.end as CSSProperties;
-const PROSEMIRROR_REQUIRED_STYLE_ATTRIBUTE =
-  "white-space: pre-wrap !important; word-wrap: break-word !important; -webkit-font-variant-ligatures: none; font-variant-ligatures: none;";
+const StatusBarGroup = ({
+  align,
+  items
+}: {
+  readonly align: "start" | "end";
+  readonly items: readonly LexionStatusBarItem[];
+}) => (
+  <div className={getStatusBarGroupClassName(align)}>
+    {items.map((item) => (
+      <div
+        key={item.key}
+        className={getStatusBarItemClassName(item)}
+        style={item.style as CSSProperties | undefined}
+      >
+        {item.text}
+      </div>
+    ))}
+  </div>
+);
 
-const splitStatusBarItems = (items: readonly LexionStatusBarItem[]) => ({
-  start: items.filter((item) => (item.align ?? "start") === "start"),
-  end: items.filter((item) => (item.align ?? "start") === "end")
-});
-
-export const LexionEditorView = ({
-  editor,
-  value,
-  defaultValue,
-  onChange,
-  onReady,
-  readOnly = false,
-  className,
-  style
-}: LexionEditorViewProps) => {
+export const LexionEditorView = (props: LexionEditorViewProps) => {
+  const { editor, value, readOnly = false, className, style, ariaLabel, ariaLabelledBy } = props;
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const viewRef = useRef<EditorView | null>(null);
-  const latestOnChange = useRef(onChange);
-  const latestOnReady = useRef(onReady);
-  const latestReadOnly = useRef(readOnly);
-  const lastAppliedValueRef = useRef<string | null>(null);
-
-  const internalEditor = useMemo(
-    () => {
-      const initialDoc = value ?? defaultValue;
-      const editorOptions =
-        initialDoc === undefined
-          ? {
-              extensions: [starterKitExtension]
-            }
-          : {
-              doc: initialDoc,
-              extensions: [starterKitExtension]
-            };
-      return new LexionEditor(editorOptions);
-    },
-    []
-  );
-
-  const activeEditor = editor ?? internalEditor;
-  const isControlled = value !== undefined;
-  const [statusBarItems, setStatusBarItems] = useState<readonly LexionStatusBarItem[]>(
-    () => activeEditor.getStatusBarItems()
-  );
+  const controllerRef = useRef<LexionViewController | null>(null);
+  const latestProps = useRef(props);
+  latestProps.current = props;
+  const hasOnChange = props.onChange !== undefined;
+  const [statusBarItems, setStatusBarItems] = useState<readonly LexionStatusBarItem[]>([]);
   const statusBar = splitStatusBarItems(statusBarItems);
 
-  latestOnChange.current = onChange;
-  latestOnReady.current = onReady;
-  latestReadOnly.current = readOnly;
-
+  // The controller (and the internal editor it creates when `editor` is not passed) is
+  // created and destroyed in the same effect, so StrictMode's mount/unmount/remount
+  // cycle always gets a fresh, live instance.
   useEffect(() => {
-    if (!containerRef.current) {
+    const element = containerRef.current;
+    if (!element) {
       return;
     }
 
-    if (isControlled && value !== undefined) {
-      const nextValue = serializeJSON(value);
-      if (nextValue !== serializeJSON(activeEditor.getJSON())) {
-        activeEditor.setJSON(value);
-      }
-      lastAppliedValueRef.current = nextValue;
-    }
-
-    const view = new EditorView(containerRef.current, {
-      state: activeEditor.state,
-      attributes: {
-        style: PROSEMIRROR_REQUIRED_STYLE_ATTRIBUTE
-      },
-      editable: () => !latestReadOnly.current,
-      dispatchTransaction: (transaction) => {
-        activeEditor.dispatchTransaction(transaction);
-        view.updateState(activeEditor.state);
-        setStatusBarItems(activeEditor.getStatusBarItems());
-
-        const nextValue = activeEditor.getJSON();
-        lastAppliedValueRef.current = serializeJSON(nextValue);
-        latestOnChange.current?.(nextValue, activeEditor);
-      }
+    const initial = latestProps.current;
+    const controller = new LexionViewController({
+      element,
+      readOnly: initial.readOnly ?? false,
+      injectStyles: initial.injectStyles !== false,
+      onStatusBarChange: setStatusBarItems,
+      ...(editor !== undefined ? { editor } : {}),
+      ...(initial.value !== undefined ? { value: initial.value } : {}),
+      ...(initial.defaultValue !== undefined ? { defaultValue: initial.defaultValue } : {}),
+      ...(initial.ariaLabel !== undefined ? { ariaLabel: initial.ariaLabel } : {}),
+      ...(initial.ariaLabelledBy !== undefined ? { ariaLabelledBy: initial.ariaLabelledBy } : {})
     });
-
-    viewRef.current = view;
-    setStatusBarItems(activeEditor.getStatusBarItems());
-    latestOnReady.current?.(activeEditor);
+    controllerRef.current = controller;
+    latestProps.current.onReady?.(controller.editor);
 
     return () => {
-      view.destroy();
-      viewRef.current = null;
+      controller.destroy();
+      controllerRef.current = null;
     };
-  }, [activeEditor]);
+  }, [editor]);
+
+  // Only install a change handler when there is one, so the document is not serialized
+  // to JSON for nobody.
+  useEffect(() => {
+    controllerRef.current?.setOnChange(
+      hasOnChange
+        ? (nextValue, activeEditor) => latestProps.current.onChange?.(nextValue, activeEditor)
+        : undefined
+    );
+  }, [editor, hasOnChange]);
 
   useEffect(() => {
-    const view = viewRef.current;
-    if (!view) {
-      return;
-    }
-    view.setProps({
-      editable: () => !latestReadOnly.current
+    controllerRef.current?.setReadOnly(readOnly);
+  }, [editor, readOnly]);
+
+  useEffect(() => {
+    controllerRef.current?.setAccessibility({
+      ...(ariaLabel !== undefined ? { ariaLabel } : {}),
+      ...(ariaLabelledBy !== undefined ? { ariaLabelledBy } : {})
     });
-  }, [readOnly]);
+  }, [editor, ariaLabel, ariaLabelledBy]);
 
   useEffect(() => {
-    if (!isControlled || value === undefined) {
-      return;
+    if (value !== undefined) {
+      controllerRef.current?.setValue(value);
     }
-
-    const nextValue = serializeJSON(value);
-    if (nextValue === lastAppliedValueRef.current || nextValue === serializeJSON(activeEditor.getJSON())) {
-      lastAppliedValueRef.current = nextValue;
-      viewRef.current?.updateState(activeEditor.state);
-      setStatusBarItems(activeEditor.getStatusBarItems());
-      return;
-    }
-
-    activeEditor.setJSON(value);
-    lastAppliedValueRef.current = nextValue;
-    viewRef.current?.updateState(activeEditor.state);
-    setStatusBarItems(activeEditor.getStatusBarItems());
-  }, [activeEditor, isControlled, value]);
-
-  useEffect(
-    () => () => {
-      if (!editor) {
-        internalEditor.destroy();
-      }
-    },
-    [editor, internalEditor]
-  );
+  }, [editor, value]);
 
   return (
     <div
@@ -165,43 +125,9 @@ export const LexionEditorView = ({
       }}
     >
       <div ref={containerRef} />
-      <div className={lexionStatusBarAppearance.className} style={STATUS_BAR_STYLE}>
-        <div
-          className={`${lexionStatusBarAppearance.groupClassName} ${lexionStatusBarAppearance.groupClassName}--start`}
-          style={STATUS_BAR_START_STYLE}
-        >
-          {statusBar.start.map((item) => (
-            <div
-              key={item.key}
-              className={
-                item.className
-                  ? `${lexionStatusBarAppearance.itemClassName} ${item.className}`
-                  : lexionStatusBarAppearance.itemClassName
-              }
-              style={item.style as CSSProperties | undefined}
-            >
-              {item.text}
-            </div>
-          ))}
-        </div>
-        <div
-          className={`${lexionStatusBarAppearance.groupClassName} ${lexionStatusBarAppearance.groupClassName}--end`}
-          style={STATUS_BAR_END_STYLE}
-        >
-          {statusBar.end.map((item) => (
-            <div
-              key={item.key}
-              className={
-                item.className
-                  ? `${lexionStatusBarAppearance.itemClassName} ${item.className}`
-                  : lexionStatusBarAppearance.itemClassName
-              }
-              style={item.style as CSSProperties | undefined}
-            >
-              {item.text}
-            </div>
-          ))}
-        </div>
+      <div className={lexionStatusBarAppearance.className}>
+        <StatusBarGroup align="start" items={statusBar.start} />
+        <StatusBarGroup align="end" items={statusBar.end} />
       </div>
     </div>
   );

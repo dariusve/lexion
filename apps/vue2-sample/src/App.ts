@@ -44,11 +44,15 @@ const createDoc = (): JSONDocument => ({
   content: [
     {
       type: "paragraph",
-      content: [{ type: "text", text: "Select text to try inline marks, links, and block transforms." }]
+      content: [
+        { type: "text", text: "Select text to try inline marks, links, and block transforms." }
+      ]
     },
     {
       type: "paragraph",
-      content: [{ type: "text", text: "Use the toolbar to compare the full starter-kit command set." }]
+      content: [
+        { type: "text", text: "Use the toolbar to compare the full starter-kit command set." }
+      ]
     },
     {
       type: "bullet_list",
@@ -67,7 +71,9 @@ const createDoc = (): JSONDocument => ({
           content: [
             {
               type: "paragraph",
-              content: [{ type: "text", text: "Place the cursor here to test indent, then outdent." }]
+              content: [
+                { type: "text", text: "Place the cursor here to test indent, then outdent." }
+              ]
             }
           ]
         }
@@ -134,7 +140,10 @@ export const App = Vue.extend({
     const vm = this as AppVm;
     return h("main", { class: "shell" }, [
       h("h1", "Vue2 Adapter Sample"),
-      h("p", "Select text to test inline formatting and links. Place the cursor in the second list item to test indent, then outdent."),
+      h(
+        "p",
+        "Select text to test inline formatting and links. Place the cursor in the second list item to test indent, then outdent."
+      ),
       h("div", { class: "toolbar" }, [
         ...toolbarButtons.map((button) =>
           h(

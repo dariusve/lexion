@@ -53,7 +53,8 @@ console.log(editor.getJSON());
 - `schema?: Schema`
 - `doc?: JSONDocument`
 - `extensions?: LexionExtension[]`
-- `plugins?: LexionPlugin[]` (alias for extensions)
+- `plugins?: LexionPlugin[]` (deprecated alias of `extensions`)
+- `branding?: boolean | { text?, align?, className?, style? }` (`false` hides the "Powered by lexion" status bar item)
 - `commands?: CommandMap`
 
 ## Core API
@@ -70,9 +71,45 @@ Main instance members:
 - `execute(command, ...args)`
 - `registerCommand(name, handler)`
 - `unregisterCommand(name)`
-- `use(extension)`
-- `removePlugin(key)`
+- `use(extension)` (throws if the extension provides a `schema`; pass those to the constructor)
+- `removeExtension(key)`
+- `removePlugin(key)` (deprecated alias of `removeExtension`)
+- `subscribe(listener)` → unsubscribe function
+- `isDestroyed`
 - `destroy()`
+
+After `destroy()`, every member except `schema`, `isDestroyed` and `destroy()` throws.
+
+## Subscribing to Changes
+`subscribe` is called after every state change: dispatched transactions (including `execute()`), `setJSON()`, and extension add/remove. Adapters use it to keep their views in sync, so commands run on a shared editor (e.g. from a toolbar) update every mounted view.
+
+```ts
+const unsubscribe = editor.subscribe(({ source, docChanged, transaction, state, previousState }) => {
+  // source: "transaction" | "setJSON" | "extensions"
+  if (docChanged) {
+    save(editor.getJSON());
+  }
+});
+
+unsubscribe(); // listeners are also cleared on destroy()
+```
+
+## Status Bar and Branding
+
+Core collects status bar items from extensions and ships the stylesheet adapters inject (`lexionStatusBarStyles`). It uses zero-specificity `:where()` selectors, so your CSS always wins, and `--lexion-status-bar-*` custom properties for quick theming.
+
+```ts
+// Hide the "Powered by lexion" item
+new LexionEditor({ extensions: [starterKitExtension], branding: false });
+
+// Or customize it
+new LexionEditor({
+  extensions: [starterKitExtension],
+  branding: { text: "Edited with Acme", align: "end", className: "acme-badge" }
+});
+```
+
+Helpers for custom renderers: `splitStatusBarItems(items)` (→ `{ start, end }`), `getStatusBarGroupClassName(align)`, `getStatusBarItemClassName(item)`, `resolveBrandingStatusItem(branding)`. `lexionStatusBarAppearance.style` / `groupStyles` are deprecated in favor of the stylesheet.
 
 ## Custom Command Example
 

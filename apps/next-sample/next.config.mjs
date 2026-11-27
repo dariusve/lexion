@@ -5,7 +5,12 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["@lexion-rte/next", "@lexion-rte/react", "@lexion-rte/core", "@lexion-rte/starter-kit"],
+  transpilePackages: [
+    "@lexion-rte/next",
+    "@lexion-rte/react",
+    "@lexion-rte/core",
+    "@lexion-rte/starter-kit"
+  ],
   webpack(config) {
     config.resolve.extensionAlias = {
       ...(config.resolve.extensionAlias ?? {}),

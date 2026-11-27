@@ -13,7 +13,14 @@ export default defineConfig({
       "@lexion-rte/vue": path.resolve(rootDir, "packages/vue/src/index.ts"),
       "@lexion-rte/web": path.resolve(rootDir, "packages/web/src/index.ts"),
       "@lexion-rte/ui": path.resolve(rootDir, "packages/ui/src/index.ts"),
-      "@lexion-rte/tools": path.resolve(rootDir, "packages/tools/src/index.ts")
+      "@lexion-rte/tools": path.resolve(rootDir, "packages/tools/src/index.ts"),
+      "@lexion-rte/angular": path.resolve(rootDir, "packages/angular/src/index.ts"),
+      "@lexion-rte/svelte": path.resolve(rootDir, "packages/svelte/src/index.ts"),
+      "@lexion-rte/solid": path.resolve(rootDir, "packages/solid/src/index.ts"),
+      "@lexion-rte/vue2": path.resolve(rootDir, "packages/vue2/src/index.ts"),
+      "@lexion-rte/astro": path.resolve(rootDir, "packages/astro/src/index.ts"),
+      "@lexion-rte/next": path.resolve(rootDir, "packages/next/src/index.ts"),
+      "@lexion-rte/nuxt": path.resolve(rootDir, "packages/nuxt/src/index.ts")
     }
   },
   test: {
@@ -22,7 +29,15 @@ export default defineConfig({
     setupFiles: ["tests/setup.ts"],
     coverage: {
       provider: "v8",
-      reporter: ["text", "lcov"]
+      reporter: ["text-summary", "text", "lcov", "json-summary"],
+      include: ["packages/*/src/**/*.{ts,tsx}"],
+      exclude: ["packages/*/src/**/*.d.ts"],
+      // Floors set a few points below the measured values; raise them as coverage improves.
+      thresholds: {
+        lines: 80,
+        "packages/core/src/**": { lines: 85, statements: 85, functions: 85, branches: 70 },
+        "packages/starter-kit/src/**": { lines: 85, statements: 85, functions: 85, branches: 80 }
+      }
     }
   }
 });

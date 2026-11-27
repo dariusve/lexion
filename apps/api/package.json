@@ -7,7 +7,7 @@
     "build": "tsc -p tsconfig.json",
     "dev": "node --enable-source-maps dist/index.js",
     "start": "node --enable-source-maps dist/index.js",
-    "lint": "eslint src --ext .ts"
+    "lint": "eslint src"
   },
   "dependencies": {
     "@lexion-rte/core": "workspace:*",

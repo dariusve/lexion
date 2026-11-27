@@ -18,6 +18,7 @@ Action options:
 - `value?: JSONDocument`
 - `defaultValue?: JSONDocument`
 - `readOnly?: boolean`
+- `ariaLabel?: string` / `ariaLabelledBy?: string` (accessible name of the editable area, which has `role="textbox"` and `aria-multiline="true"`)
 - `onChange?: (value, editor) => void`
 - `onReady?: (editor) => void`
 

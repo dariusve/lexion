@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint app --ext .ts,.tsx"
+    "lint": "eslint app"
   },
   "dependencies": {
     "@lexion-rte/core": "workspace:*",

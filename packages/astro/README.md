@@ -50,6 +50,8 @@ const editorId = "lexion-editor";
 - `destroy()`
 - `editor` getter
 
+Options also accept `ariaLabel` / `ariaLabelledBy` (set at creation) for the accessible name of the editable area, which has `role="textbox"` and `aria-multiline="true"`. `onChange` fires only when the document changes; values set through `value` / `update()` are not echoed back.
+
 ## Notes
 
 - Mount only on the client.

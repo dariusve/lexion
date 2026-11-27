@@ -43,11 +43,15 @@ const createParagraphDoc = (): JSONDocument => ({
   content: [
     {
       type: "paragraph",
-      content: [{ type: "text", text: "Select text to try inline marks, links, and block transforms." }]
+      content: [
+        { type: "text", text: "Select text to try inline marks, links, and block transforms." }
+      ]
     },
     {
       type: "paragraph",
-      content: [{ type: "text", text: "Use the toolbar to compare the full starter-kit command set." }]
+      content: [
+        { type: "text", text: "Use the toolbar to compare the full starter-kit command set." }
+      ]
     },
     {
       type: "bullet_list",
@@ -66,7 +70,9 @@ const createParagraphDoc = (): JSONDocument => ({
           content: [
             {
               type: "paragraph",
-              content: [{ type: "text", text: "Place the cursor here to test indent, then outdent." }]
+              content: [
+                { type: "text", text: "Place the cursor here to test indent, then outdent." }
+              ]
             }
           ]
         }
@@ -101,34 +107,36 @@ export const App = defineComponent({
     return () =>
       h("main", { class: "page" }, [
         h("h1", "Lexion Vue Local Sample"),
-        h("p", "Uses a shared toolbar plus the Vue 3 editor view to exercise the full starter-kit command set."),
-        h("p", "Select text for inline marks and links. Place the cursor in the second list item to test indent, then outdent."),
         h(
-          "div",
-          { class: "toolbar" },
-          [
-            ...toolbarButtons.map((button) =>
-              h(
-                "button",
-                {
-                  type: "button",
-                  onMousedown: (event: MouseEvent) => event.preventDefault(),
-                  onClick: () => runCommand(button)
-                },
-                button.label
-              )
-            ),
+          "p",
+          "Uses a shared toolbar plus the Vue 3 editor view to exercise the full starter-kit command set."
+        ),
+        h(
+          "p",
+          "Select text for inline marks and links. Place the cursor in the second list item to test indent, then outdent."
+        ),
+        h("div", { class: "toolbar" }, [
+          ...toolbarButtons.map((button) =>
             h(
               "button",
               {
                 type: "button",
                 onMousedown: (event: MouseEvent) => event.preventDefault(),
-                onClick: toggleReadOnly
+                onClick: () => runCommand(button)
               },
-              readOnly.value ? "Set Editable" : "Toggle Read Only"
+              button.label
             )
-          ]
-        ),
+          ),
+          h(
+            "button",
+            {
+              type: "button",
+              onMousedown: (event: MouseEvent) => event.preventDefault(),
+              onClick: toggleReadOnly
+            },
+            readOnly.value ? "Set Editable" : "Toggle Read Only"
+          )
+        ]),
         h("section", { class: "card" }, [
           h(LexionEditorView, {
             editor,

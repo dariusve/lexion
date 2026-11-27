@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, createElement } from "react";
+import { useEffect, useState, createElement } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { LexionEditor, type JSONDocument } from "@lexion-rte/core";
 import { starterKitExtension } from "@lexion-rte/starter-kit";
@@ -12,26 +12,24 @@ import {
 } from "./starter-kit-buttons.js";
 
 const ReactToolbarExample = () => {
-  const editor = useMemo(
-    () =>
-      new LexionEditor({
-        doc: createStarterKitSampleDocument(),
-        extensions: [starterKitExtension]
-      }),
-    []
-  );
-  const [document, setDocument] = useState<JSONDocument>(() => editor.getJSON());
+  // Own the editor in an effect so create/destroy stay paired under StrictMode.
+  const [editor, setEditor] = useState<LexionEditor | null>(null);
+  const [document, setDocument] = useState<JSONDocument>(createStarterKitSampleDocument);
 
-  useEffect(
-    () => () => {
-      editor.destroy();
-    },
-    [editor]
-  );
+  useEffect(() => {
+    const created = new LexionEditor({
+      doc: createStarterKitSampleDocument(),
+      extensions: [starterKitExtension]
+    });
+    setEditor(created);
+    return () => {
+      created.destroy();
+    };
+  }, []);
 
   const runCommand = (button: ToolbarButtonConfig): void => {
-    editor.execute(button.command, ...(button.args ?? []));
-    setDocument(editor.getJSON());
+    // The view and `onChange` update through the editor subscription.
+    editor?.execute(button.command, ...(button.args ?? []));
   };
 
   return (
@@ -49,11 +47,13 @@ const ReactToolbarExample = () => {
           </button>
         ))}
       </div>
-      <LexionEditorView
-        editor={editor}
-        value={document}
-        onChange={(nextDocument) => setDocument(nextDocument)}
-      />
+      {editor ? (
+        <LexionEditorView
+          editor={editor}
+          value={document}
+          onChange={(nextDocument) => setDocument(nextDocument)}
+        />
+      ) : null}
       <pre>{JSON.stringify(document, null, 2)}</pre>
     </div>
   );

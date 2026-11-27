@@ -1,9 +1,9 @@
-import type { Node as ProseMirrorNode, NodeType } from "prosemirror-model";
+import type { Node as DocNode, NodeType } from "prosemirror-model";
 import { Plugin, PluginKey, type EditorState, type Transaction } from "prosemirror-state";
 
 const trailingNodePluginKey = new PluginKey("starter-kit-trailing-node");
 
-const needsTrailingParagraph = (document: ProseMirrorNode, paragraph: NodeType): boolean => {
+const needsTrailingParagraph = (document: DocNode, paragraph: NodeType): boolean => {
   const lastChild = document.lastChild;
   return !lastChild || lastChild.type !== paragraph;
 };

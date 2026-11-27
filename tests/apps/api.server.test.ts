@@ -1,7 +1,9 @@
-import type { FastifyInstance } from "fastify";
 import { afterEach, describe, expect, test } from "vitest";
 
 import { buildApiServer } from "../../apps/api/src/server.js";
+
+// Derived from the server factory so this test does not need its own `fastify` dependency.
+type FastifyInstance = Awaited<ReturnType<typeof buildApiServer>>;
 
 describe("@lexion-rte/api", () => {
   let app: FastifyInstance | null = null;

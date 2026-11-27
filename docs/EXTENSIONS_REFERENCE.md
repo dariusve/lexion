@@ -23,7 +23,7 @@ This document is the canonical API reference for the Lexion extension packages.
 | `key` | `string` | `"starter-kit"` |
 | `schema` | `Schema` | `starterKitSchema` |
 | `commands` | `() => CommandMap` | Returns `createStarterKitCommands()` |
-| `prosemirrorPlugins` | `({ schema }) => Plugin[]` | Returns history, base keymap, list keymap, gap cursor, drop cursor, and trailing node plugins. |
+| `editorPlugins` | `({ schema }) => Plugin[]` | Returns history, Markdown input rules, list keymap, starter-kit keyboard shortcuts, base keymap, gap cursor, drop cursor, and trailing node plugins. |
 
 ### Starter-Kit Commands
 

@@ -8,12 +8,21 @@ For concrete payload samples, see `docs/DATA_EXAMPLES.md`.
 ### Main Class
 - `LexionEditor`
 
+### Status Bar Helpers
+- `lexionStatusBarStyles`: status bar stylesheet (zero-specificity `:where()` selectors, themeable with `--lexion-status-bar-*` custom properties). Injected by the web, React and Vue adapters.
+- `splitStatusBarItems(items)`: groups items into `start` / `end` for rendering (by `align`, default `start`).
+- `getStatusBarGroupClassName(align)` / `getStatusBarItemClassName(item)`: class names used by the adapters.
+- `resolveBrandingStatusItem(branding)`: the branding item for a `branding` option value, or `null` when hidden.
+- `lexionBrandingStatusItem`, `LEXION_BRANDING_CLASS_NAME`
+- `lexionStatusBarAppearance` (`style` / `groupStyles` are deprecated; use the stylesheet)
+
 ### `LexionEditorOptions`
 - `schema?: Schema`
 - `doc?: JSONDocument`
 - `extensions?: LexionExtension[]`
 - `commands?: CommandMap`
-- `plugins?: LexionPlugin[]` (alias for extension compatibility)
+- `plugins?: LexionPlugin[]` (deprecated alias of `extensions`)
+- `branding?: boolean | { text?, align?, className?, style? }` (`false` hides the "Powered by lexion" status bar item)
 
 ### Instance API
 - `schema`
@@ -26,9 +35,14 @@ For concrete payload samples, see `docs/DATA_EXAMPLES.md`.
 - `execute(commandName, ...args)`
 - `registerCommand(name, handler)`
 - `unregisterCommand(name)`
-- `use(extension)`
-- `removePlugin(key)`
+- `use(extension)` (throws if the extension provides a `schema`; pass those to the constructor)
+- `removeExtension(key)`
+- `removePlugin(key)` (deprecated alias of `removeExtension`)
+- `subscribe(listener)` → unsubscribe function
+- `isDestroyed`
 - `destroy()`
+
+After `destroy()`, every member except `schema`, `isDestroyed` and `destroy()` throws.
 
 ### Example: Initialize + Execute Commands
 ```ts
@@ -62,6 +76,20 @@ const nextDoc: JSONDocument = {
 editor.setJSON(nextDoc);
 const persisted = editor.getJSON();
 console.log(persisted);
+```
+
+### Example: Subscribe to Changes
+`subscribe` is called after every state change: dispatched transactions (including `execute()`), `setJSON()`, and extension add/remove. Adapters use it to keep their views in sync, so commands run on a shared editor (e.g. from a toolbar) update every mounted view.
+
+```ts
+const unsubscribe = editor.subscribe(({ source, docChanged, transaction, state, previousState }) => {
+  // source: "transaction" | "setJSON" | "extensions"
+  if (docChanged) {
+    save(editor.getJSON());
+  }
+});
+
+unsubscribe(); // listeners are also cleared on destroy()
 ```
 
 ### Example: Register Custom Command
@@ -112,6 +140,9 @@ editor.unregisterCommand("insertTimestamp");
 - `undo`
 - `redo`
 
+### Keyboard Shortcuts and Input Rules
+`starterKitExtension` binds shortcuts (`Mod-z` undo, `Mod-b` bold, `Mod-Alt-1` heading 1, `Shift-Mod-8` bullet list, ...) and Markdown input rules (`# `, `> `, `- `, `1. `, ```` ``` ````, `---`). The full tables are in the [starter-kit README](../packages/starter-kit/README.md#keyboard-shortcuts).
+
 ### Example: Use Starter Kit Commands
 ```ts
 import { LexionEditor } from "@lexion-rte/core";
@@ -143,6 +174,18 @@ The public repo documents only the community package surface. Commercial capabil
 - `LexionWebEditor`
 - `injectLexionWebEditorStyles(options?)`
 - `lexionWebEditorStyles`
+- `EDITOR_REQUIRED_STYLE_ATTRIBUTE` (`PROSEMIRROR_REQUIRED_STYLE_ATTRIBUTE` is a deprecated alias)
+- `LexionViewController` (shared view wiring that every adapter uses; use it to build your own adapter)
+
+### `LexionWebEditor` Options
+- `element: HTMLElement`
+- `editor?: LexionEditor` (not destroyed by the adapter)
+- `value?` / `defaultValue?: JSONDocument`
+- `readOnly?: boolean`
+- `ariaLabel?` / `ariaLabelledBy?: string` (the editable area has `role="textbox"` and `aria-multiline="true"`)
+- `injectStyles?: boolean` (default `true`), `styleInjectionOptions?`
+- `onChange?(value, editor)`: called only when the document changes; values applied through `value` / `setValue()` / `update()` are not echoed back
+- `onReady?(editor)`
 
 ### Example: Uncontrolled Editor
 ```ts
@@ -157,6 +200,8 @@ const webEditor = createLexionWebEditor({
 ```
 
 ### Example: Controlled Update + Commands
+The view subscribes to the editor, so commands run through `execute()` (or directly on a shared `LexionEditor`) update it and fire `onChange`.
+
 ```ts
 import { starterKitCommandNames } from "@lexion-rte/starter-kit";
 import { createLexionWebEditor } from "@lexion-rte/web";
@@ -173,6 +218,25 @@ webEditor.execute(starterKitCommandNames.toggleItalic);
 ### Styling Notes
 - The web adapter auto-injects base ProseMirror styles (including `white-space: pre-wrap`) by default.
 - Disable this with `injectStyles: false` if your app already includes custom ProseMirror CSS.
+- The status bar is styled through CSS classes (`.lexion-editor-status-bar`, `.lexion-editor-status-item`, ...) and `--lexion-status-bar-font-size`, `--lexion-status-bar-color`, `--lexion-status-bar-background`, `--lexion-status-bar-border-color`, `--lexion-status-bar-padding`.
+
+### Example: Custom Adapter with `LexionViewController`
+```ts
+import { splitStatusBarItems } from "@lexion-rte/core";
+import { LexionViewController } from "@lexion-rte/web";
+
+const controller = new LexionViewController({
+  element,
+  defaultValue,
+  ariaLabel: "Message body",
+  onChange: (value) => save(value),
+  onStatusBarChange: (items) => render(splitStatusBarItems(items))
+});
+
+controller.setValue(nextValue);
+controller.setReadOnly(true);
+controller.destroy(); // destroys the editor only if the controller created it
+```
 
 ## `@lexion-rte/ui`
 
@@ -186,10 +250,24 @@ webEditor.execute(starterKitCommandNames.toggleItalic);
 - `lexionToolbarStyles`
 - `lexionToolbarAppearance`
 
+### Toolbar Options
+- `element: HTMLElement`
+- `editor?: LexionToolbarEditor`
+- `items?: LexionToolbarItemInput[]`
+- `className?: string`
+- `ariaLabel?: string` (default `"Editor toolbar"`)
+- `onItemExecute?(event)`
+
 ### Toolbar Item States
 - `enabled`
 - `disabled`
 - `hidden`
+
+Toggle items can also carry `active?: boolean`, which renders `aria-pressed` and the `lexion-toolbar-ui__button--active` class. Update it with `toolbar.setItemActive(id, active)` or `toolbar.setItemsActive({ bold: true, italic: false })`, for example from `editor.subscribe()`.
+
+### Accessibility
+- `role="toolbar"` with an `aria-label`; a single Tab stop with `ArrowLeft` / `ArrowRight` / `Home` / `End` navigation.
+- Dropdowns open with `ArrowDown` / `Enter` / `Space`; items have `role="menuitem"`; `Escape` closes the menu and returns focus to the trigger.
 
 ### Toolbar Editor Contract
 - Required: `execute(command, ...args): boolean`
@@ -262,8 +340,15 @@ const toolbar = createLexionToolbar({
 ### Exports
 - `LexionEditorView`
 
+### Props
+`editor?`, `value?`, `defaultValue?`, `onChange?`, `onReady?`, `readOnly?`, `ariaLabel?`, `ariaLabelledBy?`, `injectStyles?` (default `true`), `className?`, `style?`.
+
+- `onChange` fires only when the document changes, including changes from a shared `editor` (e.g. a toolbar). Controlled `value` updates are not echoed back.
+- Works under `<StrictMode>`. No internal editor is created when `editor` is passed, and a passed editor is never destroyed by the view.
+
 ### Styling Notes
 - The React view enforces required ProseMirror `white-space` styling on the editor root to prevent CSS console warnings.
+- It injects the editor and status bar stylesheet once per document; opt out with `injectStyles={false}`.
 
 ### Example: Uncontrolled
 ```tsx
@@ -295,8 +380,12 @@ export const ControlledEditor = ({ initial }: { initial: JSONDocument }) => {
 ### Exports
 - `LexionEditorView`
 
+### Props
+`editor?`, `modelValue?` (`v-model`), `defaultValue?`, `readOnly?`, `ariaLabel?`, `ariaLabelledBy?`, `injectStyles?` (default `true`), `className?`, `style?`. Events: `update:modelValue` and `change` (only when the document changes), `ready`.
+
 ### Styling Notes
 - The Vue view enforces required ProseMirror `white-space` styling on the editor root to prevent CSS console warnings.
+- It injects the editor and status bar stylesheet once per document; opt out with `:inject-styles="false"`.
 
 ### Example: Uncontrolled
 ```vue

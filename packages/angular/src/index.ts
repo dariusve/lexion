@@ -1,12 +1,13 @@
 import type { JSONDocument, LexionEditor } from "@lexion-rte/core";
 import {
   createLexionWebEditor,
+  type LexionAccessibilityOptions,
   type LexionWebEditor,
   type LexionWebEditorOptions,
   type LexionWebEditorUpdateOptions
 } from "@lexion-rte/web";
 
-export interface LexionAngularAdapterOptions {
+export interface LexionAngularAdapterOptions extends LexionAccessibilityOptions {
   readonly editor?: LexionEditor;
   readonly value?: JSONDocument;
   readonly defaultValue?: JSONDocument;
@@ -110,9 +111,7 @@ export class LexionAngularAdapter {
     }
 
     const updateOptions: { value?: JSONDocument; readOnly?: boolean } = {
-      ...(hasOwn(options, "value") && options.value !== undefined
-        ? { value: options.value }
-        : {}),
+      ...(hasOwn(options, "value") && options.value !== undefined ? { value: options.value } : {}),
       ...(hasOwn(options, "readOnly") && options.readOnly !== undefined
         ? { readOnly: options.readOnly }
         : {})
@@ -145,15 +144,19 @@ export class LexionAngularAdapter {
       element,
       readOnly: this.currentReadOnly,
       onChange: this.handleChange,
-      ...(this.initialOptions.editor !== undefined
-        ? { editor: this.initialOptions.editor }
-        : {}),
+      ...(this.initialOptions.editor !== undefined ? { editor: this.initialOptions.editor } : {}),
       ...(this.currentValue !== undefined ? { value: this.currentValue } : {}),
       ...(this.initialOptions.defaultValue !== undefined
         ? { defaultValue: this.initialOptions.defaultValue }
         : {}),
       ...(this.initialOptions.onReady !== undefined
         ? { onReady: this.initialOptions.onReady }
+        : {}),
+      ...(this.initialOptions.ariaLabel !== undefined
+        ? { ariaLabel: this.initialOptions.ariaLabel }
+        : {}),
+      ...(this.initialOptions.ariaLabelledBy !== undefined
+        ? { ariaLabelledBy: this.initialOptions.ariaLabelledBy }
         : {})
     };
   }
