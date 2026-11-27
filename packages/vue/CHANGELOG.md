@@ -1,5 +1,42 @@
 # @lexion-rte/vue
 
+## 0.2.0
+
+### Minor Changes
+
+- 785eb57: Shared view controller, accessibility, and themeable status bar.
+
+  - **New `LexionViewController`** in `@lexion-rte/web`: the single implementation of view wiring that every adapter now uses (editor subscription, controlled-value sync, change emission, read-only state, ARIA attributes, stylesheet injection). `@lexion-rte/react` and `@lexion-rte/vue` now depend on `@lexion-rte/web`.
+  - **Accessibility:** the editable area has `role="textbox"`, `aria-multiline` and `aria-readonly`. Every adapter accepts `ariaLabel` / `ariaLabelledBy`.
+  - **Status bar:** it is now styled with CSS classes from an injected stylesheet (`lexionStatusBarStyles`, zero-specificity `:where()` selectors, `--lexion-status-bar-*` custom properties) instead of inline styles, so it can be themed. The font size went from 7.5px to 11px, and `text-wrap-mode` was replaced with `white-space: nowrap`. React and Vue now inject the stylesheet too; opt out with `injectStyles: false`.
+  - **Branding:** the new `LexionEditorOptions.branding` option hides (`false`) or customizes (`{ text, align, className, style }`) the "Powered by lexion" status bar item.
+  - New core helpers: `splitStatusBarItems`, `getStatusBarGroupClassName`, `getStatusBarItemClassName`, `resolveBrandingStatusItem`. `lexionStatusBarAppearance.style` / `groupStyles` are deprecated.
+
+### Patch Changes
+
+- 785eb57: Add editor change events and make adapters react to them.
+
+  **`@lexion-rte/core`**
+
+  - New `editor.subscribe(listener)` returns an unsubscribe function. Listeners receive `{ editor, source, transaction, previousState, state, docChanged }` after dispatched transactions (including `execute()`), `setJSON()`, and extension add/remove. Listeners are cleared on `destroy()`.
+  - New `editor.removeExtension(key)` and `editor.isDestroyed`.
+  - **Deprecated:** `removePlugin(key)` (use `removeExtension`), the `plugins` option (use `extensions`) and the `LexionPlugin` type (use `LexionExtension`). They keep working.
+  - **Behavior change:** `use(extension)` now throws when the extension provides a `schema`. Before, the schema was silently ignored. Pass schema-providing extensions to the constructor.
+  - **Behavior change:** `state`, `doc` and `getJSON()` now throw on a destroyed editor, like the other members.
+
+  **Adapters (`web`, `react`, `vue`, and everything built on `web`)**
+
+  - Views now update when the shared editor changes from outside the view, e.g. `editor.execute()` from a toolbar or another view.
+  - `onChange` / `update:modelValue` fire only when the document changes, not on selection-only changes or commands that did nothing. Values applied through the controlled `value` / `modelValue` are not echoed back.
+  - Controlled values are compared by reference and `Node.eq()` instead of `JSON.stringify` on every transaction.
+  - React: the internal editor is created and destroyed in the same effect, so `<LexionEditorView>` works under `<StrictMode>`. No internal editor is created when `editor` is passed.
+
+- Updated dependencies [785eb57]
+- Updated dependencies [785eb57]
+- Updated dependencies [785eb57]
+  - @lexion-rte/core@0.2.0
+  - @lexion-rte/web@0.2.0
+
 ## 0.1.9
 
 ### Patch Changes

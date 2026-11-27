@@ -1,5 +1,26 @@
 # @lexion-rte/starter-kit
 
+## 0.3.0
+
+### Minor Changes
+
+- 785eb57: Add keyboard shortcuts and Markdown input rules.
+
+  - Shortcuts: `Mod-z` / `Shift-Mod-z` / `Mod-y` undo and redo (they were not bound before), `Mod-b` / `Mod-i` / `Mod-u` / `Mod-e` / `Shift-Mod-s` marks, `Mod-Alt-0..6` paragraph and headings, `Mod-Alt-c` code block, `Shift-Mod-b` blockquote, `Shift-Mod-8` / `Shift-Mod-7` lists, `Shift-Enter` / `Mod-Enter` hard break.
+  - Input rules: `# ` … `###### ` headings, `> ` blockquote, `- ` / `* ` / `+ ` bullet list, `1. ` ordered list, ` ``` ` code block, `---` horizontal rule.
+
+### Patch Changes
+
+- 785eb57: Rename ProseMirror-branded public names to neutral ones.
+
+  - `LexionExtension.prosemirrorPlugins` → `editorPlugins`. The old field still works but is deprecated; `editorPlugins` wins when both are set.
+  - `PROSEMIRROR_REQUIRED_STYLE_ATTRIBUTE` → `EDITOR_REQUIRED_STYLE_ATTRIBUTE`. The old export remains as a deprecated alias.
+
+- Updated dependencies [785eb57]
+- Updated dependencies [785eb57]
+- Updated dependencies [785eb57]
+  - @lexion-rte/core@0.2.0
+
 ## 0.2.2
 
 ### Patch Changes

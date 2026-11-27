@@ -1,5 +1,26 @@
 # @lexion-rte/ui
 
+## 0.2.0
+
+### Minor Changes
+
+- 785eb57: Toolbar accessibility and module split.
+
+  - `role="toolbar"` with an `aria-label` (new `ariaLabel` option), one Tab stop, and `ArrowLeft` / `ArrowRight` / `Home` / `End` navigation.
+  - Dropdown menus are keyboard operable: `ArrowDown` opens and focuses the first item, items have `role="menuitem"`, and `Escape` returns focus to the trigger.
+  - New `active` item field, plus `setItemActive()` / `setItemsActive()`. Toggle buttons expose `aria-pressed` and a `--active` class.
+  - Visible `:focus-visible` outline.
+  - Internal: `src/index.ts` was split into modules. The public exports are unchanged.
+
+### Patch Changes
+
+- Updated dependencies [785eb57]
+- Updated dependencies [785eb57]
+- Updated dependencies [785eb57]
+- Updated dependencies [785eb57]
+  - @lexion-rte/core@0.2.0
+  - @lexion-rte/starter-kit@0.3.0
+
 ## 0.1.1
 
 ### Patch Changes
